@@ -46,7 +46,6 @@ function LiveCounter({ base, rate, unit, serverTime, label, lang }) {
 }
 
 import { useStats } from './StatsProvider';
-import { getWeather } from '@/lib/weather';
 
 export default function PremiumHeader() {
   const { lang } = useLanguage();
@@ -55,7 +54,7 @@ export default function PremiumHeader() {
   const [weather, setWeather] = useState(null);
 
   useEffect(() => {
-    getWeather('Dhaka').then(setWeather).catch(console.error);
+    fetch('/api/weather').then(res => res.json()).then(setWeather);
   }, []);
 
   const t = {

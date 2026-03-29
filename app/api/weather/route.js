@@ -1,7 +1,10 @@
-import { DISTRICTS } from './districts';
+import { NextResponse } from 'next/server';
+import { DISTRICTS } from '@/lib/districts';
 
-export async function getWeather(districtName = 'Dhaka') {
-  const apiKey = 'f5aeec1f3dd348b291b141654262903';
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const districtName = searchParams.get('district') || 'Dhaka';
+  const apiKey = process.env.WEATHER_API_KEY || 'f5aeec1f3dd348b291b141654262903';
 
   // URL decode the district name and make it case-insensitive for matching
   const decodedName = decodeURIComponent(districtName).trim();
@@ -12,7 +15,8 @@ export async function getWeather(districtName = 'Dhaka') {
 
   try {
     const res = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=1&aqi=no&alerts=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=1&aqi=no&alerts=no`,
+      { cache: 'no-store' }
     );
     const data = await res.json();
 
@@ -22,6 +26,7 @@ export async function getWeather(districtName = 'Dhaka') {
     const forecast = data.forecast.forecastday[0].day;
 
     // Irrigation Logic
+    // High Priority: No rain today AND Temp > 30°C
     let irrigationStatus = {
       level: 'low',
       message_en: 'No immediate irrigation needed.',
@@ -48,7 +53,7 @@ export async function getWeather(districtName = 'Dhaka') {
       };
     }
 
-    return {
+    return NextResponse.json({
       location: data.location.name,
       district: district ? district.bn : decodedName,
       temp: current.temp_c,
@@ -59,10 +64,10 @@ export async function getWeather(districtName = 'Dhaka') {
       wind: current.wind_kph,
       rain_chance: forecast.daily_chance_of_rain,
       irrigation: irrigationStatus
-    };
+    });
 
   } catch (error) {
-    console.error('Weather Fetch Error:', error);
-    throw error;
+    console.error('Weather API Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

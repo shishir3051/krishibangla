@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DISTRICTS } from '@/lib/districts';
-import { getWeather } from '@/lib/weather';
 import { useLanguage } from '@/components/LanguageProvider';
 
 export default function WeatherWidget() {
@@ -41,7 +40,9 @@ export default function WeatherWidget() {
   const fetchWeather = async (name) => {
     setLoading(true);
     try {
-      const data = await getWeather(name);
+      const res = await fetch(`/api/weather?district=${encodeURIComponent(name)}`);
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
       setWeather(data);
       setError(null);
     } catch (err) {
