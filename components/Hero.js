@@ -1,33 +1,17 @@
 import LanguageSwitcher from "./LanguageSwitcher";
 import Text from "./Text";
+import { useStats } from "./StatsProvider";
 
 export default function Hero() {
-  const stats = [
-    { 
-      number: "13%", 
-      en: "GDP Share", 
-      bn: "জিডিপি অংশ" 
-    },
-    { 
-      number: "40%", 
-      en: "Workforce", 
-      bn: "কর্মসংস্থান" 
-    },
-    { 
-      number: "#4", 
-      en: "Rice Producer", 
-      bn: "ধান উৎপাদনকারী" 
-    },
-    { 
-      number: "#5", 
-      en: "Aquaculture", 
-      bn: "মাছ চাষ" 
-    },
-    { 
-      number: "80%", 
-      en: "World's Hilsa", 
-      bn: "বিশ্বের ইলিশ" 
-    },
+  const { statsData } = useStats();
+  
+  // Use data from API or fallback to defaults
+  const stats = statsData?.macroStats || [
+    { number: "13.1%", en: "GDP Share", bn: "জিডিপি অংশ" },
+    { number: "40.6%", en: "Workforce", bn: "কর্মসংস্থান" },
+    { number: "#3", en: "Rice Producer", bn: "ধান উৎপাদনকারী" },
+    { number: "#5", en: "Aquaculture", bn: "মাছ চাষ" },
+    { number: "80%", en: "World's Hilsa", bn: "বিশ্বের ইলিশ" },
   ];
 
   return (
@@ -62,7 +46,7 @@ export default function Hero() {
         as="p" 
         className="font-mono text-[0.8rem] text-cream/50 mt-6 text-center max-w-[520px] leading-[1.9] animate-fadeUp opacity-0 [animation-delay:0.45s]" 
         en="Real-time AI insights · Rice A-to-Z · Fisheries · Climate · Expert AI Chat" 
-        bn="AI-ভিত্তিক তথ্য · ধান চাষ A-থেকে-Z · মৎস্য সম্পদ · জলবায়ু · বিশেষজ্ঞ AI চ্যাট" 
+        bn="AI-ভিত্তিক তথ্য · ধান চাষ · মৎস্য সম্পদ · জলবায়ু · বিশেষজ্ঞ AI চ্যাট" 
       />
       
       {/* Stats Cards */}

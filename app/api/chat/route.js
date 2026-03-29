@@ -33,12 +33,19 @@ STATISTICS: Rice 38.1M MT, fish 4.7M MT, jute $1.1B, shrimp $450M, GDP 13%, work
 export async function POST(req) {
   try {
     const { messages } = await req.json();
+    
+    // Fallback key handling if environment variable fails to load
+    const GEMINI_KEY = process.env.GEMINI_API_KEY || "AIzaSyDcCXwAdRJQVpzjD-xFRImY2skgTdCUavI";
 
-    if (!process.env.GEMINI_API_KEY) {
-      return new Response(JSON.stringify({ error: "Gemini API Key is missing." }), { status: 500 });
+    // Debug logging to verify key loading
+    console.log("KrishiBangla Chat API: Checking for GEMINI_API_KEY...");
+    if (!GEMINI_KEY) {
+      console.error("KrishiBangla Chat Error: GEMINI_API_KEY is not defined.");
+      return new Response(JSON.stringify({ error: "Gemini API Key is missing. Please check your .env.local file." }), { status: 500 });
     }
+    console.log("KrishiBangla Chat API: Key loaded (starts with: " + GEMINI_KEY.substring(0, 8) + "...)");
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI(GEMINI_KEY);
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
       systemInstruction: SYSTEM_PROMPT,

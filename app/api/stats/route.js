@@ -1,0 +1,169 @@
+import { NextResponse } from 'next/server';
+
+// Cache for 24 hours — FAO/BBS base data
+export const revalidate = 86400;
+
+// Base Agricultural Data (Real 2024-2025 Benchmarks)
+const BASE_STATS = {
+  rice: { base: 38100000, annual_growth: 1.2, unit: 'MT' }, // 38.1M MT
+  fish: { base: 4700000, annual_growth: 3.5, unit: 'MT' },   // 4.7M MT
+  jute: { base: 1100000000, annual_growth: 0.8, unit: 'USD' }, // $1.1B
+  shrimp: { base: 450000000, annual_growth: 2.1, unit: 'USD' }, // $450M
+};
+
+// Calculate "Simulated Live" Production based on annual growth rate
+// Tons per second = (Annual Base * Growth Rate) / Seconds in a Year
+function getLiveValue(key) {
+  const item = BASE_STATS[key];
+  if (!item) return 0;
+  const yearlyIncrement = item.base * (item.annual_growth / 100);
+  const perSecond = yearlyIncrement / (365 * 24 * 60 * 60);
+  return perSecond;
+}
+
+export async function GET() {
+  const now = Date.now();
+  
+  // Real historical points for trend charts (BBS Data 2015-2024)
+  const riceHistory = [
+    { year: 2015, value: 29.7 },
+    { year: 2016, value: 31.2 },
+    { year: 2017, value: 32.5 },
+    { year: 2018, value: 33.8 },
+    { year: 2019, value: 34.0 },
+    { year: 2020, value: 35.5 },
+    { year: 2021, value: 36.2 },
+    { year: 2022, value: 37.0 },
+    { year: 2023, value: 37.8 },
+    { year: 2024, value: 38.1 },
+  ];
+
+  const data = {
+    serverTime: now,
+    counters: {
+      rice: { base: BASE_STATS.rice.base, rate: getLiveValue('rice') },
+      fish: { base: BASE_STATS.fish.base, rate: getLiveValue('fish') },
+      jute: { base: BASE_STATS.jute.base, rate: getLiveValue('jute') },
+      shrimp: { base: BASE_STATS.shrimp.base, rate: getLiveValue('shrimp') },
+    },
+    history: { rice: riceHistory },
+    majorCrops: [
+      { name_en: 'Rice', name_bn: 'ধান', value: '38.1', width: '90%', colors: ['#2d6a35', '#4caf50'], momentum: 'up' },
+      { name_en: 'Potato', name_bn: 'আলু', value: '10.2', width: '55%', colors: ['#8b5e3c', '#c49a6c'], momentum: 'up' },
+      { name_en: 'Maize', name_bn: 'ভুট্টা', value: '5.8', width: '38%', colors: ['#e67e22', '#f39c12'], momentum: 'stable' },
+      { name_en: 'Vegetables', name_bn: 'সবজি', value: '7.5', width: '42%', colors: ['#27ae60', '#2ecc71'], momentum: 'up' },
+      { name_en: 'Wheat', name_bn: 'গম', value: '1.1', width: '20%', colors: ['#c8a84b', '#f0d080'], momentum: 'down' },
+      { name_en: 'Jute', name_bn: 'পাট', value: '0.8', width: '16%', colors: ['#c8a84b', '#e8c86a'], momentum: 'stable' },
+    ],
+    fisheries: {
+      total: '4.7',
+      intro_en: '"Machhe Bhate Bangali" — Fish and Rice define the Bengali identity. Bangladesh is the world\'s 5th largest aquaculture producer.',
+      intro_bn: '"মাছে ভাতে বাঙালি" — মাছ ও ভাত বাঙালির পরিচয়। বাংলাদেশ বিশ্বের ৫ম বৃহত্তম মাছ চাষকারী দেশ।',
+      breakdown: [
+        { name_en: 'Aquaculture', name_bn: 'মাছ চাষ', share: '58%', color: '#1e5f8a' },
+        { name_en: 'Inland Capture', name_bn: 'অভ্যন্তরীণ আহরণ', share: '28%', color: '#4caf50' },
+        { name_en: 'Marine', name_bn: 'সামুদ্রিক', share: '14%', color: '#c8a84b' },
+      ],
+      cards: [
+        { icon: '🐟', title_en: 'Hilsa / ইলিশ', title_bn: 'ইলিশ মাছ', stat: '~80%', desc_en: "Bangladesh produces ~80% of the world's hilsa.", desc_bn: "বাংলাদেশ বিশ্বের ~৮০% ইলিশ উৎপাদন করে।", badge_en: '↑ Stocks Recovering', badge_bn: '↑ মজুদ বাড়ছে', badge_color: 'bg-emerald-50 text-emerald-600' },
+        { icon: '🦐', title_en: 'Shrimp Export', title_bn: 'চিংড়ি রপ্তানি', stat: '$450M', desc_en: "Exported to EU and USA.", desc_bn: "EU ও USA-তে রপ্তানি হয়।", badge_en: '→ Stable', badge_bn: '→ স্থিতিশীল', badge_color: 'bg-amber-50 text-amber-600' },
+        { icon: '🐠', title_en: 'Aquaculture Growth', title_bn: 'মাছ চাষে প্রবৃদ্ধি', stat: '6%+', desc_en: "Tilapia, Rohu, Carp.", desc_bn: "তেলাপিয়া, রুই, কার্প।", badge_en: '↑ Booming', badge_bn: '↑ দ্রুত বৃদ্ধি', badge_color: 'bg-emerald-50 text-emerald-600' },
+        { icon: '⚓', title_en: 'Marine Fisheries', title_bn: 'সামুদ্রিক মৎস্য', stat: '118,813 km²', desc_en: "Bangladesh's EEZ.", desc_bn: "বাংলাদেশের EEZ।", badge_en: '↑ Strategic Focus', badge_bn: '↑ কৌশলগত অগ্রাধিকার', badge_color: 'bg-blue-50 text-blue-600' }
+      ]
+    },
+    topDistricts: [
+      { name_en: 'Mymensingh', name_bn: 'ময়মনসিংহ', value: '2,840', width: '85%', colors: ['#1a3d1f', '#2d6a35'] },
+      { name_en: 'Rangpur', name_bn: 'রংপুর', value: '2,610', width: '78%', colors: ['#1a3d1f', '#2d6a35'] },
+      { name_en: 'Rajshahi', name_bn: 'রাজশাহী', value: '2,410', width: '72%', colors: ['#1a3d1f', '#2d6a35'] },
+      { name_en: 'Comilla', name_bn: 'কুমিল্লা', value: '2,180', width: '65%', colors: ['#1a3d1f', '#2d6a35'] },
+      { name_en: 'Dinajpur', name_bn: 'দিনাজপুর', value: '2,010', width: '60%', colors: ['#1a3d1f', '#2d6a35'] },
+    ],
+    riceSeasons: [
+      { id: 'AUS', name_en: 'Aus', name_bn: 'আউশ', season_type_en: 'Aus Rice — Early Season', season_type_bn: 'আউশ ধান — Early Season', months_en: 'March — August', months_bn: 'মার্চ — আগস্ট', desc_en: "Early rain-fed season. Contributes ~16% of annual output. Key varieties: BRRI dhan48, BR26.", desc_bn: "বৃষ্টি-নির্ভর আগাম মৌসুম। বার্ষিক উৎপাদনের প্রায় ১৬% আসে। প্রধান জাত: BRRI ধান৪৮, BR26।" },
+      { id: 'AMAN', name_en: 'Aman', name_bn: 'আমন', season_type_en: 'Aman Rice — Main Season', season_type_bn: 'আমন ধান — Main Season', months_en: 'June — December', months_bn: 'জুন — ডিসেম্বর', desc_en: "Main traditional season tied to Bangladesh's cultural identity. Monsoon rain-fed. Contributes ~38% of output.", desc_bn: "বাংলাদেশের সাংস্কৃতিক পরিচয়ের সাথে জড়িত মূল ঐতিহ্যবাহী মৌসুম। বর্ষার পানিতে চাষ হয়। বার্ষিক উৎপাদনের ~৩৮%।" },
+      { id: 'BORO', name_en: 'Boro', name_bn: 'বোরো', season_type_en: 'Boro Rice — Dry Season', season_type_bn: 'বোরো ধান — Dry Season', months_en: 'November — May', months_bn: 'নভেম্বর — মে', desc_en: "High-yield dry season, entirely irrigation-dependent. Largest contributor (~46%) to annual production.", desc_bn: "সেচ-নির্ভর উচ্চফলনশীল শুষ্ক মৌসুম। বার্ষিক উৎপাদনে সবচেয়ে বড় অবদান (~৪৬%)।" }
+    ],
+    climate: [
+      { icon: '🌊', border: 'border-blue-400', color: 'bg-blue-400', title_en: 'Annual Floods', title_bn: 'বার্ষিক বন্যা', desc_en: '20–70% of land floods annually. BRRI dhan51/52 survive 2 weeks submerged.', desc_bn: 'প্রতি বছর ২০–৭০% জমি প্লাবিত হয়। BRRI ধান৫১/৫২ দুই সপ্তাহ পানির নিচে বেঁচে থাকে।', barWidth: '85%' },
+      { icon: '🌀', border: 'border-red-500', color: 'bg-red-500', title_en: 'Cyclones', title_bn: 'ঘূর্ণিঝড়', desc_en: 'Cyclones Sidr, Aila, Amphan devastated coastal agriculture.', desc_bn: 'সিডর, আইলা, আম্পান উপকূলীয় কৃষিকে ধ্বংস করেছে।', barWidth: '75%' },
+      { icon: '🧂', border: 'border-purple-500', color: 'bg-purple-500', title_en: 'Salinity Intrusion', title_bn: 'লবণাক্ততার অনুপ্রবেশ', desc_en: 'Sea-level rise pushes saltwater inland. 2.8M ha affected.', desc_bn: 'সমুদ্রের জলস্তর বৃদ্ধিতে লোনা পানি ঢুকছে। ২৮ লক্ষ হেক্টর ক্ষতিগ্রস্ত।', barWidth: '80%' },
+      { icon: '☀️', border: 'border-orange-500', color: 'bg-orange-500', title_en: 'Drought', title_bn: 'খরা', desc_en: 'Barind Tract faces seasonal water stress. AWD technique helps.', desc_bn: 'বরেন্দ্র অঞ্চল মৌসুমি পানির চাপে ভোগে। AWD পদ্ধতি সাহায্য করে।', barWidth: '60%' },
+      { icon: '🌡️', border: 'border-sky-500', color: 'bg-sky-500', title_en: 'Heat Stress', title_bn: 'তাপ চাপ', desc_en: 'Each 1°C rise reduces rice yield 3–10%. BRRI developing heat-tolerant varieties.', desc_bn: 'প্রতি ১°C তাপে ধানের ফলন ৩–১০% কমতে পারে। BRRI তাপ-সহনশীল জাত উদ্ভাবন করছে।', barWidth: '65%' },
+      { icon: '🌿', border: 'border-emerald-500', color: 'bg-emerald-500', title_en: 'Adaptation Success', title_bn: 'অভিযোজনের সাফল্য', desc_en: 'Floating gardens in haor areas — recognized by UN-FAO as Global Agricultural Heritage.', desc_bn: 'হাওরে ভাসমান বাগান — জাতিসংঘের FAO কর্তৃক বৈশ্বিক কৃষি ঐতিহ্য হিসেবে স্বীকৃত।', barWidth: '70%' }
+    ],
+    market: {
+      exportTotal: '$1.25B+',
+      rankings: [
+        { crop: 'Jute', bn: 'পাট', rank: '#2', world: 'Global Producer', world_bn: 'বৈশ্বিক উৎপাদনকারী', color: '#d4af37' },
+        { crop: 'Rice', bn: 'ধান', rank: '#3', world: 'Global Producer', world_bn: 'বৈশ্বিক উৎপাদনকারী', color: '#10b981' },
+        { crop: 'Mango', bn: 'আম', rank: '#7', world: 'Global Producer', world_bn: 'বৈশ্বিক উৎপাদনকারী', color: '#f39c12' },
+        { crop: 'Potato', bn: 'আলু', rank: '#7', world: 'Global Producer', world_bn: 'বৈশ্বিক উৎপাদনকারী', color: '#c8a84b' },
+      ]
+    },
+    macroStats: [
+      { id: 'gdp', number: '13.1%', en: 'GDP Share', bn: 'জিডিপি অংশ' },
+      { id: 'work', number: '40.6%', en: 'Workforce', bn: 'কর্মসংস্থান' },
+      { id: 'rice_rank', number: '#3', en: 'Rice Producer', bn: 'ধান উৎপাদনকারী' },
+      { id: 'aqua', number: '#5', en: 'Aquaculture', bn: 'মাছ চাষ' },
+      { id: 'hilsa', number: '80%', en: "World's Hilsa", bn: 'বিশ্বের ইলিশ' }
+    ],
+    riceGuide: [
+      { 
+        step: '01', 
+        title_en: 'Land Preparation', 
+        title_bn: 'জমি প্রস্তুত', 
+        sub_en: 'Professional Plowing', 
+        sub_bn: 'পেশাদার চাষাবাদ', 
+        desc_en: 'Plow the land 3-4 times followed by laddering to ensure a level surface. Maintain 5-10cm of standing water to suppress weeds. Clay-loam soil is ideal for retaining moisture throughout the season.', 
+        desc_bn: 'জমি ৩-৪ বার আড়াআড়ি চাষ ও মই দিয়ে সমান করতে হবে। আগাছা দমনের জন্য ৫-১০ সেমি পানি ধরে রাখুন। সারা মৌসুমে আর্দ্রতা ধরে রাখার জন্য এঁটেল-দোআঁশ মাটি সবচেয়ে ভালো।' 
+      },
+      { 
+        step: '02', 
+        title_en: 'Variety Selection', 
+        title_bn: 'জাত নির্বাচন', 
+        sub_en: 'Season-Specific Choice', 
+        sub_bn: 'মৌসুম ভিত্তিক নির্বাচন', 
+        desc_en: 'Select high-yield BRRI varieties based on the season. For Boro, BRRI dhan28/29 or dhan89/92 are excellent. For Aman, choose submergence-tolerant BRRI dhan51/52 in flood-prone areas.', 
+        desc_bn: 'মৌসুম অনুযায়ী উচ্চফলনশীল ব্রি (BRRI) জাত নির্বাচন করুন। বোরো মৌসুমের জন্য ব্রি ধান২৮/২৯ বা ধান৮৯/৯২ এবং আমনের জন্য বন্যাপ্রবণ এলাকায় ব্রি ধান৫১/৫২ সেরা।' 
+      },
+      { 
+        step: '03', 
+        title_en: 'Seed Treatment', 
+        title_bn: 'বীজ শোধন', 
+        sub_en: 'Disease Prevention', 
+        sub_bn: 'রোগ প্রতিরোধ', 
+        desc_en: 'Soak seeds in 10% salt water to remove light, unhealthy seeds. Treat the healthy seeds with fungicides like Provax or Carbendazim (3g per kg) to prevent blast and fungal infections.', 
+        desc_bn: '১০% লোনা পানিতে বীজ ভিজিয়ে হালকা ও রুগ্ন বীজ আলাদা করুন। ব্লাস্ট ও ছত্রাকজনিত রোগ প্রতিরোধে কার্বেন্ডাজিম (প্রতি কেজিতে ৩ গ্রাম) দিয়ে বীজ শোধন করে নিন।' 
+      },
+      { 
+        step: '04', 
+        title_en: 'Nursery Management', 
+        title_bn: 'বীজতলা ব্যবস্থাপনা', 
+        sub_en: 'Seedling Care', 
+        sub_bn: 'চারাগাছের যত্ন', 
+        desc_en: 'Prepare a moist, leveled seedbed. Sowing rate should be 3-5kg per decimal. Keep the bed free from pests and ensure proper drainage to produce strong, deep-green seedlings for transplanting.', 
+        desc_bn: 'আর্দ্র ও সমান বীজতলা তৈরি করুন। প্রতি শতাংশে ৩-৫ কেজি বীজ বপন করুন। চারাগাছ পোকামাকড় মুক্ত রাখুন এবং সঠিক নিষ্কাশন ব্যবস্থা নিশ্চিত করুন যাতে সুস্থ চারা পাওয়া যায়।' 
+      },
+      { 
+        step: '05', 
+        title_en: 'Correct Transplanting', 
+        title_bn: 'সঠিক চারা রোপণ', 
+        sub_en: 'Precision Planting', 
+        sub_bn: 'সঠিক রোপণ পদ্ধতি', 
+        desc_en: 'Transplant 25-30 day old seedlings in straight rows with 20cm x 15cm spacing. Plant 2-3 seedlings per hill at a depth of 2-3cm. Low-depth planting encourages better tillering and root spread.', 
+        desc_bn: '২৫-৩০ দিনের চারা ২০ সেমি x ১৫ সেমি দূরত্বে সরলরেখায় রোপণ করুন। প্রতি গুছিতে ২-৩টি চারা ২-৩ সেমি গভীরতায় লাগান। কম গভীরতায় রোপণ করলে কুশি ও শিকড় ভালো গজায়।' 
+      },
+      { 
+        step: '06', 
+        title_en: 'Water & Nutrient Mgmt', 
+        title_bn: 'পানি ও পুষ্টি ব্যবস্থাপনা', 
+        sub_en: 'Smart Irrigation', 
+        sub_bn: 'স্মার্ট সেচ পদ্ধতি', 
+        desc_en: 'Adopt the AWD (Alternate Wetting and Drying) technique to save 30% water. Apply Urea, TSP, and MoP in recommended split doses. Monitor for pest attacks like Stem Borer or Brown Plant Hopper regularly.', 
+        desc_bn: 'সেচ খরচ ৩০% কমাতে AWD পদ্ধতি ব্যবহার করুন। ইউরিয়া, টিএসপি ও এমওপি সার নির্দিষ্ট কিস্তিতে প্রয়োগ করুন। মাজরা বা বাদামী গাছ ফড়িং এর মতো পোকা নিয়মিত পর্যবেক্ষণ করুন।' 
+      }
+    ]
+  };
+
+  return NextResponse.json(data);
+}

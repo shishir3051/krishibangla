@@ -1,28 +1,22 @@
 import { NextResponse } from 'next/server';
-
-const DISTRICTS = [
-  { name: 'Dhaka', bn: 'ঢাকা', lat: 23.8103, lon: 90.4125 },
-  { name: 'Rajshahi', bn: 'রাজশাহী', lat: 24.3745, lon: 88.6042 },
-  { name: 'Rangpur', bn: 'রংপুর', lat: 25.7439, lon: 89.2478 },
-  { name: 'Sylhet', bn: 'সিলেট', lat: 24.8949, lon: 91.8687 },
-  { name: 'Khulna', bn: 'খুলনা', lat: 22.8456, lon: 89.5403 },
-  { name: 'Chittagong', bn: 'চট্টগ্রাম', lat: 22.3569, lon: 91.7832 },
-  { name: 'Barisal', bn: 'বরিশাল', lat: 22.7010, lon: 90.3535 },
-  { name: 'Mymensingh', bn: 'ময়মনসিংহ', lat: 24.7471, lon: 90.4203 }
-];
+import { DISTRICTS } from '@/lib/districts';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const districtName = searchParams.get('district') || 'Dhaka';
-  const apiKey = process.env.WEATHER_API_KEY;
+  const apiKey = process.env.WEATHER_API_KEY || 'f5aeec1f3dd348b291b141654262903';
 
-  if (!apiKey) {
-    return NextResponse.json({ error: 'Weather API Key missing' }, { status: 500 });
-  }
+  // URL decode the district name and make it case-insensitive for matching
+  const decodedName = decodeURIComponent(districtName).trim();
+  const district = DISTRICTS.find(d => d.name.toLowerCase() === decodedName.toLowerCase());
+  
+  // Use coordinates if available for better reliability, fall back to name
+  const query = district ? `${district.lat},${district.lon}` : decodedName;
 
   try {
     const res = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${districtName}&days=1&aqi=no&alerts=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=1&aqi=no&alerts=no`,
+      { cache: 'no-store' }
     );
     const data = await res.json();
 
@@ -61,6 +55,7 @@ export async function GET(request) {
 
     return NextResponse.json({
       location: data.location.name,
+      district: district ? district.bn : decodedName,
       temp: current.temp_c,
       feels_like: current.feelslike_c,
       condition: current.condition.text,
@@ -68,8 +63,7 @@ export async function GET(request) {
       humidity: current.humidity,
       wind: current.wind_kph,
       rain_chance: forecast.daily_chance_of_rain,
-      irrigation: irrigationStatus,
-      districts: DISTRICTS
+      irrigation: irrigationStatus
     });
 
   } catch (error) {

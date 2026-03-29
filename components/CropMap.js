@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import { districtsData } from '@/data/districtsData';
 import DistrictReportModal from './DistrictReportModal';
+import { useLanguage } from './LanguageProvider';
 
 // Name normalizations between geoBoundaries shapeNames and our districtsData keys
 const NAME_MAP = {
@@ -22,11 +23,45 @@ function getDistrictKey(shapeName) {
 }
 
 export default function CropMap() {
+  const { lang } = useLanguage();
   const [geoData, setGeoData] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [hoveredDistrict, setHoveredDistrict] = useState(null);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const t = {
+    en: {
+      title: 'Agricultural Intelligence Map',
+      subtitle: 'Bangladesh 64 Districts',
+      desc: 'Click any district to explore its unique agricultural profile',
+      precision: 'ADM2 Precision Active',
+      loading: 'Loading Map...',
+      selectDistrict: 'Select a District',
+      selectDesc: 'Click on any district on the map to view agricultural intelligence data',
+      districtIntel: 'District Intel',
+      majorCrops: 'Major Crops',
+      soilProfile: 'Soil Profile',
+      climateRisk: 'Climate Risk',
+      irrigation: 'Irrigation',
+      generateReport: 'Generate Full Intelligence Report',
+    },
+    bn: {
+      title: 'কৃষি ইন্টেলিজেন্স ম্যাপ',
+      subtitle: 'বাংলাদেশের ৬৪টি জেলা',
+      desc: 'যেকোনো জেলায় ক্লিক করে এর অনন্য কৃষি প্রোফাইল দেখুন',
+      precision: 'ADM2 প্রিসিশন সক্রিয়',
+      loading: 'ম্যাপ লোড হচ্ছে...',
+      selectDistrict: 'একটি জেলা নির্বাচন করুন',
+      selectDesc: 'কৃষি ইন্টেলিজেন্স ডাটা দেখতে ম্যাপে যেকোনো জেলায় ক্লিক করুন',
+      districtIntel: 'জেলা ইন্টেল',
+      majorCrops: 'প্রধান ফসল',
+      soilProfile: 'মাটির প্রোফাইল',
+      climateRisk: 'জলবায়ু ঝুঁকি',
+      irrigation: 'সেচ',
+      generateReport: 'সম্পূর্ণ ইন্টেলিজেন্স রিপোর্ট তৈরি করুন',
+    }
+  }[lang];
 
   useEffect(() => {
     fetch('/bangladesh.json')
@@ -64,13 +99,13 @@ export default function CropMap() {
       <div style={{ marginBottom: '2.5rem', position: 'relative', zIndex: 10 }}>
         <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', marginBottom:'0.5rem' }}>
           <div style={{ width:'36px', height:'36px', borderRadius:'10px', background:'linear-gradient(135deg, #10b981, #059669)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'18px' }}>🗺️</div>
-          <span style={{ fontSize:'11px', fontWeight:700, letterSpacing:'0.2em', color:'#10b981', textTransform:'uppercase' }}>Agricultural Intelligence Map</span>
+          <span style={{ fontSize:'11px', fontWeight:700, letterSpacing:'0.2em', color:'#10b981', textTransform:'uppercase' }}>{t.title}</span>
         </div>
         <h2 style={{ fontSize:'2.25rem', fontWeight:800, color:'#ffffff', lineHeight:1.1, margin:0 }}>
-          Bangladesh <span style={{ color:'#10b981' }}>64 Districts</span>
+          {lang === 'bn' ? 'বাংলাদেশ ' : 'Bangladesh '} <span style={{ color:'#10b981' }}>{lang === 'bn' ? '৬৪টি জেলা' : '64 Districts'}</span>
         </h2>
         <p style={{ color:'rgba(255,255,255,0.4)', marginTop:'0.5rem', fontSize:'0.95rem' }}>
-          Click any district to explore its unique agricultural profile
+          {t.desc}
         </p>
       </div>
 
@@ -96,7 +131,7 @@ export default function CropMap() {
             zIndex:20, whiteSpace:'nowrap',
           }}>
             <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:'#10b981', boxShadow:'0 0 8px #10b981' }} />
-            ADM2 Precision Active
+            {t.precision}
           </div>
 
           {loading ? (
@@ -107,7 +142,7 @@ export default function CropMap() {
                 borderTopColor:'#10b981',
                 animation:'spin 0.8s linear infinite',
               }} />
-              <span style={{ color:'rgba(255,255,255,0.4)', fontSize:'12px', textTransform:'uppercase', letterSpacing:'0.1em' }}>Loading Map...</span>
+              <span style={{ color:'rgba(255,255,255,0.4)', fontSize:'12px', textTransform:'uppercase', letterSpacing:'0.1em' }}>{t.loading}</span>
             </div>
           ) : (
             <div style={{ position:'relative', marginTop:'2.5rem' }}>
@@ -137,26 +172,46 @@ export default function CropMap() {
                   const d = pathGenerator(feature);
                   if (!d) return null;
                   return (
-                    <path
-                      key={i}
-                      d={d}
-                      onClick={() => setSelectedDistrict(key)}
-                      onMouseEnter={() => setHoveredDistrict(key)}
-                      onMouseLeave={() => setHoveredDistrict(null)}
-                      fill={
-                        isSelected ? '#10b981' :
-                        isHovered ? 'rgba(16,185,129,0.45)' :
-                        'rgba(16,185,129,0.15)'
-                      }
-                      stroke={
-                        isSelected ? '#34d399' :
-                        isHovered ? 'rgba(52,211,153,0.8)' :
-                        'rgba(16,185,129,0.4)'
-                      }
-                      strokeWidth={isSelected ? 1.5 : 0.7}
-                      filter={isSelected ? 'url(#glow)' : undefined}
-                      style={{ cursor:'pointer', transition:'fill 0.2s ease, stroke 0.2s ease' }}
-                    />
+                    <g key={i}>
+                      <path
+                        d={d}
+                        onClick={() => setSelectedDistrict(key)}
+                        onMouseEnter={() => setHoveredDistrict(key)}
+                        onMouseLeave={() => setHoveredDistrict(null)}
+                        fill={
+                          isSelected ? '#10b981' :
+                          isHovered ? 'rgba(16,185,129,0.45)' :
+                          'rgba(16,185,129,0.15)'
+                        }
+                        stroke={
+                          isSelected ? '#34d399' :
+                          isHovered ? 'rgba(52,211,153,0.8)' :
+                          'rgba(16,185,129,0.4)'
+                        }
+                        strokeWidth={isSelected ? 1.5 : 0.7}
+                        filter={isSelected ? 'url(#glow)' : undefined}
+                        style={{ cursor:'pointer', transition:'fill 0.2s ease, stroke 0.2s ease' }}
+                      />
+                      {pathGenerator && (
+                        <text
+                          x={pathGenerator.centroid(feature)[0]}
+                          y={pathGenerator.centroid(feature)[1]}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          fill="rgba(255,255,255,0.45)"
+                          style={{
+                            fontSize: '6.5px',
+                            fontWeight: 600,
+                            pointerEvents: 'none',
+                            textShadow: '0 0 3px rgba(0,0,0,0.5)',
+                            transition: 'fill 0.2s ease, opacity 0.2s ease',
+                            opacity: isHovered || isSelected ? 1 : 0.8,
+                          }}
+                        >
+                          {districtsData[key]?.bn || key}
+                        </text>
+                      )}
+                    </g>
                   );
                 })}
               </svg>
@@ -183,9 +238,9 @@ export default function CropMap() {
                 display:'flex', alignItems:'center', justifyContent:'center',
                 fontSize:'2.5rem', marginBottom:'1.5rem',
               }}>🗺️</div>
-              <h3 style={{ color:'#ffffff', fontWeight:700, fontSize:'1.25rem', margin:'0 0 0.5rem' }}>Select a District</h3>
+              <h3 style={{ color:'#ffffff', fontWeight:700, fontSize:'1.25rem', margin:'0 0 0.5rem' }}>{t.selectDistrict}</h3>
               <p style={{ color:'rgba(255,255,255,0.3)', fontSize:'0.875rem', maxWidth:'220px', lineHeight:1.6 }}>
-                Click on any district on the map to view agricultural intelligence data
+                {t.selectDesc}
               </p>
               <div style={{ marginTop:'2rem', display:'flex', gap:'0.5rem', flexWrap:'wrap', justifyContent:'center' }}>
                 {['Dhaka', 'Sylhet', 'Khulna', 'Rajshahi'].map(d => (
@@ -227,7 +282,7 @@ export default function CropMap() {
                 }}>🌾</div>
                 <div>
                   <h4 style={{ color:'#fff', fontWeight:800, fontSize:'2rem', margin:0, lineHeight:1 }}>{stats.bn}</h4>
-                  <p style={{ color:'#10b981', fontWeight:600, fontSize:'11px', letterSpacing:'0.15em', textTransform:'uppercase', margin:'0.25rem 0 0' }}>{stats.name} · District Intel</p>
+                  <p style={{ color:'#10b981', fontWeight:600, fontSize:'11px', letterSpacing:'0.15em', textTransform:'uppercase', margin:'0.25rem 0 0' }}>{lang === 'bn' ? stats.bn : stats.name} · {t.districtIntel}</p>
                 </div>
                 <button
                   onClick={() => setSelectedDistrict(null)}
@@ -242,10 +297,10 @@ export default function CropMap() {
 
               {/* Data rows */}
               <div style={{ padding:'1.5rem 2rem', display:'flex', flexDirection:'column', gap:'1rem' }}>
-                <StatCard icon="🌱" label="Major Crops" value={stats.crops?.join(', ')} color="#10b981" />
-                <StatCard icon="🪨" label="Soil Profile" value={stats.soil} color="#f59e0b" />
-                <StatCard icon="⚡" label="Climate Risk" value={stats.risk} color="#ef4444" />
-                <StatCard icon="💧" label="Irrigation" value={stats.irrigation} color="#3b82f6" />
+                <StatCard icon="🌱" label={t.majorCrops} value={stats.crops?.join(', ')} color="#10b981" />
+                <StatCard icon="🪨" label={t.soilProfile} value={stats.soil} color="#f59e0b" />
+                <StatCard icon="⚡" label={t.climateRisk} value={stats.risk} color="#ef4444" />
+                <StatCard icon="💧" label={t.irrigation} value={stats.irrigation} color="#3b82f6" />
               </div>
 
               {/* CTA */}
@@ -265,7 +320,7 @@ export default function CropMap() {
                   onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 12px 40px rgba(16,185,129,0.5)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 30px rgba(16,185,129,0.35)'; }}
                 >
-                  <span>📊</span> Generate Full Intelligence Report
+                  <span>📊</span> {t.generateReport}
                 </button>
               </div>
             </div>

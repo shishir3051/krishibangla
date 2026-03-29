@@ -1,6 +1,86 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { useLanguage } from './LanguageProvider';
 
 export default function DistrictReportModal({ isOpen, onClose, district }) {
+  const { lang } = useLanguage();
+  const [showAdvisoryDetails, setShowAdvisoryDetails] = useState(false);
+
+  const t = {
+    en: {
+      intelReport: 'Intelligence Report',
+      officialAudit: 'Official Audit v4.2',
+      updated: 'Updated March 2026',
+      agronomyOverview: 'Agronomy Overview',
+      climateRisk: 'Climate Risk',
+      monitorStrategies: 'Monitor and prepare mitigation strategies.',
+      qualityScore: 'Quality Score',
+      soilFertility: 'Soil Fertility',
+      waterTable: 'Water Table',
+      exportPotential: 'Export Potential',
+      pestAdvisory: 'Pest & Disease Advisory',
+      treatmentActive: 'Treatment Plan Active',
+      details: 'Details',
+      advancedProtocol: 'Advanced Protocol',
+      back: 'Back',
+      targetedMeasures: 'Targeted Measures',
+      bioAdvisory: 'Bio-Advisory',
+      source: 'Source: BARI / BRRI Treatment Guidelines',
+      agronomyCalendar: 'Agronomy Calendar',
+      harvestSeason: 'Harvest Season',
+      offSeason: 'Off Season',
+      marketAnalysis: 'Market & Export Analysis',
+      growth: 'Growth',
+      export: 'Export',
+      keyCrops: 'Key Crops:',
+      close: 'Close',
+      downloadPDF: 'Download PDF',
+      loading: 'Loading...',
+    },
+    bn: {
+      intelReport: 'ইন্টেলিজেন্স রিপোর্ট',
+      officialAudit: 'অফিসিয়াল অডিট v4.2',
+      updated: 'আপডেট করা হয়েছে মার্চ ২০২৬',
+      agronomyOverview: 'অ্যাগ্রোনমি ওভারভিউ',
+      climateRisk: 'জলবায়ু ঝুঁকি',
+      monitorStrategies: 'পর্যবেক্ষণ করুন এবং প্রশমন কৌশল প্রস্তুত করুন।',
+      qualityScore: 'কোয়ালিটি স্কোর',
+      soilFertility: 'মাটির উর্বরতা',
+      waterTable: 'পানির স্তর',
+      exportPotential: 'রপ্তানি সম্ভাবনা',
+      pestAdvisory: 'কীটপতঙ্গ ও রোগ পরামর্শ',
+      treatmentActive: 'চিকিৎসা পরিকল্পনা সক্রিয়',
+      details: ' বিস্তারিত  →',
+      advancedProtocol: 'উন্নত প্রোটোকল',
+      back: 'পিছনে',
+      targetedMeasures: 'লক্ষ্যযুক্ত ব্যবস্থা:',
+      bioAdvisory: 'বায়ো-পরামর্শ:',
+      source: 'উৎস: BARI / BRRI চিকিৎসা নির্দেশিকা',
+      agronomyCalendar: 'অ্যাগ্রোনমি ক্যালেন্ডার',
+      harvestSeason: 'ফসলের মৌসুম',
+      offSeason: 'অফ সিজন',
+      marketAnalysis: 'বাজার ও রপ্তানি বিশ্লেষণ',
+      growth: 'বৃদ্ধি',
+      export: 'রপ্তানি',
+      keyCrops: 'প্রধান ফসল:',
+      close: 'বন্ধ করুন',
+      downloadPDF: 'পিডিএফ ডাউনলোড করুন',
+      loading: 'লোড হচ্ছে...',
+    }
+  }[lang];
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      setShowAdvisoryDetails(false); // Reset details state on close
+    };
+  }, [isOpen]);
+
   if (!isOpen || !district) return null;
 
   const hasAdvisory = !!district.advisory;
@@ -72,7 +152,7 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
         width: '100%', maxWidth: '860px',
         margin: '0 auto', // strict horizontal centering (block level)
         background: '#0f1c2e',
-        borderRadius: '1.5rem',
+        borderRadius: '.4rem',
         border: '1px solid rgba(255,255,255,0.08)',
         boxShadow: '0 40px 120px rgba(0,0,0,0.8)',
         display: 'flex', flexDirection: 'column',
@@ -99,7 +179,7 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
                 {district.bn}
               </h2>
               <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', fontWeight: 500 }}>
-                {district.name} — Intelligence Report
+                {district.name} — {t.intelReport}
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.35rem', alignItems: 'center' }}>
@@ -108,8 +188,8 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
                 border: '1px solid rgba(16,185,129,0.3)',
                 fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
                 padding: '2px 8px', borderRadius: '100px',
-              }}>Official Audit v4.2</span>
-              <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '11px' }}>Updated March 2026</span>
+              }}>{t.officialAudit}</span>
+              <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '11px' }}>{t.updated}</span>
             </div>
           </div>
           <button
@@ -133,11 +213,11 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
               background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
               borderRadius: '1rem', padding: '1rem 1.25rem',
             }}>
-              <SectionTitle icon="🌾">Agronomy Overview</SectionTitle>
+              <SectionTitle icon="🌾">{t.agronomyOverview}</SectionTitle>
               <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.82rem', lineHeight: 1.7, margin: '0.5rem 0 0' }}>
-                <strong style={{ color: 'rgba(255,255,255,0.8)' }}>{district.name}</strong> features <strong style={{ color: '#10b981' }}>{district.soil}</strong> soil.
-                Primary crops: <strong style={{ color: '#fbbf24' }}>{district.crops?.join(', ')}</strong>.
-                Irrigation coverage: <strong style={{ color: '#60a5fa' }}>{district.irrigation}</strong>.
+                <strong style={{ color: 'rgba(255,255,255,0.8)' }}>{lang === 'bn' ? district.bn : district.name}</strong> {lang === 'bn' ? 'এ ' : 'features '} <strong style={{ color: '#10b981' }}>{district.soil}</strong> {lang === 'bn' ? 'মাটি রয়েছে।' : 'soil.'}
+                {lang === 'bn' ? ' প্রধান ফসল: ' : ' Primary crops: '} <strong style={{ color: '#fbbf24' }}>{district.crops?.join(', ')}</strong>.
+                {lang === 'bn' ? ' সেচ কভারেজ: ' : ' Irrigation coverage: '} <strong style={{ color: '#60a5fa' }}>{district.irrigation}</strong>.
               </p>
               {district.risk && (
                 <div style={{
@@ -148,8 +228,8 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
                 }}>
                   <span style={{ fontSize: '0.9rem' }}>⚠️</span>
                   <div>
-                    <div style={{ color: '#f87171', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>Climate Risk</div>
-                    <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.78rem' }}>{district.risk} — Monitor and prepare mitigation strategies.</div>
+                    <div style={{ color: '#f87171', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>{t.climateRisk}</div>
+                    <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.78rem' }}>{district.risk} — {t.monitorStrategies}</div>
                   </div>
                 </div>
               )}
@@ -161,11 +241,11 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
               borderRadius: '1rem', padding: '1rem 1.25rem', minWidth: '160px', textAlign: 'center',
             }}>
               <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#10b981', lineHeight: 1 }}>{scoreBadge}</div>
-              <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px', marginBottom: '0.875rem' }}>Quality Score</div>
+              <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px', marginBottom: '0.875rem' }}>{t.qualityScore}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <MetricRow label="Soil Fertility" value={fertility} />
-                <MetricRow label="Water Table" value={waterTable} />
-                <MetricRow label="Export Potential" value={exportPot} />
+                <MetricRow label={t.soilFertility} value={fertility} />
+                <MetricRow label={t.waterTable} value={waterTable} />
+                <MetricRow label={t.exportPotential} value={exportPot} />
               </div>
             </div>
           </div>
@@ -176,22 +256,69 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
             <div style={{
               background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)',
               borderRadius: '1rem', padding: '1rem 1.25rem',
+              position: 'relative', // Constrain the overlay details to this box
             }}>
-              <SectionTitle icon="💡">Pest & Disease Advisory</SectionTitle>
+              <SectionTitle icon="💡">{t.pestAdvisory}</SectionTitle>
               <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.8rem', lineHeight: 1.7, margin: '0.5rem 0 0.75rem' }}>
                 {hasAdvisory
                   ? district.advisory
-                  : `Monitor common pests for ${district.crops?.[0] || 'primary crops'}. Follow IPM protocols. Contact local agricultural extension office for spray schedules.`}
+                  : (lang === 'bn' ? `${district.crops?.[0] || 'প্রধান ফসল'}-এর জন্য সাধারণ কীটপতঙ্গ পর্যবেক্ষণ করুন। আইপিএম প্রোটোকল অনুসরণ করুন। স্প্রে করার সময়সূচীর জন্য স্থানীয় কৃষি সম্প্রসারণ অফিসের সাথে যোগাযোগ করুন।` : `Monitor common pests for ${district.crops?.[0] || 'primary crops'}. Follow IPM protocols. Contact local agricultural extension office for spray schedules.`)}
               </p>
+              
+              {showAdvisoryDetails && (
+                <div style={{
+                  position: 'absolute', inset: 0, 
+                  background: '#0a1e2f', zIndex: 100, 
+                  padding: '1rem 1.25rem', borderRadius: '1rem',
+                  display: 'flex', flexDirection: 'column',
+                  animation: 'fadeIn 0.3s ease',
+                  border: '1px solid rgba(16,185,129,0.4)',
+                  boxShadow: '0 0 30px rgba(16,185,129,0.1)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <SectionTitle icon="🔬">{t.advancedProtocol}</SectionTitle>
+                    <button 
+                      onClick={() => setShowAdvisoryDetails(false)}
+                      style={{ background: 'none', border: 'none', color: '#10b981', cursor: 'pointer', fontSize: '12px', fontWeight: 700 }}
+                    >← {t.back}</button>
+                  </div>
+                  <div style={{ marginTop: '0.75rem', overflowY: 'auto', flex: 1, fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+                    <div style={{ marginBottom: '0.75rem' }}>
+                      <strong style={{ display: 'block', color: '#10b981', marginBottom: '4px' }}>{t.targetedMeasures}</strong>
+                      {district.crops?.includes('Rice') && (
+                        <div style={{ marginBottom: '4px' }}>• {lang === 'bn' ? 'ধানের মাজরা পোকা: ফেরোমন ফাঁদ + কার্বোফিউরান ৫জি ব্যবহার করুন।' : 'Rice Stem Borer: Use pheromone traps + Carbofuran 5G.'}</div>
+                      )}
+                      {district.crops?.includes('Tea') && (
+                        <div style={{ marginBottom: '4px' }}>• {lang === 'bn' ? 'লাল মাকড়সা: ২ মিলি/লিটার হারে ডিকোফল ১৮.৫ ইসি স্প্রে করুন।' : 'Red Spider Mite: Spray Dicofol 18.5EC at 2ml/L.'}</div>
+                      )}
+                      {district.crops?.includes('Mango') && (
+                        <div style={{ marginBottom: '4px' }}>• {lang === 'bn' ? 'ফল মাছি : বাগানে মেটাইল ইউজেনল ফাঁদ ব্যবহার করুন।' : 'Fruit Fly: Use Matyl Eugenol traps in orchard.'}</div>
+                      )}
+                      <div style={{ marginBottom: '4px' }}>• {lang === 'bn' ? 'মাটির স্বাস্থ্য: ভালো ফলনের জন্য মাটির পিএইচ (pH) নিরপেক্ষ করুন।' : 'Soil Health: Neutralize pH for better pesticide efficiency.'}</div>
+                    </div>
+                    <div>
+                      <strong style={{ display: 'block', color: '#fbbf24', marginBottom: '4px' }}>{t.bioAdvisory}</strong>
+                      {lang === 'bn' ? 'আর্দ্রতা বেশি থাকলে চোষক পোকা দমনে বিউভেরিয়া বাসিয়ানা ব্যবহার করুন।' : 'Apply Beauveria bassiana for biological control of sucking pests during high humidity.'}
+                    </div>
+                    <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: '9px', color: 'rgba(16,185,129,0.6)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      {t.source}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 paddingTop: '0.625rem', borderTop: '1px solid rgba(255,255,255,0.06)',
               }}>
-                <span style={{ color: '#10b981', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Treatment Plan Active</span>
-                <button style={{
-                  background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.25)',
-                  color: '#10b981', borderRadius: '6px', padding: '3px 10px', fontSize: '11px', fontWeight: 600, cursor: 'pointer',
-                }}>Details →</button>
+                <span style={{ color: '#10b981', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{t.treatmentActive}</span>
+                <button 
+                  onClick={() => setShowAdvisoryDetails(true)}
+                  style={{
+                    background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.25)',
+                    color: '#10b981', borderRadius: '6px', padding: '3px 10px', fontSize: '11px', fontWeight: 600, cursor: 'pointer',
+                  }}
+                >{t.details}</button>
               </div>
             </div>
 
@@ -200,11 +327,11 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
               background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
               borderRadius: '1rem', padding: '1rem 1.25rem',
             }}>
-              <SectionTitle icon="📅">Agronomy Calendar</SectionTitle>
+              <SectionTitle icon="📅">{t.agronomyCalendar}</SectionTitle>
               <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.8rem', lineHeight: 1.7, margin: '0.5rem 0 0.75rem' }}>
                 {hasCalendar
                   ? district.calendar
-                  : `Primary planting season for ${district.crops?.[0] || 'crops'} follows the Boro/Aman cycle. Transplanting begins post-monsoon.`}
+                  : (lang === 'bn' ? `${district.crops?.[0] || 'প্রধান ফসল'}-এর জন্য বোরো/আমন চক্র অনুসরণ লক্ষ্য করা যায়। বর্ষা পরবর্তী সময়ে চারা রোপণ শুরু হয়।` : `Primary planting season for ${district.crops?.[0] || 'crops'} follows the Boro/Aman cycle. Transplanting begins post-monsoon.`)}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '4px' }}>
                 {months.map((m, i) => (
@@ -222,11 +349,11 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
               <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.75rem', fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{ width: '8px', height: '8px', background: 'rgba(16,185,129,0.4)', borderRadius: '2px', display: 'inline-block' }} />
-                  Harvest Season
+                  {t.harvestSeason}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{ width: '8px', height: '8px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px', display: 'inline-block' }} />
-                  Off Season
+                  {t.offSeason}
                 </span>
               </div>
             </div>
@@ -238,25 +365,25 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
             border: '1px solid rgba(99,102,241,0.2)',
             borderRadius: '1rem', padding: '1rem 1.25rem',
           }}>
-            <SectionTitle icon="📈">Market & Export Analysis</SectionTitle>
+            <SectionTitle icon="📈">{t.marketAnalysis}</SectionTitle>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: '1rem', marginTop: '0.75rem', alignItems: 'start' }}>
               <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', lineHeight: 1.7, margin: 0 }}>
                 {hasPotential
                   ? district.potential
-                  : `Based on historical yield data, ${district.bn} has strong agricultural export performance. Focus on value-added processing to increase margins.`}
+                  : (lang === 'bn' ? `ঐতিহাসিক ফলন ডাটার ওপর ভিত্তি করে, ${district.bn} জেলায় কৃষিপণ্য রপ্তানির জোরালো সম্ভাবনা রয়েছে। লাভের মার্জিন বাড়াতে কৃষি প্রক্রিয়াকরণে মনোযোগ দিন।` : `Based on historical yield data, ${district.bn} has strong agricultural export performance. Focus on value-added processing to increase margins.`)}
               </p>
               <div style={{
                 background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: '0.75rem', padding: '0.625rem 1rem', textAlign: 'center', flexShrink: 0,
               }}>
-                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>Growth</div>
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>{t.growth}</div>
                 <div style={{ color: '#fff', fontWeight: 800, fontSize: '1.1rem' }}>{growth}</div>
               </div>
               <div style={{
                 background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: '0.75rem', padding: '0.625rem 1rem', textAlign: 'center', flexShrink: 0,
               }}>
-                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>Export</div>
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>{t.export}</div>
                 <div style={{ color: '#fff', fontWeight: 800, fontSize: '1.1rem' }}>{tier}</div>
               </div>
             </div>
@@ -264,7 +391,7 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
 
           {/* Row 4: Crops pills */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', paddingBottom: '0.25rem' }}>
-            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '11px', fontWeight: 600, alignSelf: 'center', marginRight: '0.25rem' }}>Key Crops:</span>
+            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '11px', fontWeight: 600, alignSelf: 'center', marginRight: '0.25rem' }}>{t.keyCrops}</span>
             {district.crops?.map((c, i) => (
               <span key={i} style={{
                 background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)',
@@ -285,23 +412,29 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
           background: 'rgba(255,255,255,0.02)',
         }}>
           <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '10px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            KrishiBangla Intelligence Portal — Bangladesh Official Report
+            KrishiBangla Intelligence Portal — {lang === 'bn' ? 'বাংলাদেশ অফিশিয়াল রিপোর্ট' : 'Bangladesh Official Report'}
           </span>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button onClick={onClose} style={{
               background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
               color: 'rgba(255,255,255,0.7)', borderRadius: '8px', padding: '0.4rem 1rem',
               fontSize: '12px', fontWeight: 600, cursor: 'pointer',
-            }}>Close</button>
-            <button style={{
+            }}>{t.close}</button>
+            {/* <button style={{
               background: 'linear-gradient(135deg, #10b981, #059669)',
               border: 'none', color: '#fff', borderRadius: '8px', padding: '0.4rem 1rem',
               fontSize: '12px', fontWeight: 700, cursor: 'pointer',
               boxShadow: '0 4px 15px rgba(16,185,129,0.35)',
-            }}>Download PDF</button>
+            }}>{t.downloadPDF}</button> */}
           </div>
         </div>
       </div>
+      <style>{`
+        @keyframes fadeIn { 
+          from { opacity: 0; transform: translateY(5px); } 
+          to { opacity: 1; transform: translateY(0); } 
+        }
+      `}</style>
     </div>
   );
 }
