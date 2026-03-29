@@ -1,3 +1,4 @@
+export const dynamic = 'force-static';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const SYSTEM_PROMPT = `You are KrishiBangla AI Disease Expert, a high-precision Vision Model. You specialize in identifying diseases in crops and vegetables grown in Bangladesh.

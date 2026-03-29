@@ -1,3 +1,4 @@
+export const dynamic = 'force-static';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const SYSTEM_PROMPT = `You are KrishiBangla AI, a passionate and knowledgeable expert on Bangladesh's complete agricultural sector. Reply in the SAME LANGUAGE the user writes in — Bangla question = full Bangla answer, English question = full English answer.
