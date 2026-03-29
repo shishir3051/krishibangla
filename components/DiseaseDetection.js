@@ -1,6 +1,4 @@
-'use client';
-import { useState, useRef } from 'react';
-import { useLanguage } from './LanguageProvider';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default function DiseaseDetection() {
   const { lang } = useLanguage();
@@ -70,21 +68,55 @@ export default function DiseaseDetection() {
     setError(null);
 
     try {
-      const res = await fetch('/api/detect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      const apiKey = "AIzaSyDcCXwAdRJQVpzjD-xFRImY2skgTdCUavI";
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+      const base64Content = image.split(',')[1];
+      const mimeType = image.split(';')[0].split(':')[1];
+
+      const prompt = `Act as an expert plant pathologist specialized in Bangladesh agriculture (BRRI/BARI standards). Analyze this plant leaf image and provide a JSON response. 
+      If a disease is found:
+      {
+        "detected": true,
+        "crop_en": "Crop Name (e.g. Rice)",
+        "crop_bn": "ফসলের নাম (যেমন: ধান)",
+        "disease_en": "Disease Name (e.g. Rice Blast)",
+        "disease_bn": "রোগের নাম (যেমন: ধানের ব্লাস্ট)",
+        "confidence": 0.95,
+        "description_en": "Detailed symptoms in English",
+        "description_bn": "বিস্তারিত লক্ষণ বাংলায়",
+        "treatment_en": ["Step 1", "Step 2"],
+        "treatment_bn": ["ধাপ ১", "ধাপ ২"]
+      }
+      If the plant is healthy:
+      {
+        "detected": false,
+        "message_en": "The plant looks healthy. Maintain regular care.",
+        "message_bn": "গাছটি সুস্থ দেখাচ্ছে। নিয়মিত যত্ন নিন।"
+      }
+      ONLY return the raw JSON, no markdown formatting blocks.`;
+
+      const result = await model.generateContent([
+        prompt,
+        {
+          inlineData: {
+            data: base64Content,
+            mimeType: mimeType
+          }
+        }
+      ]);
+
+      const response = await result.response;
+      let text = response.text();
+      // Clean up potential markdown blocks
+      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      
+      const data = JSON.parse(text);
       setResult(data);
     } catch (err) {
-      if (err.message.includes('429') || err.message.toLowerCase().includes('quota') || err.message.toLowerCase().includes('limit')) {
-        setError(t.limit);
-      } else {
-        setError(t.error);
-      }
-      console.error(err);
+      console.error("Gemini Vision Error:", err);
+      setError(t.error);
     } finally {
       setLoading(false);
     }

@@ -11,9 +11,11 @@ export function StatsProvider({ children }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('/api/stats');
+        const res = await fetch('/data/stats.json');
         if (!res.ok) throw new Error('Failed to fetch stats');
         const data = await res.json();
+        // Add current time as counter reference
+        data.serverTime = Date.now();
         setStatsData(data);
       } catch (err) {
         console.error('Stats fetch error:', err);

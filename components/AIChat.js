@@ -1,7 +1,36 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { useLanguage } from "./LanguageProvider";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const SYSTEM_PROMPT = `You are KrishiBangla AI, a passionate and knowledgeable expert on Bangladesh's complete agricultural sector. Reply in the SAME LANGUAGE the user writes in — Bangla question = full Bangla answer, English question = full English answer.
+
+Give WIDE, DETAILED, INFORMATIVE answers. Use bullet points, numbered steps, and clear sections. Include specific statistics, variety names, dates, and practical farmer-level advice. Never give short vague answers — always explain thoroughly.
+
+RICE FARMING A-Z:
+- 3 seasons: Aus আউশ (Mar–Aug, 16% output), Aman আমন (Jun–Dec, 38%), Boro বোরো (Nov–May, 46%)
+- BRRI varieties: dhan29 (Boro staple 8t/ha), dhan48 (Aus), dhan51/52 (Aman flood-tolerant Sub1A gene, survives 2 weeks submerged), dhan67/97 (saline tolerant up to 12 dS/m), dhan88 (short-duration Boro), Golden Rice (Vitamin A, approved 2021)
+- Full steps: land prep (clay-loam, plough 20–25cm, lime if pH<5.5) → variety selection → seed treatment (salt float test, carbendazim 2g/kg) → nursery seedbed (60–80g/m², 20–30 days) → puddling → transplanting (20×20cm, 2–3 seedlings/hill) → AWD water management (saves 25–30% water) → fertilizer (Urea 200kg/ha, TSP 100, MoP 100, Gypsum 120, split urea 3 doses) → weed control (Butachlor pre-emergent, Bispyribac post) → IPM pest management (BPH, stem borer, blast, sheath blight) → harvest at 80–85% golden grain → combine harvester (saves 50% cost) → hermetic storage at 14% moisture
+- Mechanization: power tiller, transplanter, combine harvester, dryer
+
+FISHERIES:
+- Hilsa ইলিশ: 80% of world production, GI certified, anadromous (spawns in rivers), 22-day Ma Ilish ban Oct–Nov, jatka ban Mar–Apr, catches up 70% in 10 years due to conservation
+- Aquaculture: tilapia, pangasius (পাঙ্গাশ), rohu (রুই), catla, carp, 6%+ annual growth, integrated rice-fish farming
+- Shrimp: bagda (black tiger Penaeus monodon), galda (Macrobrachium rosenbergii), $450M export, Khulna/Satkhira/Bagerhat, EU/USA markets
+- Marine: EEZ 118,813 km² Bay of Bengal, Blue Economy Policy 2017, 1.4M coastal fishers
+
+CLIMATE RESILIENCE:
+- Floods: 20–70% land annually, Sub1A gene rice (dhan51/52), haor areas, embankment polders
+- Cyclones: Sidr 2007, Aila 2009, Amphan 2020, storm surge salinity contamination
+- Salinity intrusion: 2.8M ha coastal farmland, BRRI dhan67/97, mangrove buffer zones
+- Drought: Barind Tract (Rajshahi, Chapai), BRRI dhan56/57, AWD technique
+- Floating gardens ভাসমান বাগান: haor areas (Netrokona, Sunamganj), UN-FAO GIAHS recognition
+- Heat stress: 1°C rise = 3–10% yield loss, adjust Boro calendar
+
+OTHER CROPS: Jute পাট $1.1B export (world's largest), wheat 1.1M MT, maize 5.8M MT, potato 10.2M MT, vegetables 7.5M MT, mustard, lentils, spices (turmeric, chili, onion, garlic)
+
+INSTITUTIONS: BRRI (Gazipur), BARI, DAE, DoF, BARC, BAU (Mymensingh), BJRI
+POLICY: Fertilizer subsidy ভর্তুকি, OMS, food procurement MSP, crop insurance ফসল বীমা, e-krishi
+STATISTICS: Rice 38.1M MT, fish 4.7M MT, jute $1.1B, shrimp $450M, GDP 13%, workforce 40%, 38M farm households`;
 
 export default function AIChat() {
   const { lang } = useLanguage();
@@ -14,7 +43,7 @@ export default function AIChat() {
   const messagesEndRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const inputRef = useRef(null);
-  const abortControllerRef = useRef(null);
+  const chatInstanceRef = useRef(null);
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -24,10 +53,9 @@ export default function AIChat() {
   };
 
   const stopResponse = () => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      setLoading(false);
-    }
+    setLoading(false);
+    // Gemini client SDK doesn't have a direct cancel, but we stop UI updates
+    chatInstanceRef.current = null;
   };
 
   const scrollToBottom = (force = false) => {
@@ -42,20 +70,15 @@ export default function AIChat() {
   useEffect(() => {
     setMessages([{
       role: "assistant",
-      content: `আস্সালামু আলাইকুম! আমি KrishiBangla AI।\n\nবাংলায় বা English-এ যেকোনো প্রশ্ন করুন:\n🌾 ধান চাষ A-Z · 🐟 মৎস্য সম্পদ\n🌊 জলবায়ু · 🪢 পাট · 📊 পরিসংখ্যান\n\nWhat would you like to know? কি জানতে চান?`
+      content: `আস্সালামু আলাইকুম! আমি KrishiBangla AI।\\n\\nবাংলায় বা English-এ যেকোনো প্রশ্ন করুন:\\n🌾 ধান চাষ A-Z · 🐟 মৎস্য সম্পদ\\n🌊 জলবায়ু · 🪢 পাট · 📊 পরিসংখ্যান\\n\\nWhat would you like to know? কি জানতে চান?`
     }]);
   }, []);
 
   useEffect(() => {
     if (messages.length > 1 || loading) {
       const lastMsg = messages[messages.length - 1];
-      // Force scroll if:
-      // 1. It's a user message (just sent)
-      // 2. It's the very start of an assistant response
-      // 3. User is already close to bottom
       const isUserMsg = lastMsg?.role === 'user';
       const isStartOfAI = lastMsg?.role === 'assistant' && lastMsg?.content?.length < 100;
-      
       scrollToBottom(isUserMsg || isStartOfAI);
     }
   }, [messages, loading]);
@@ -86,60 +109,50 @@ export default function AIChat() {
     setLoading(true);
     let fullText = "";
     
-    // Create new abort controller
-    abortControllerRef.current = new AbortController();
-    const signal = abortControllerRef.current.signal;
-
     try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
-        signal: signal
+      const apiKey = "AIzaSyDcCXwAdRJQVpzjD-xFRImY2skgTdCUavI";
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.0-flash",
+        systemInstruction: SYSTEM_PROMPT
       });
-      if (!res.ok) throw new Error("API error");
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = "";
-      let botMessageIndex = history.length + 1;
+      // Format history for Gemini
+      const formattedHistory = history.slice(0, -1).map(msg => ({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.content }]
+      }));
+
+      const chat = model.startChat({
+        history: formattedHistory,
+      });
+
+      chatInstanceRef.current = chat;
+      
+      const lastMsg = history[history.length - 1].content;
+      const result = await chat.sendMessageStream(lastMsg);
+
+      let botMessageIndex = messages.length + 1;
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += decoder.decode(value, { stream: true });
-        const lines = buf.split('\n');
-        buf = lines.pop();
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const raw = line.slice(6).trim();
-          if (raw === '[DONE]') break;
-          try {
-            const obj = JSON.parse(raw);
-            if (obj.type === 'content_block_delta' && obj.delta?.type === 'text_delta' && obj.delta?.text) {
-              fullText += obj.delta.text;
-              setMessages((prev) => {
-                const updated = [...prev];
-                updated[botMessageIndex].content = fullText;
-                return updated;
-              });
-            }
-          } catch (e) { }
-        }
+      for await (const chunk of result.stream) {
+        if (!chatInstanceRef.current) break; // User stopped
+        const chunkText = chunk.text();
+        fullText += chunkText;
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[botMessageIndex].content = fullText;
+          return updated;
+        });
       }
     } catch (err) {
-      if (err.name === 'AbortError') {
-        // User interrupted the response, do nothing or show stopped indicator
-      } else {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: lang === 'bn' ? 'সংযোগ সমস্যা — পুনরায় চেষ্টা করুন।' : 'Connection issue — please try again.' }
-        ]);
-      }
+      console.error("Gemini Error:", err);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: lang === 'bn' ? 'সংযোগ সমস্যা — পুনরায় চেষ্টা করুন।' : 'Connection issue — please try again.' }
+      ]);
     }
     setLoading(false);
-    abortControllerRef.current = null;
   };
 
   const sendMessage = async () => {
