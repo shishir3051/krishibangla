@@ -1,0 +1,99 @@
+import LanguageSwitcher from "./LanguageSwitcher";
+import Text from "./Text";
+
+export default function Hero() {
+  const stats = [
+    { 
+      number: "13%", 
+      en: "GDP Share", 
+      bn: "জিডিপি অংশ" 
+    },
+    { 
+      number: "40%", 
+      en: "Workforce", 
+      bn: "কর্মসংস্থান" 
+    },
+    { 
+      number: "#4", 
+      en: "Rice Producer", 
+      bn: "ধান উৎপাদনকারী" 
+    },
+    { 
+      number: "#5", 
+      en: "Aquaculture", 
+      bn: "মাছ চাষ" 
+    },
+    { 
+      number: "80%", 
+      en: "World's Hilsa", 
+      bn: "বিশ্বের ইলিশ" 
+    },
+  ];
+
+  return (
+    <div className="min-h-screen relative flex flex-col items-center justify-center p-8 overflow-hidden bg-[radial-gradient(ellipse_at_20%_50%,rgba(44,106,53,0.18)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(200,168,75,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_60%_80%,rgba(30,95,138,0.15)_0%,transparent_50%),linear-gradient(160deg,#0d2410_0%,#1a3d1f_40%,#0e2d38_100%)] before:content-[''] before:absolute before:inset-0 before:bg-[repeating-linear-gradient(0deg,transparent,transparent_60px,rgba(76,175,80,0.04)_60px,rgba(76,175,80,0.04)_61px),repeating-linear-gradient(90deg,transparent,transparent_60px,rgba(76,175,80,0.04)_60px,rgba(76,175,80,0.04)_61px)] before:pointer-events-none">
+      
+      <LanguageSwitcher />
+
+      {/* Subtitle */}
+      <Text 
+        as="div" 
+        className="font-mono text-[0.68rem] tracking-[0.25em] text-green-light uppercase border border-[rgba(168,213,171,0.3)] py-[0.4rem] px-4 rounded-[2px] mb-8 animate-fadeUp opacity-0" 
+        en="AI-Powered Agriculture Intelligence Portal" 
+        bn="AI-চালিত কৃষি তথ্য পোর্টাল" 
+      />
+      
+      {/* Main Heading */}
+      <h1 className="font-playfair text-[clamp(3rem,8vw,7rem)] font-black text-cream text-center leading-none animate-fadeUp opacity-0 [animation-delay:0.15s]">
+        <Text as="span" en="Bangladesh" bn="বাংলাদেশ" />
+        <Text as="span" className="text-gold italic block" en="Agriculture" bn="কৃষি" />
+      </h1>
+      
+      {/* Tagline */}
+      <Text 
+        as="p" 
+        className="font-tiro text-[clamp(1.1rem,2.5vw,1.8rem)] text-green-light mt-2 text-center animate-fadeUp opacity-0 [animation-delay:0.3s]" 
+        en="কৃষি বাংলাদেশ — সবুজ সোনার দেশ" 
+        bn="কৃষি বাংলাদেশ — সবুজ সোনার দেশ" 
+      />
+      
+      {/* Description */}
+      <Text 
+        as="p" 
+        className="font-mono text-[0.8rem] text-cream/50 mt-6 text-center max-w-[520px] leading-[1.9] animate-fadeUp opacity-0 [animation-delay:0.45s]" 
+        en="Real-time AI insights · Rice A-to-Z · Fisheries · Climate · Expert AI Chat" 
+        bn="AI-ভিত্তিক তথ্য · ধান চাষ A-থেকে-Z · মৎস্য সম্পদ · জলবায়ু · বিশেষজ্ঞ AI চ্যাট" 
+      />
+      
+      {/* Stats Cards */}
+      <div className="flex gap-6 mt-12 flex-wrap justify-center animate-fadeUp opacity-0 [animation-delay:0.6s]">
+        {stats.map((stat, index) => (
+          <div 
+            key={index}
+            className="bg-white/6 border border-gold/25 py-[0.8rem] px-[1.4rem] rounded-[3px] text-center backdrop-blur-[10px] hover:border-gold/50 hover:scale-105 transition-all duration-300"
+          >
+            <span className="font-playfair text-[1.8rem] font-bold text-gold block">
+              {stat.number}
+            </span>
+            <Text 
+              as="span" 
+              className="font-mono text-[0.63rem] text-green-light tracking-[0.08em] uppercase" 
+              en={stat.en} 
+              bn={stat.bn} 
+            />
+          </div>
+        ))}
+      </div>
+      
+      {/* Scroll Indicator - Fixed */}
+      <Text 
+        as="div" 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center animate-fadeUp opacity-0 [animation-delay:1s] text-green-light/50 font-mono text-[0.68rem] tracking-[0.15em] text-center" 
+        en="SCROLL" 
+        bn="নিচে দেখুন"
+      >
+        <span className="animate-bounce">↓</span>
+      </Text>
+    </div>
+  );
+}

@@ -1,0 +1,101 @@
+/* 1. Google Fonts Import - MUST BE FIRST */
+@import url("https://fonts.googleapis.com/css2?family=Tiro+Bangla&family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap");
+
+/* 2. Tailwind Import */
+@import "tailwindcss";
+
+/* 3. Theme configuration */
+@theme {
+  --font-lora: 'Lora', serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-tiro: 'Tiro Bangla', serif;
+
+  --color-green-deep: #1a3d1f;
+  --color-green-mid: #2d6a35;
+  --color-green-bright: #4caf50;
+  --color-green-light: #a8d5ab;
+  --color-gold: #c8a84b;
+  --color-gold-light: #f0d080;
+  --color-water: #1e5f8a;
+  --color-water-light: #5bafd6;
+  --color-cream: #faf6ee;
+  --color-paper: #f2ead8;
+  --color-ink: #1a1a12;
+  --color-muted: #5a5a45;
+  --color-accent-red: #c0392b;
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+  @keyframes growBar {
+    from { width: 0; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
+  @keyframes floatPulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, .35), 0 0 0 0 rgba(76, 175, 80, .4); }
+    50%       { box-shadow: 0 8px 32px rgba(0, 0, 0, .35), 0 0 0 10px rgba(76, 175, 80, 0); }
+  }
+
+  --animate-fadeUp: fadeUp 0.8s ease forwards;
+  --animate-bounce: bounce 2s infinite;
+  --animate-growBar: growBar 1.2s cubic-bezier(.4, 0, .2, 1) forwards;
+  --animate-pulse: pulse 2s infinite;
+  --animate-floatPulse: floatPulse 3s ease-in-out infinite;
+}
+
+/* 4. Root variables */
+:root {
+  --green-deep: #1a3d1f;
+  --green-mid: #2d6a35;
+  --green-bright: #4caf50;
+  --green-light: #a8d5ab;
+  --gold: #c8a84b;
+  --gold-light: #f0d080;
+  --water: #1e5f8a;
+  --water-light: #5bafd6;
+  --cream: #faf6ee;
+  --paper: #f2ead8;
+  --ink: #1a1a12;
+  --muted: #5a5a45;
+  --accent-red: #c0392b;
+}
+
+/* 5. Base & Utilities layers */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+  body {
+    @apply font-lora bg-cream text-ink overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .chat-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .chat-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(44, 106, 53, 0.1);
+    border-radius: 4px;
+  }
+}
