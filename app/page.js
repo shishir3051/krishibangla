@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Hero from "@/components/Hero";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Navbar from "@/components/Navbar";
 import PremiumHeader from "@/components/PremiumHeader";
 import Overview from "@/components/Overview";
@@ -34,6 +35,7 @@ export default function Home() {
 
   return (
     <StatsProvider>
+      <LanguageSwitcher />
       <Hero />
       <Navbar />
       

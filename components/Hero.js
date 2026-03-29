@@ -1,4 +1,3 @@
-import LanguageSwitcher from "./LanguageSwitcher";
 import Text from "./Text";
 import { useStats } from "./StatsProvider";
 
@@ -17,7 +16,7 @@ export default function Hero() {
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-center p-8 overflow-hidden bg-[radial-gradient(ellipse_at_20%_50%,rgba(44,106,53,0.18)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(200,168,75,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_60%_80%,rgba(30,95,138,0.15)_0%,transparent_50%),linear-gradient(160deg,#0d2410_0%,#1a3d1f_40%,#0e2d38_100%)] before:content-[''] before:absolute before:inset-0 before:bg-[repeating-linear-gradient(0deg,transparent,transparent_60px,rgba(76,175,80,0.04)_60px,rgba(76,175,80,0.04)_61px),repeating-linear-gradient(90deg,transparent,transparent_60px,rgba(76,175,80,0.04)_60px,rgba(76,175,80,0.04)_61px)] before:pointer-events-none">
       
-      <LanguageSwitcher />
+      {/* Hero Content */}
 
       {/* Subtitle */}
       <Text 
