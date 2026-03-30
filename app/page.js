@@ -36,9 +36,9 @@ export default function Home() {
       <Navbar />
       
       {/* Premium Dashboard Command Center */}
-      <section id="map" className="bg-[#05111e] py-16 px-4 relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-500/5 blur-[120px] rounded-full animate-pulse pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] rounded-full animate-pulse pointer-events-none" />
+      <section id="map" className="bg-[#05111e] py-12 md:py-16 px-4 relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-emerald-500/5 blur-[80px] md:blur-[120px] rounded-full animate-pulse pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-500/5 blur-[60px] md:blur-[100px] rounded-full animate-pulse pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <PremiumHeader />

@@ -37,11 +37,11 @@ export default function CropExplorer() {
   };
 
   return (
-    <section id="crop-explorer" className="py-24 px-4 bg-[#05111e] relative overflow-hidden">
+    <section id="crop-explorer" className="py-16 md:py-24 px-4 bg-[#05111e] relative overflow-hidden">
       {/* Decorative Blur */}
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-emerald-500/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-emerald-500/5 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="max-w-[1200px] mx-auto relative z-10">
+      <div className="max-w-[1600px] mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
             <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-full mb-6">
@@ -68,12 +68,12 @@ export default function CropExplorer() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6"
         >
           {crops.map((crop) => (
             <motion.div key={crop.id} variants={itemVariants}>
               <Link href={`/crop/${crop.id}`}>
-                <div className={`block h-[280px] rounded-[2.5rem] p-8 border border-white/5 bg-gradient-to-br transition-all duration-500 group relative overflow-hidden bg-[#0a1628] ${crop.color} ${crop.border} hover:-translate-y-2 hover:shadow-2xl`}>
+                <div className={`block h-[260px] md:h-[280px] lg:h-[300px] rounded-[2.5rem] p-6 md:p-8 border border-white/5 bg-gradient-to-br transition-all duration-500 group relative overflow-hidden bg-[#0a1628] ${crop.color} ${crop.border} hover:-translate-y-2 hover:shadow-2xl`}>
                   
                   {/* Background Accents */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full pointer-events-none group-hover:bg-white/10 transition-colors" />

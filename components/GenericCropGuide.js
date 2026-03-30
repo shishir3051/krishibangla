@@ -176,10 +176,10 @@ export default function GenericCropGuide({ cropId }) {
         </div>
       </section>
 
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         
         {/* 2. Left Column: Lifecycle & Analytics */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-6 xl:col-span-5 space-y-8">
           
           {/* Lifecycle timeline */}
           <div className="bg-[#0a1628] border border-white/5 rounded-[2rem] p-8 shadow-xl">
@@ -292,7 +292,7 @@ export default function GenericCropGuide({ cropId }) {
         </div>
 
         {/* 3. Right Column: Functional Inline AI Chat */}
-         <div className="lg:col-span-7 h-[750px] lg:h-[850px]">
+         <div className="lg:col-span-6 xl:col-span-7 h-[600px] md:h-[700px] lg:h-[850px]">
           <div className="bg-[#0a1628] border border-white/10 rounded-[2rem] h-full flex flex-col shadow-2xl relative overflow-hidden">
             {/* AI Header */}
             <div className={`p-6 border-b border-white/10 bg-gradient-to-r ${bgGradient.split(' ')[0]} to-[#0a1628] flex items-center gap-4 flex-shrink-0`}>

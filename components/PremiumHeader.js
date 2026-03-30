@@ -53,9 +53,59 @@ export default function PremiumHeader() {
   const { statsData: apiData } = useStats();
   const [alertOpen, setAlertOpen] = useState(false);
   const [weather, setWeather] = useState(null);
+  const [marketPrices, setMarketPrices] = useState([
+    { name: 'Rice Boro', price: 56.5, trend: 'up', unit: '৳' },
+    { name: 'Rice Aman', price: 62.0, trend: 'down', unit: '৳' },
+    { name: 'Jute', price: 3200, trend: 'up', unit: '৳' },
+    { name: 'Potato', price: 28, trend: 'up', unit: '৳' },
+    { name: 'Hilsa', price: 1200, trend: 'up', unit: '৳' },
+    { name: 'Shrimp', price: 850, trend: 'neutral', unit: '৳' },
+    { name: 'Egg', price: 12.5, trend: 'down', unit: '৳' },
+    { name: 'Urea', price: 22.0, trend: 'neutral', unit: '৳' },
+  ]);
 
   useEffect(() => {
     fetch('/api/weather').then(res => res.json()).then(setWeather);
+  }, []);
+
+  // Fetch real market prices
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const crops = ['rice', 'jute', 'potato', 'mango', 'tomato'];
+        const priceUpdates = [];
+        
+        for (const crop of crops) {
+          try {
+            const res = await fetch(`/api/market/${crop}`);
+            const data = await res.json();
+            console.log(`Market API ${crop}:`, data);
+            
+            if (data.price) {
+              priceUpdates.push({
+                name: crop.charAt(0).toUpperCase() + crop.slice(1),
+                price: typeof data.price === 'number' ? data.price : parseFloat(data.price),
+                unit: data.unit || '৳',
+                trend: data.trend === 'up' ? 'up' : data.trend === 'down' ? 'down' : 'neutral'
+              });
+            }
+          } catch (cropErr) {
+            console.warn(`Failed to fetch ${crop}:`, cropErr);
+          }
+        }
+        
+        if (priceUpdates.length > 0) {
+          console.log('Updating prices:', priceUpdates);
+          setMarketPrices(priceUpdates);
+        }
+      } catch (err) {
+        console.error('Failed to fetch market prices:', err);
+      }
+    };
+
+    fetchPrices(); // Fetch immediately on mount
+    const interval = setInterval(fetchPrices, 60000); // Update every 60 seconds
+    return () => clearInterval(interval);
   }, []);
 
   const t = {
@@ -115,35 +165,73 @@ export default function PremiumHeader() {
   return (
     <div className="w-full mb-12">
       {/* Dynamic Status Bar */}
-      <div className="flex flex-wrap justify-between items-center bg-white/5 border border-white/10 px-6 py-4 rounded-3xl backdrop-blur-2xl mb-8 gap-4 shadow-2xl">
-        <div className="flex items-center gap-3">
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-          </span>
-          <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em]">{t.live}</span>
-          <div className="h-4 w-px bg-white/10 mx-2 hidden sm:block" />
-          <span className="text-xs font-bold text-white/50 tracking-tighter uppercase">
-            {apiData?.debug?.wbActive ? `${t.status} • LIVE SYNC` : t.status}
-          </span>
-        </div>
-        
-        {/* Animated Market Ribbon */}
-        <div className="flex-1 max-w-xl mx-8 overflow-hidden hidden lg:block">
-          <div className="flex whitespace-nowrap gap-12 font-mono text-[10px] font-bold text-white/30 uppercase tracking-widest animate-[marquee_40s_linear_infinite]">
-            {['Rice Boro: ৳56.5 ↑', 'Rice Aman: ৳62.0 ↓', 'Jute: ৳3200 ↑', 'Potato: ৳28 ↑', 'Hilsa: ৳1200 ↑', 'Shrimp: ৳850 ↔', 'Egg: ৳12.5 ↓', 'Urea: ৳22.0 ↔'].map((p, i) => (
-               <span key={i} className="flex items-center gap-4">
-                 <span className="text-white">{p.split(':')[0]}</span>
-                 <span className={p.includes('↑') ? 'text-emerald-400' : p.includes('↓') ? 'text-red-400' : 'text-amber-400'}>{p.split(':')[1]}</span>
-                 <span className="text-white/5">•</span>
-               </span>
-            ))}
+      <div className="bg-white/5 border border-white/10 px-4 sm:px-6 py-4 rounded-3xl backdrop-blur-2xl mb-8 shadow-2xl">
+        {/* Top Row: COMMAND CENTER and Status */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+          {/* Left: COMMAND CENTER */}
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em]">{t.live}</span>
+          </div>
+
+          {/* Right: Status - Full Width on Mobile */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="h-4 w-px bg-white/10 mx-2 flex-shrink-0" />
+            <span className="text-xs sm:text-sm font-bold text-white/70 tracking-tighter uppercase">
+              {apiData?.debug?.wbActive ? `${t.status} • LIVE SYNC` : t.status}
+            </span>
           </div>
         </div>
 
-        <button onClick={() => setAlertOpen(true)} className="bg-red-500 hover:bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse">
-          {t.viewAlerts}
-        </button>
+        {/* Bottom Row: Market Data Moving Under Status */}
+        <div className="flex items-center justify-between gap-4">
+          {/* Market Ribbon - Desktop Version */}
+          <div className="flex-1 overflow-hidden hidden md:block">
+            <div className="flex whitespace-nowrap gap-12 font-mono text-[10px] font-bold text-white/30 uppercase tracking-widest" style={{ animation: 'marquee 50s linear infinite' }}>
+              {[...marketPrices, ...marketPrices].map((p, i) => (
+                 <span key={i} className="flex items-center gap-4 flex-shrink-0">
+                   <span className="text-white">{p.name}:</span>
+                   <span className={p.trend === 'up' ? 'text-emerald-400' : p.trend === 'down' ? 'text-red-400' : 'text-amber-400'}>{p.unit} {p.price} {p.trend === 'up' ? '↑' : p.trend === 'down' ? '↓' : '↔'}</span>
+                   <span className="text-white/5">•</span>
+                 </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Market Summary - Tablet Version with Animation */}
+          <div className="hidden sm:block md:hidden flex-1 overflow-hidden">
+            <div className="flex items-center gap-3 text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest whitespace-nowrap" style={{ animation: 'marquee 50s linear infinite' }}>
+              {[...marketPrices, ...marketPrices].map((p, i) => (
+                <span key={i} className="flex items-center gap-3 flex-shrink-0">
+                  <span className="text-white">{p.name}:</span>
+                  <span className={p.trend === 'up' ? 'text-emerald-400' : p.trend === 'down' ? 'text-red-400' : 'text-amber-400'}>{p.unit} {p.price} {p.trend === 'up' ? '↑' : p.trend === 'down' ? '↓' : '↔'}</span>
+                  <span className="text-white/20">•</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Market Summary - Animated */}
+          <div className="sm:hidden flex-1 overflow-hidden">
+            <div className="flex items-center gap-3 text-[9px] font-mono font-bold text-white/40 uppercase tracking-widest whitespace-nowrap" style={{ animation: 'marquee 50s linear infinite' }}>
+              {[...marketPrices, ...marketPrices].map((p, i) => (
+                <span key={i} className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-white text-[8px]">{p.name}:</span>
+                  <span className={p.trend === 'up' ? 'text-emerald-400' : p.trend === 'down' ? 'text-red-400' : 'text-amber-400'}>{p.unit} {p.price}</span>
+                  <span className="text-white/20">•</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Alert Button */}
+          <button onClick={() => setAlertOpen(true)} className="bg-red-500 hover:bg-red-600 text-white text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] px-3 sm:px-4 py-2 rounded-xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse flex-shrink-0 whitespace-nowrap">
+            {t.viewAlerts}
+          </button>
+        </div>
       </div>
 
       {/* 8-Card Stat Grid */}

@@ -98,4 +98,18 @@
     background: rgba(44, 106, 53, 0.1);
     border-radius: 4px;
   }
+
+  /* Marquee Animation for Market Ribbon */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50% - 24px));
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 50s linear infinite;
+  }
 }

@@ -81,19 +81,11 @@ export default function CropMap() {
   return (
     <section
       id="map"
-      style={{
-        background: 'linear-gradient(160deg, #0a1628 0%, #0d2137 40%, #0a2e1a 100%)',
-        borderRadius: '2rem',
-        padding: '3rem',
-        border: '1px solid rgba(255,255,255,0.07)',
-        boxShadow: '0 40px 120px rgba(0,0,0,0.6)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="bg-gradient-to-br from-[#0a1628] via-[#0d2137] to-[#0a2e1a] rounded-3xl p-4 md:p-6 lg:p-12 border border-white/7 shadow-2xl relative overflow-hidden"
     >
       {/* Decorative blurs */}
-      <div style={{ position:'absolute', top:'-80px', right:'-80px', width:'400px', height:'400px', background:'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%)', pointerEvents:'none' }} />
-      <div style={{ position:'absolute', bottom:'-60px', left:'-60px', width:'300px', height:'300px', background:'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)', pointerEvents:'none' }} />
+      <div className="absolute -top-10 -right-10 lg:-top-20 lg:-right-20 w-40 h-40 lg:w-80 lg:h-80 bg-emerald-500/12 rounded-full pointer-events-none" />
+      <div className="absolute -bottom-8 -left-8 lg:-bottom-16 lg:-left-16 w-32 h-32 lg:w-60 lg:h-60 bg-blue-500/8 rounded-full pointer-events-none" />
 
       {/* Header */}
       <div style={{ marginBottom: '2.5rem', position: 'relative', zIndex: 10 }}>
@@ -110,7 +102,7 @@ export default function CropMap() {
       </div>
 
       {/* Main Grid */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2rem', position:'relative', zIndex:10 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 relative z-10">
 
         {/* ── Map Panel ── */}
         <div style={{
