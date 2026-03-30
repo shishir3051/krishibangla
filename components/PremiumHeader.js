@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 // Real Bangladesh Agricultural Alert Data (March 2026)
 const DISTRICT_ALERTS = [
@@ -66,7 +67,15 @@ export default function PremiumHeader() {
         { key: 'shrimp', label: 'Shrimp Export', unit: 'USD', trend: 'EU + USA', icon: '🦐', color: 'cyan' },
         { label: 'Live Humidity', value: weather ? `${weather.humidity}%` : '--', unit: 'Relative', trend: weather ? weather.condition : 'Syncing...', icon: '💧', color: 'purple' },
         { label: 'Air Temp', value: weather ? `${weather.temp}°C` : '--', unit: 'Celsius', trend: 'Dhaka Station', icon: '🌡️', color: 'rose' },
-        { label: 'Agri GDP Share', value: '13%', unit: 'GDP', trend: '40% workforce', icon: '📊', color: 'orange' },
+        { 
+          label: 'Agri GDP Share', 
+          value: apiData?.macroStats?.[0]?.number || '13.1%', 
+          unit: 'GDP', 
+          trend: apiData?.debug?.source || 'National Stat', 
+          icon: '📊', 
+          color: 'orange',
+          isLive: !!apiData?.macroStats?.[0]?.live
+        },
         { label: 'Active Alerts', value: '4', unit: 'Districts', trend: 'Click to view', icon: '⚠️', color: 'red', isAlert: true },
       ]
     },
@@ -78,7 +87,15 @@ export default function PremiumHeader() {
         { key: 'shrimp', label: 'চিংড়ি রপ্তানি', unit: 'USD', trend: 'EU + USA', icon: '🦐', color: 'cyan' },
         { label: 'লাইভ আর্দ্রতা', value: weather ? `${weather.humidity}%` : '--', unit: 'আপেক্ষিক', trend: weather ? weather.condition_bn : 'সিঙ্ক হচ্ছে...', icon: '💧', color: 'purple' },
         { label: 'বায়ুর তাপমাত্রা', value: weather ? (lang === 'bn' ? String(weather.temp).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : weather.temp) + '°C' : '--', unit: 'সেলসিয়াস', trend: 'ঢাকা স্টেশন', icon: '🌡️', color: 'rose' },
-        { label: 'কৃষির GDP অংশ', value: '১৩%', unit: 'GDP', trend: '৪০% কর্মশক্তি', icon: '📊', color: 'orange' },
+        { 
+          label: 'কৃষির GDP অংশ', 
+          value: apiData?.macroStats?.[0]?.number || '১৩%', 
+          unit: 'GDP', 
+          trend: apiData?.debug?.source ? (lang === 'bn' ? 'ওয়ার্ল্ড ব্যাংক লাইভ' : 'World Bank Live') : (lang === 'bn' ? 'জাতীয় পরিসংখ্যান' : 'National Stat'), 
+          icon: '📊', 
+          color: 'orange',
+          isLive: !!apiData?.macroStats?.[0]?.live
+        },
         { label: 'জেলা সতর্কবার্তা', value: '৪', unit: 'সক্রিয়', trend: 'ক্লিক করুন', icon: '⚠️', color: 'red', isAlert: true },
       ]
     }
@@ -106,7 +123,9 @@ export default function PremiumHeader() {
           </span>
           <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em]">{t.live}</span>
           <div className="h-4 w-px bg-white/10 mx-2 hidden sm:block" />
-          <span className="text-xs font-bold text-white/50 tracking-tighter uppercase">{t.status}</span>
+          <span className="text-xs font-bold text-white/50 tracking-tighter uppercase">
+            {apiData?.debug?.wbActive ? `${t.status} • LIVE SYNC` : t.status}
+          </span>
         </div>
         
         {/* Animated Market Ribbon */}
@@ -131,8 +150,11 @@ export default function PremiumHeader() {
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {t.cards.map((card, i) => (
           <motion.div key={i} variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }} onClick={card.isAlert ? () => setAlertOpen(true) : undefined}
-            className={`group bg-[#0a1a2a]/60 p-5 rounded-3xl border border-white/5 backdrop-blur-md transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-[#0a1a2a]/80 ${card.isAlert ? 'cursor-pointer' : ''}`}
+            className={`group bg-[#0a1a2a]/60 p-5 rounded-3xl border border-white/5 backdrop-blur-md transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-[#0a1a2a]/80 ${card.isAlert ? 'cursor-pointer' : ''} relative overflow-hidden`}
           >
+            {card.isLive && (
+              <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+            )}
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-4 border ${colorMap[card.color]}`}>
               {card.icon}
             </div>
@@ -155,33 +177,36 @@ export default function PremiumHeader() {
       </motion.div>
 
       {/* Alert Modal */}
-      <AnimatePresence>
-        {alertOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setAlertOpen(false)} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9 }} onClick={e => e.stopPropagation()} className="bg-[#05111e] border border-white/10 rounded-[2.5rem] p-10 max-w-2xl w-full shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-amber-500 to-red-500" />
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-2xl font-black text-white">{t.alertTitle}</h3>
-                <button onClick={() => setAlertOpen(false)} className="text-white/30 hover:text-white transition-all font-mono">CLOSE_X</button>
-              </div>
-              <div className="space-y-4">
-                {DISTRICT_ALERTS.map((alert, i) => (
-                  <div key={i} className={`p-5 rounded-2xl border ${alert.level === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'} flex gap-5`}>
-                    <div className="text-4xl">{alert.icon}</div>
-                    <div>
-                      <div className="flex items-center gap-3 mb-1">
-                         <span className="text-lg font-black text-white">{lang === 'bn' ? alert.district_bn : alert.district_en}</span>
-                         <span className={`text-[8px] font-black px-2 py-0.5 rounded-full border ${alert.level === 'high' ? 'text-red-500 border-red-500' : 'text-amber-500 border-amber-500'}`}>{alert.level.toUpperCase()}</span>
+      {typeof window !== 'undefined' ? createPortal(
+        <AnimatePresence>
+          {alertOpen && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setAlertOpen(false)} className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9 }} onClick={e => e.stopPropagation()} className="bg-[#05111e] border border-white/10 rounded-[2.5rem] p-10 max-w-2xl w-full shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-amber-500 to-red-500" />
+                <div className="flex justify-between items-center mb-8">
+                  <h3 className="text-2xl font-black text-white">{t.alertTitle}</h3>
+                  <button onClick={() => setAlertOpen(false)} className="text-white/30 hover:text-white transition-all font-mono">CLOSE_X</button>
+                </div>
+                <div className="space-y-4">
+                  {DISTRICT_ALERTS.map((alert, i) => (
+                    <div key={i} className={`p-5 rounded-2xl border ${alert.level === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'} flex gap-5`}>
+                      <div className="text-4xl">{alert.icon}</div>
+                      <div>
+                        <div className="flex items-center gap-3 mb-1">
+                           <span className="text-lg font-black text-white">{lang === 'bn' ? alert.district_bn : alert.district_en}</span>
+                           <span className={`text-[8px] font-black px-2 py-0.5 rounded-full border ${alert.level === 'high' ? 'text-red-500 border-red-500' : 'text-amber-500 border-amber-500'}`}>{alert.level.toUpperCase()}</span>
+                        </div>
+                        <p className="text-white/60 text-sm leading-relaxed">{lang === 'bn' ? alert.risk_bn : alert.risk_en}</p>
                       </div>
-                      <p className="text-white/60 text-sm leading-relaxed">{lang === 'bn' ? alert.risk_bn : alert.risk_en}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      ) : null}
       <style jsx>{` @keyframes marquee { 0% { transform: translateX(50%); } 100% { transform: translateX(-150%); } } `}</style>
     </div>
   );

@@ -6,18 +6,14 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Navbar from "@/components/Navbar";
 import PremiumHeader from "@/components/PremiumHeader";
 import Overview from "@/components/Overview";
-import RiceGuide from "@/components/RiceGuide";
-import DataCharts from "@/components/DataCharts";
-import RiceSeasons from "@/components/RiceSeasons";
-import Fisheries from "@/components/Fisheries";
-import Climate from "@/components/Climate";
 import WeatherWidget from "@/components/WeatherWidget";
 import CropMap from "@/components/CropMap";
 import DiseaseDetection from "@/components/DiseaseDetection";
 import AIChat from "@/components/AIChat";
 import Footer from "@/components/Footer";
-import MarketIntelligence from "@/components/MarketIntelligence";
+import CropExplorer from "@/components/CropExplorer";
 import { StatsProvider } from "@/components/StatsProvider";
+import FarmerSuccessHub from "@/components/FarmerSuccessHub";
 
 export default function Home() {
   useEffect(() => {
@@ -59,20 +55,23 @@ export default function Home() {
       </section>
 
       <Overview />
-      <RiceGuide />
-      <DataCharts />
-      <div id="market">
-        <MarketIntelligence />
+      
+      <div id="explorer">
+        <CropExplorer />
       </div>
-      <RiceSeasons />
-      <Fisheries />
-      <Climate />
+
+      <div id="farmer-success">
+        <FarmerSuccessHub />
+      </div>
+
       <div id="protection">
         <DiseaseDetection />
       </div>
+      
       <div id="ai-chat">
         <AIChat />
       </div>
+      
       <Footer />
     </StatsProvider>
   );

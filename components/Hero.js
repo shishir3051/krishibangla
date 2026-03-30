@@ -53,17 +53,33 @@ export default function Hero() {
         {stats.map((stat, index) => (
           <div 
             key={index}
-            className="bg-white/6 border border-gold/25 py-[0.8rem] px-[1.4rem] rounded-[3px] text-center backdrop-blur-[10px] hover:border-gold/50 hover:scale-105 transition-all duration-300"
+            className="bg-white/5 border border-gold/20 py-4 px-6 rounded-xl text-center backdrop-blur-md hover:border-gold/50 hover:scale-105 transition-all duration-500 group relative"
           >
-            <span className="font-playfair text-[1.8rem] font-bold text-gold block">
-              {stat.number}
-            </span>
-            <Text 
-              as="span" 
-              className="font-mono text-[0.63rem] text-green-light tracking-[0.08em] uppercase" 
-              en={stat.en} 
-              bn={stat.bn} 
-            />
+            {/* Live Indicator Badge */}
+            {stat.live && (
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500/90 text-white text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg border border-emerald-400/50 animate-pulse">
+                <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+                LIVE DATA
+              </div>
+            )}
+
+            <div className="flex flex-col items-center">
+              <span className="font-playfair text-4xl font-black text-gold mb-1">
+                {stat.number}
+              </span>
+              <Text 
+                as="span" 
+                className="font-mono text-[10px] text-green-light/70 tracking-widest uppercase font-bold" 
+                en={stat.en} 
+                bn={stat.bn} 
+              />
+              
+              {stat.live && (
+                <div className="mt-2 text-[8px] font-mono text-white/30 uppercase tracking-tighter group-hover:text-amber-500/50 transition-colors">
+                  Source: World Bank WDI
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

@@ -9,7 +9,7 @@ export const districtsData = {
     advisory: "Monitor for stem borer in Boro rice. Use balanced Fertilizer (Urea:TSP:MOP = 3:1:1).",
     calendar: "Planting: Nov–Dec; Harvest: May–June",
     potential: "High potential for rooftop gardening and greenhouse vegetable production.",
-    qualityScore: 'A+', fertility: '92%', waterTable: 'Optimal', exportPotential: '91%', growthForecast: '+11.5%', exportTier: 'Tier 1'
+    qualityScore: 'A+', fertility: '91%', waterTable: 'Optimal', exportPotential: '89%', growthForecast: '+10.8%', exportTier: 'Tier 1'
   },
   "Gazipur": {
     name: "Gazipur", bn: "গাজীপুর",
@@ -20,7 +20,7 @@ export const districtsData = {
     advisory: "Apply potash to improve jackfruit sweetness. Guard against fruit borer.",
     calendar: "Planting: July–August; Harvest: June–July",
     potential: "Strong potential for agro-processing and canned fruit exports.",
-    qualityScore: 'A+', fertility: '92%', waterTable: 'Optimal', exportPotential: '91%', growthForecast: '+11.5%', exportTier: 'Tier 1'
+    qualityScore: 'A', fertility: '83%', waterTable: 'Medium', exportPotential: '80%', growthForecast: '+8.2%', exportTier: 'Tier 2'
   },
   "Nishardi": { name: "Nishardi", bn: "নিশর্দী", crops: ["Rice"], soil: "Aluvial", risk: "Flood", irrigation: "Medium" },
   "Tangail": {
@@ -28,8 +28,8 @@ export const districtsData = {
     crops: ["Pineapple", "Rice", "Banana"],
     soil: "Loamy / Red Soil",
     risk: "Flood",
-    irrigation: "高 (Canal/Mixed)",
-    qualityScore: 'A+', fertility: '92%', waterTable: 'Optimal', exportPotential: '91%', growthForecast: '+11.5%', exportTier: 'Tier 1',
+    irrigation: "High (Canal/Mixed)",
+    qualityScore: 'A', fertility: '86%', waterTable: 'Moderate', exportPotential: '78%', growthForecast: '+7.9%', exportTier: 'Tier 2',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Kishoreganj": {
@@ -38,7 +38,7 @@ export const districtsData = {
     soil: "Wetland (Haor) Peat",
     risk: "Flash Flood (April)",
     irrigation: "95% (Surface/LIFT)",
-    qualityScore: 'A', fertility: '80%', waterTable: 'Medium', exportPotential: '85%', growthForecast: '+8.5%', exportTier: 'Tier 2',
+    qualityScore: 'A', fertility: '80%', waterTable: 'High (Haor)', exportPotential: '74%', growthForecast: '+7.1%', exportTier: 'Tier 2',
     calendar: 'Planting: Oct-Nov; Harvest: Feb-Mar'
   },
   "Manikganj": { name: "Manikganj", bn: "মানিকগঞ্জ", crops: ["Tobacco", "Rice"], soil: "Sandy Loam", risk: "River Erosion", irrigation: "High" },
@@ -48,7 +48,7 @@ export const districtsData = {
     soil: "Light Alluvial",
     risk: "River Erosion",
     irrigation: "80% (Surface/Mixed)",
-    qualityScore: 'A+', fertility: '92%', waterTable: 'Optimal', exportPotential: '91%', growthForecast: '+11.5%', exportTier: 'Tier 1',
+    qualityScore: 'A+', fertility: '93%', waterTable: 'Optimal', exportPotential: '94%', growthForecast: '+12.1%', exportTier: 'Tier 1',
     calendar: 'Planting: Oct-Nov; Harvest: Feb-Mar'
   },
   "Narayanganj": { name: "Narayanganj", bn: "নারায়ণগঞ্জ", crops: ["Rice", "Jute"], soil: "Clay Loam", risk: "Industrial Runoff", irrigation: "Medium" },
@@ -64,7 +64,7 @@ export const districtsData = {
     advisory: "Use pheromone traps for Mango fruit fly. Implement mulching to save water.",
     calendar: "Planting: June; Harvest: June–August",
     potential: "High export demand for G.I. certified Silk and premium Mango varieties.",
-    qualityScore: 'A+', fertility: '88%', waterTable: 'Low (Barind)', exportPotential: '95%', growthForecast: '+14.2%', exportTier: 'Tier 1'
+    qualityScore: 'A+', fertility: '87%', waterTable: 'Low (Barind)', exportPotential: '96%', growthForecast: '+14.8%', exportTier: 'Tier 1'
   },
   "Chapai Nawabganj": {
     name: "Chapai Nawabganj", bn: "চাঁপাইনবাবগঞ্জ",
@@ -75,7 +75,7 @@ export const districtsData = {
     advisory: "Focus on Khirsapat and Langra mangoes. Prioritize drip irrigation.",
     calendar: "Planting: June; Harvest: May–July",
     potential: "Global Mango export hub. Potential for processing pulp and juice.",
-    qualityScore: 'A+', fertility: '88%', waterTable: 'Low (Barind)', exportPotential: '95%', growthForecast: '+14.2%', exportTier: 'Tier 1'
+    qualityScore: 'A+', fertility: '84%', waterTable: 'Very Low', exportPotential: '97%', growthForecast: '+15.3%', exportTier: 'Tier 1'
   },
   "Naogaon": {
     name: "Naogaon", bn: "নওগাঁ",
@@ -83,7 +83,7 @@ export const districtsData = {
     soil: "Barind Alluvial",
     risk: "Drought",
     irrigation: "95% (Intensive Tube-well)",
-    qualityScore: 'A+', fertility: '88%', waterTable: 'Low (Barind)', exportPotential: '95%', growthForecast: '+14.2%', exportTier: 'Tier 1',
+    qualityScore: 'A', fertility: '85%', waterTable: 'Low (Barind)', exportPotential: '88%', growthForecast: '+11.2%', exportTier: 'Tier 1',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Natore": { name: "Natore", bn: "নাটোর", crops: ["Sugar Cane", "Fish"], soil: "Clay", risk: "Drought", irrigation: "High" },
@@ -99,7 +99,7 @@ export const districtsData = {
     soil: "Sandy Alluvial (Tista)",
     risk: "Cold Waves / Monga",
     irrigation: "High (Surface Mixed)",
-    qualityScore: 'A', fertility: '80%', waterTable: 'Medium', exportPotential: '85%', growthForecast: '+8.5%', exportTier: 'Tier 2',
+    qualityScore: 'B+', fertility: '76%', waterTable: 'Medium', exportPotential: '72%', growthForecast: '+6.8%', exportTier: 'Tier 2',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Dinajpur": {
@@ -108,7 +108,7 @@ export const districtsData = {
     soil: "Old Himalayan Piedmont",
     risk: "Cold Stress",
     irrigation: "High",
-    qualityScore: 'A+', fertility: '88%', waterTable: 'Low (Barind)', exportPotential: '95%', growthForecast: '+14.2%', exportTier: 'Tier 1',
+    qualityScore: 'A', fertility: '89%', waterTable: 'Moderate', exportPotential: '91%', growthForecast: '+13.0%', exportTier: 'Tier 1',
     calendar: 'Flowering: Feb-Mar; Harvest: Jun-Jul'
   },
   "Thakurgaon": { name: "Thakurgaon", bn: "ঠাকুরগাঁও", crops: ["Potato", "Rice"], soil: "Sandy Loam", risk: "Cold Stress", irrigation: "High" },
@@ -125,7 +125,7 @@ export const districtsData = {
     soil: "Acidic Hill Soil",
     risk: "Flash Floods",
     irrigation: "Low (Rain-fed dominant)",
-    qualityScore: 'A', fertility: '82%', waterTable: 'High (Haor)', exportPotential: '90%', growthForecast: '+10.1%', exportTier: 'Tier 1',
+    qualityScore: 'A', fertility: '82%', waterTable: 'High (Haor)', exportPotential: '91%', growthForecast: '+10.5%', exportTier: 'Tier 1',
     calendar: 'Pruning: Dec-Feb; Plucking: Mar-Nov'
   },
   "Moulvibazar": { name: "Moulvibazar", bn: "মৌলভীবাজার", crops: ["Tea", "Pineapple"], soil: "Hilly Acidic", risk: "Flash Flood", irrigation: "Low" },
@@ -139,7 +139,7 @@ export const districtsData = {
     soil: "Saline/Alluvial",
     risk: "Cyclone / Salinity",
     irrigation: "Medium",
-    qualityScore: 'B+', fertility: '75%', waterTable: 'Saline Intrusion', exportPotential: '88%', growthForecast: '+7.4%', exportTier: 'Tier 2',
+    qualityScore: 'B+', fertility: '74%', waterTable: 'Saline Intrusion', exportPotential: '86%', growthForecast: '+7.2%', exportTier: 'Tier 2',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Cox's Bazar": { name: "Cox's Bazar", bn: "কক্সবাজার", crops: ["Salt", "Betel Leaf", "Dry Fish"], soil: "Sandy Saline", risk: "Cyclone / Salinity", irrigation: "Low" },
@@ -160,7 +160,7 @@ export const districtsData = {
     soil: "Saline Clayey",
     risk: "Cyclones / Salinity",
     irrigation: "Medium (Surface Water)",
-    qualityScore: 'A-', fertility: '78%', waterTable: 'Saline/Mixed', exportPotential: '94%', growthForecast: '+12.8%', exportTier: 'Tier 1',
+    qualityScore: 'A-', fertility: '77%', waterTable: 'Saline/Mixed', exportPotential: '95%', growthForecast: '+13.4%', exportTier: 'Tier 1',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Satkhira": { name: "Satkhira", bn: "সাতক্ষীরা", crops: ["White Gold (Shrimp)", "Honey", "Mango"], soil: "High Saline", risk: "Salinity / Cyclone", irrigation: "Low" },
@@ -180,7 +180,7 @@ export const districtsData = {
     soil: "Silty Saline Alluvial",
     risk: "Coastal Flood",
     irrigation: "Low (Surface river-fed)",
-    qualityScore: 'A', fertility: '85%', waterTable: 'High (Riverine)', exportPotential: '82%', growthForecast: '+9.3%', exportTier: 'Tier 2',
+    qualityScore: 'A', fertility: '85%', waterTable: 'High (Riverine)', exportPotential: '81%', growthForecast: '+9.0%', exportTier: 'Tier 2',
     calendar: 'Planting: Dec-Feb; Harvest: Apr-May'
   },
   "Bhola": { name: "Bhola", bn: "ভোলা", crops: ["Betel Nut", "Rice", "Buffalo Milk"], soil: "Marine Alluvial", risk: "Extreme Cyclone", irrigation: "Low" },
@@ -196,12 +196,15 @@ export const districtsData = {
     soil: "Clay Loam",
     risk: "Flood",
     irrigation: "High",
-    qualityScore: 'A', fertility: '86%', waterTable: 'Optimal', exportPotential: '87%', growthForecast: '+10.4%', exportTier: 'Tier 2',
+    qualityScore: 'A', fertility: '88%', waterTable: 'Optimal', exportPotential: '86%', growthForecast: '+10.2%', exportTier: 'Tier 2',
     calendar: 'Flowering: Feb-Mar; Harvest: Jun-Jul'
   },
   "Netrokona": { name: "Netrokona", bn: "নেত্রকোণা", crops: ["Boro Rice", "Duck"], soil: "Peat / Haor", risk: "Flash Flood", irrigation: "Medium" },
   "Sherpur": { name: "Sherpur", bn: "শেরপুর", crops: ["Rice"], soil: "Hilly Alluvial", risk: "Flood", irrigation: "Medium" },
-  "Jamalpur": { name: "Jamalpur", bn: "জামালপুর", crops: ["Rice", "Mustard"], soil: "Loamy", risk: "River Erosion", irrigation: "Medium" },
+  "Jamalpur": { 
+    name: "Jamalpur", bn: "জামালপুর", 
+    crops: ["Rice", "Mustard"], soil: "Loamy", risk: "River Erosion", irrigation: "Medium",
     qualityScore: 'A', fertility: '86%', waterTable: 'Optimal', exportPotential: '87%', growthForecast: '+10.4%', exportTier: 'Tier 2',
     calendar: 'Planting: Dec-Jan; Harvest: Apr-May'
+  }
 };

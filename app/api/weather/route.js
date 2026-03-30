@@ -3,15 +3,27 @@ import { DISTRICTS } from '@/lib/districts';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const districtName = searchParams.get('district') || 'Dhaka';
+  const districtName = searchParams.get('district');
+  const lat = searchParams.get('lat');
+  const lon = searchParams.get('lon');
+  
   const apiKey = process.env.WEATHER_API_KEY || 'f5aeec1f3dd348b291b141654262903';
 
-  // URL decode the district name and make it case-insensitive for matching
-  const decodedName = decodeURIComponent(districtName).trim();
-  const district = DISTRICTS.find(d => d.name.toLowerCase() === decodedName.toLowerCase());
-  
-  // Use coordinates if available for better reliability, fall back to name
-  const query = district ? `${district.lat},${district.lon}` : decodedName;
+  let query;
+  let isCoord = false;
+  let decodedName = '';
+  let district = null;
+
+  if (lat && lon) {
+    query = `${lat},${lon}`;
+    isCoord = true;
+  } else {
+    // URL decode the district name and make it case-insensitive for matching
+    decodedName = decodeURIComponent(districtName || 'Dhaka').trim();
+    district = DISTRICTS.find(d => d.name.toLowerCase() === decodedName.toLowerCase());
+    // Use coordinates if available for better reliability, fall back to name
+    query = district ? `${district.lat},${district.lon}` : decodedName;
+  }
 
   try {
     const res = await fetch(
@@ -55,7 +67,7 @@ export async function GET(request) {
 
     return NextResponse.json({
       location: data.location.name,
-      district: district ? district.bn : decodedName,
+      district: isCoord ? (data.location.region || data.location.name) : (district ? district.bn : decodedName),
       temp: current.temp_c,
       feels_like: current.feelslike_c,
       condition: current.condition.text,

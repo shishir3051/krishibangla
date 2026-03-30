@@ -114,63 +114,99 @@ export default function DiseaseDetection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Upload Area */}
           <div className="relative group">
-            <div className={`relative aspect-square md:aspect-video lg:aspect-square bg-white/5 border-2 border-dashed ${preview ? 'border-emerald-500/50' : 'border-white/10'} rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:bg-white/10 flex flex-col items-center justify-center p-8 text-center`}>
+            <div className={`min-h-[520px] bg-white/5 border-2 border-dashed 
+              ${preview ? 'border-emerald-500/50' : 'border-white/10'} 
+              rounded-[2.5rem] overflow-hidden transition-all duration-500 
+              group-hover:bg-white/10 flex flex-col items-center justify-center p-8 text-center`}>
+              
               {preview ? (
                 <div className="relative w-full h-full">
-                  <img src={preview} alt="Preview" className="w-full h-full object-cover rounded-2xl" />
+                  <img 
+                    src={preview} 
+                    alt="Preview" 
+                    className="w-full h-full object-cover rounded-2xl" 
+                  />
                   {loading && (
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center">
                       <div className="relative w-24 h-24 mb-6">
                         <div className="absolute inset-0 border-4 border-emerald-500/20 rounded-full" />
                         <div className="absolute inset-0 border-4 border-t-emerald-500 rounded-full animate-spin" />
                       </div>
-                      <span className="text-emerald-400 font-bold tracking-widest animate-pulse">{t.scanning}</span>
+                      <span className="text-emerald-400 font-bold tracking-widest animate-pulse">
+                        {t.scanning}
+                      </span>
                     </div>
                   )}
                   {!loading && !result && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                       <button onClick={handleDetect} className="bg-emerald-500 text-white font-bold py-3 px-8 rounded-2xl shadow-2xl shadow-emerald-500/30 hover:scale-105 transition-transform">
-                          {t.uploadBtn}
-                       </button>
+                      <button 
+                        onClick={handleDetect} 
+                        className="bg-emerald-500 text-white font-bold py-3 px-8 rounded-2xl shadow-2xl shadow-emerald-500/30 hover:scale-105 transition-transform"
+                      >
+                        {t.uploadBtn}
+                      </button>
                     </div>
                   )}
                 </div>
               ) : (
-                <div onClick={() => fileInputRef.current?.click()} className="cursor-pointer">
-                  <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto group-hover:scale-110 transition-all duration-500">📸</div>
+                <div 
+                  onClick={() => fileInputRef.current?.click()} 
+                  className="cursor-pointer w-full h-full flex flex-col items-center justify-center"
+                >
+                  <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto group-hover:scale-110 transition-all duration-500">
+                    📸
+                  </div>
                   <h3 className="text-xl font-bold text-white mb-2">{t.dragDrop}</h3>
                   <p className="text-white/30 text-sm">PNG, JPG up to 10MB</p>
                 </div>
               )}
-              <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
+
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileChange} 
+                className="hidden" 
+                accept="image/*" 
+              />
             </div>
-            
-            {/* Action Overlay */}
-            {preview && !loading && (
-               <div className="mt-6 flex gap-4">
-                  <button onClick={() => fileInputRef.current?.click()} className="flex-1 bg-white/5 border border-white/10 text-white font-bold py-4 rounded-3xl hover:bg-white/10 transition-all">
-                    {t.back}
-                  </button>
-               </div>
+
+            {/* Action Button */}
+            {preview && !loading && !result && (
+              <div className="mt-6 flex gap-4">
+                <button 
+                  onClick={() => fileInputRef.current?.click()} 
+                  className="flex-1 bg-white/5 border border-white/10 text-white font-bold py-4 rounded-3xl hover:bg-white/10 transition-all"
+                >
+                  {t.back}
+                </button>
+              </div>
             )}
           </div>
 
-          {/* Result Panel */}
+          {/* Result Panel - Same Height */}
           <div className="relative">
-            {result ? (
-               <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-xl animate-scaleIn">
+            <div className={`min-h-[520px] border-2 border-dashed 
+              ${result ? 'border-white/10 bg-white/5' : 'border-white/5 bg-white/[0.02]'} 
+              rounded-[2.5rem] transition-all duration-500 overflow-hidden flex flex-col`}>
+              
+              {result ? (
+                <div className="p-10 backdrop-blur-xl flex-1">
                   {result.detected ? (
                     <>
                       <div className="flex justify-between items-start mb-8">
                         <div>
                           <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-1">{t.detected}</div>
                           <h3 className="text-3xl font-black text-white">
-                            {lang === 'bn' ? `${result.crop_bn || ''} - ${result.disease_bn}` : `${result.crop_en || ''} - ${result.disease_en}`}
+                            {lang === 'bn' 
+                              ? `${result.crop_bn || ''} - ${result.disease_bn}` 
+                              : `${result.crop_en || ''} - ${result.disease_en}`}
                           </h3>
                         </div>
                         <div className="bg-emerald-500/20 px-4 py-2 rounded-xl border border-emerald-500/30 text-center">
                           <div className="text-[10px] text-emerald-400 font-black uppercase leading-none mb-1">{t.confidence}</div>
-                          <div className="text-xl font-black text-emerald-400 leading-none">{(result.confidence * 100).toFixed(1)}%</div>
+                          <div className="text-xl font-black text-emerald-400 leading-none">
+                            {(result.confidence * 100).toFixed(1)}%
+                          </div>
                         </div>
                       </div>
 
@@ -190,17 +226,19 @@ export default function DiseaseDetection() {
                           </h4>
                           <ul className="grid grid-cols-1 gap-3">
                             {(lang === 'bn' ? (result.treatment_bn || []) : (result.treatment_en || [])).map((step, i) => (
-                               <li key={i} className="bg-white/5 border border-white/5 p-4 rounded-2xl flex gap-4 items-start">
-                                  <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-1">{i+1}</span>
-                                  <span className="text-white/80 text-sm">{step}</span>
-                               </li>
+                              <li key={i} className="bg-white/5 border border-white/5 p-4 rounded-2xl flex gap-4 items-start">
+                                <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-1">
+                                  {i + 1}
+                                </span>
+                                <span className="text-white/80 text-sm">{step}</span>
+                              </li>
                             ))}
                           </ul>
                         </div>
                       </div>
                     </>
                   ) : (
-                    <div className="text-center py-8">
+                    <div className="text-center py-12">
                       <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto">🍃</div>
                       <h3 className="text-2xl font-black text-white mb-4">{t.healthy}</h3>
                       <p className="text-white/60 leading-relaxed">
@@ -213,13 +251,14 @@ export default function DiseaseDetection() {
                     <span>{t.source}</span>
                     <span className="text-emerald-500/50 italic">Verified Algorithm v2.0</span>
                   </div>
-               </div>
-            ) : (
-              <div className="h-full min-h-[500px] border-2 border-dashed border-white/5 rounded-[2.5rem] flex flex-col items-center justify-center text-center p-12 bg-white/[0.02]">
-                <div className="w-20 h-20 bg-emerald-500/5 rounded-full flex items-center justify-center text-4xl mb-6 opacity-30">🔬</div>
-                <h3 className="text-white/30 text-xl font-bold italic">Waiting for scan analysis...</h3>
-              </div>
-            )}
+                </div>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-12">
+                  <div className="w-20 h-20 bg-emerald-500/5 rounded-full flex items-center justify-center text-4xl mb-6 opacity-30">🔬</div>
+                  <h3 className="text-white/30 text-xl font-bold italic">Waiting for scan analysis...</h3>
+                </div>
+              )}
+            </div>
 
             {error && (
               <div className="mt-8 p-6 bg-red-500/10 border border-red-500/20 rounded-3xl text-red-400 text-sm font-bold flex items-center gap-4 animate-shake">

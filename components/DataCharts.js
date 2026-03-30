@@ -3,29 +3,17 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Text from "./Text";
 import { useLanguage } from "./LanguageProvider";
-
 import { useStats } from "./StatsProvider";
+import { generateLinearPath, generateFillPath } from "@/lib/chartUtils";
 
 export default function DataCharts() {
   const { lang } = useLanguage();
   const { statsData, loading } = useStats();
 
-  const generatePath = (data, width, height) => {
-    if (!data || data.length < 2) return "";
-    const minVal = Math.min(...data.map(d => d.value));
-    const maxVal = Math.max(...data.map(d => d.value));
-    const range = maxVal - minVal;
-    
-    return data.map((d, i) => {
-      const x = (i / (data.length - 1)) * width;
-      const y = height - ((d.value - minVal) / range) * height;
-      return `${i === 0 ? 'M' : 'L'}${x},${y}`;
-    }).join(' ');
-  };
+  const riceHistory = statsData?.history?.rice || [];
+  const startData = riceHistory.length > 0 ? riceHistory[0] : { year: '2015', value: 29.7 };
+  const endData = riceHistory.length > 0 ? riceHistory[riceHistory.length - 1] : { year: '2024', value: 38.1 };
 
-  const generateFillPath = (path, width, height) => {
-    return `${path} L${width},${height} L0,${height} Z`;
-  };
 
   if (!statsData) {
     return (
@@ -62,7 +50,7 @@ export default function DataCharts() {
           {/* Main Trend Chart - Dynamic SVG */}
           <motion.div initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="bg-[#0a1a2a]/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] p-10 flex flex-col justify-between group">
             <div className="flex justify-between items-start mb-8">
-               <Text as="h3" className="font-mono text-xs font-black tracking-widest text-emerald-400 uppercase" en="Rice Production Trend (2015-2024)" bn="ধান উৎপাদনের ধারা (২০১৫-২০২৪)" />
+               <Text as="h3" className="font-mono text-xs font-black tracking-widest text-emerald-400 uppercase" en={`Rice Production Trend (${startData.year}-${endData.year})`} bn={`ধান উৎপাদনের ধারা (${startData.year}-${endData.year})`} />
                <div className="text-emerald-400/50 font-mono text-[10px] tracking-tight">CAGR: +2.8%</div>
             </div>
             
@@ -79,24 +67,24 @@ export default function DataCharts() {
                     initial={{ pathLength: 0 }}
                     whileInView={{ pathLength: 1 }}
                     transition={{ duration: 2, ease: "easeOut" }}
-                    d={generatePath(statsData.history?.rice || [], 400, 100)} 
+                    d={generateLinearPath(statsData.history?.rice || [], 400, 100)} 
                     fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" 
                   />
                   <motion.path 
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 1, duration: 1 }}
-                    d={generateFillPath(generatePath(statsData.history?.rice || [], 400, 100), 400, 100)} 
+                    d={generateFillPath(generateLinearPath(statsData.history?.rice || [], 400, 100), 400, 100)} 
                     fill="url(#chartGradient)" 
                   />
                   
                   {(statsData.history?.rice || []).map((p, i) => (
-                    <motion.circle key={i} cx={(i / (statsData.history.rice.length - 1)) * 400} cy={100 - ((p.value - 29.7) / (38.1 - 29.7)) * 100} r="3" fill="#10b981" initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 1 + (i * 0.1) }} />
+                    <motion.circle key={i} cx={(i / (statsData.history.rice.length - 1)) * 400} cy={100 - ((p.value - startData.value) / (endData.value - startData.value)) * 100} r="3" fill="#10b981" initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 1 + (i * 0.1) }} />
                   ))}
                </svg>
                <div className="flex justify-between mt-4 font-mono text-[9px] text-white/20 uppercase tracking-widest">
-                  <span>2015: 29.7M</span>
-                  <span>2024: 38.1M</span>
+                  <span>{startData.year}: {startData.value}M</span>
+                  <span>{endData.year}: {endData.value}M</span>
                </div>
             </div>
           </motion.div>

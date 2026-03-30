@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Text from "./Text";
 import { useLanguage } from "./LanguageProvider";
-
 import { useStats } from "./StatsProvider";
 
 export default function Climate() {
@@ -26,7 +25,7 @@ export default function Climate() {
 
   if (!data) {
     return (
-      <div className="py-20 px-8 flex items-center justify-center min-h-[400px]">
+      <div className="bg-[#05111e] py-20 px-8 flex items-center justify-center min-h-[400px]">
         <div className="animate-pulse text-red-500 font-mono tracking-widest text-sm uppercase">Loading Climate Data...</div>
       </div>
     );
@@ -38,35 +37,40 @@ export default function Climate() {
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
       variants={container}
-      id="climate" className="py-24 px-8 max-w-[1200px] mx-auto relative"
+      id="climate" className="py-32 px-8 max-w-[1200px] mx-auto relative bg-[#05111e]"
     >
-      <Text as="div" className="font-mono text-[0.68rem] tracking-[0.3em] uppercase text-emerald-600 mb-2" en="Climate Resilience" bn="জলবায়ু সহনশীলতা" />
-      <h2 className="font-playfair text-[clamp(2rem,4vw,3.2rem)] font-black text-[#0a1628] leading-[1.1] mb-6">
-        <Text as="span" html={true} en="Agriculture Under <em class='text-red-500'>Pressure</em>" bn="চাপের মুখে <em class='text-red-500'>কৃষি</em>" />
+      <Text as="div" className="font-mono text-[0.7rem] tracking-[0.4em] uppercase text-emerald-500 mb-4 font-black" en="Climate Resilience" bn="জলবায়ু সহনশীলতা" />
+      <h2 className="font-playfair text-[clamp(2.5rem,5vw,4.5rem)] font-black text-white leading-none mb-10">
+        <Text as="span" html={true} en="Agriculture Under <em class='text-red-500 not-italic'>Pressure</em>" bn="চাপের মুখে <em class='text-red-500 not-italic'>কৃষি</em>" />
       </h2>
-      <Text as="p" className="max-w-[700px] text-gray-600 leading-[1.9] mb-12 text-[1.1rem]" 
+      <Text as="p" className="max-w-[750px] text-white/50 leading-relaxed mb-16 text-lg" 
         en="Bangladesh is the 7th most climate-vulnerable nation. Agriculture bears the heaviest burden — yet remarkable innovations show extraordinary adaptive capacity." 
         bn="বাংলাদেশ বিশ্বের ৭ম সর্বোচ্চ জলবায়ু-ঝুঁকিপূর্ণ দেশ। কৃষি সবচেয়ে বেশি ক্ষতিগ্রস্ত — তবুও অসাধারণ উদ্ভাবন অভিযোজন ক্ষমতার প্রমাণ দিচ্ছে।" 
       />
       
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {data.map((card, i) => (
           <motion.div 
             key={i} 
             variants={item}
-            className={`border-l-4 ${card.border} p-8 bg-white/60 backdrop-blur-xl border-y border-r border-[#0a1628]/5 rounded-r-3xl hover:bg-white transition-all duration-500 group shadow-lg shadow-[#0a1628]/[0.02] hover:shadow-2xl hover:-translate-y-1`}
+            className={`border-l-4 ${card.border.replace('border-', 'border-')} p-10 bg-[#0a1628] border-y border-r border-white/5 rounded-r-[2.5rem] hover:bg-[#0c1c32] hover:border-white/20 transition-all duration-700 group shadow-2xl relative overflow-hidden`}
           >
-            <div className="text-4xl mb-6 relative group-hover:scale-110 transition-transform origin-bottom-left duration-300">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-white/10 transition-colors" />
+            
+            <div className="text-5xl mb-8 relative group-hover:scale-125 transition-transform origin-bottom-left duration-500">
               {card.icon}
             </div>
-            <div className="font-playfair text-[1.3rem] font-bold text-[#0a1628] mb-3">{lang === 'bn' ? card.title_bn : card.title_en}</div>
-            <p className="text-[0.95rem] text-gray-600 leading-[1.7] mb-6 min-h-[100px]">
+            <div className="font-playfair text-[1.5rem] font-bold text-white mb-4 group-hover:text-red-400 transition-colors">{lang === 'bn' ? card.title_bn : card.title_en}</div>
+            <p className="text-[1rem] text-white/50 leading-relaxed mb-10 min-h-[80px] font-sans group-hover:text-white/70 transition-colors">
               {lang === 'bn' ? card.desc_bn : card.desc_en}
             </p>
-            <div className="mt-auto h-1.5 bg-gray-100 rounded-full overflow-hidden w-full">
-              <div 
-                 className={`h-full rounded-full transition-all duration-1000 ease-in-out ${card.color}`} 
-                 style={{ width: card.barWidth }}
+            <div className="mt-auto h-2 bg-white/5 rounded-full overflow-hidden w-full">
+              <motion.div 
+                 initial={{ width: 0 }}
+                 whileInView={{ width: card.barWidth }}
+                 viewport={{ once: true }}
+                 transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+                 className={`h-full rounded-full ${card.color.replace('bg-', 'bg-')}`} 
               />
             </div>
           </motion.div>

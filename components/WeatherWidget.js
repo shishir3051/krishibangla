@@ -11,6 +11,7 @@ export default function WeatherWidget() {
   const [district, setDistrict] = useState('Dhaka');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLive, setIsLive] = useState(false);
 
   const t = {
     en: {
@@ -37,13 +38,23 @@ export default function WeatherWidget() {
     }
   }[lang];
 
-  const fetchWeather = async (name) => {
+  const fetchWeather = async (params) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/weather?district=${encodeURIComponent(name)}`);
+      let query = '';
+      if (params.lat && params.lon) {
+        query = `lat=${params.lat}&lon=${params.lon}`;
+        setIsLive(true);
+      } else {
+        query = `district=${encodeURIComponent(params.district || 'Dhaka')}`;
+        setIsLive(false);
+      }
+
+      const res = await fetch(`/api/weather?${query}`);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setWeather(data);
+      if (!params.lat) setDistrict(params.district);
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -54,8 +65,29 @@ export default function WeatherWidget() {
 
   useEffect(() => {
     setMounted(true);
-    fetchWeather(district);
-  }, [district]);
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          fetchWeather({ 
+            lat: position.coords.latitude, 
+            lon: position.coords.longitude 
+          });
+        },
+        () => {
+          // Fallback to default district if geolocation fails or is denied
+          fetchWeather({ district });
+        }
+      );
+    } else {
+      fetchWeather({ district });
+    }
+  }, []);
+
+  const handleDistrictChange = (newDistrict) => {
+    setDistrict(newDistrict);
+    fetchWeather({ district: newDistrict });
+  };
 
   if (!mounted) return null;
 
@@ -92,16 +124,24 @@ export default function WeatherWidget() {
             <span className="text-4xl">🌦️</span> 
             {t.title}
           </h2>
-          <p className="text-white/60 mt-1 font-medium italic">
-            {lang === 'bn' ? (DISTRICTS.find(d => d.name === weather?.district)?.bn || weather?.district) : weather?.district}: {weather?.location || (lang === 'bn' ? 'লোড হচ্ছে...' : 'Loading...')}
-          </p>
+          <div className="flex items-center gap-2 mt-1">
+            {isLive && (
+              <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ring-2 ring-emerald-400/30" />
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-tighter">Live</span>
+              </span>
+            )}
+            <p className="text-white/60 font-medium italic">
+              {lang === 'bn' ? (DISTRICTS.find(d => d.name === weather?.district)?.bn || weather?.district) : weather?.district}: {weather?.location || (lang === 'bn' ? 'লোড হচ্ছে...' : 'Loading...')}
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-3 bg-white/10 p-1.5 pl-4 rounded-2xl border border-white/10">
           <span className="text-xs uppercase tracking-widest text-white/40 font-bold">{t.districtLabel}</span>
           <select 
             value={district}
-            onChange={(e) => setDistrict(e.target.value)}
+            onChange={(e) => handleDistrictChange(e.target.value)}
             className="bg-green-600 text-white font-bold py-2 px-4 rounded-xl outline-none cursor-pointer hover:bg-green-500 transition-colors border-none appearance-none pr-10 relative"
             style={{
               backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'3\' d=\'M19 9l-7 7-7-7\'/%3E%3C/svg%3E")',

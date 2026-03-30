@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useLanguage } from './LanguageProvider';
+import { parseHarvestMonths, MONTHS } from '../lib/calendarUtils';
 
 export default function DistrictReportModal({ isOpen, onClose, district }) {
   const { lang } = useLanguage();
@@ -95,38 +96,10 @@ export default function DistrictReportModal({ isOpen, onClose, district }) {
   const growth = district.growthForecast || '+8.5%';
   const tier = district.exportTier || 'Tier 2';
 
-  const months = [
-    { key:'J', name:'Jan' }, { key:'F', name:'Feb' }, { key:'M', name:'Mar' }, { key:'A', name:'Apr' },
-    { key:'M', name:'May' }, { key:'J', name:'Jun' }, { key:'J', name:'Jul' }, { key:'A', name:'Aug' },
-    { key:'S', name:'Sep' }, { key:'O', name:'Oct' }, { key:'N', name:'Nov' }, { key:'D', name:'Dec' },
-  ];
-  
-  // Real-time dynamic calendar parsing: Extract only Harvest/Plucking months and support wrapping ranges (e.g. Dec-Feb)
-  const monthOrder = months.map(m => m.name);
-  let harvestSet = new Set();
-  if (district.calendar) {
-    const harvestMatch = district.calendar.match(/(?:Harvest|Plucking)\s*:\s*([^;]+)/i);
-    const targetStr = harvestMatch ? harvestMatch[1] : district.calendar;
-    // Format capitalize to match monthOrder
-    const targetStrCamel = targetStr.replace(/\b\w/g, c => c.toUpperCase());
-    const monthsFound = targetStrCamel.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/g);
-    
-    if (monthsFound && monthsFound.length === 2 && targetStr.includes('-')) {
-       const startIdx = monthOrder.indexOf(monthsFound[0]);
-       const endIdx = monthOrder.indexOf(monthsFound[1]);
-       if (startIdx !== -1 && endIdx !== -1) {
-          let curr = startIdx;
-          while (true) {
-             harvestSet.add(monthOrder[curr]);
-             if (curr === endIdx) break;
-             curr = (curr + 1) % 12; // Wrap around Dec to Jan
-          }
-       }
-    } else if (monthsFound) {
-       monthsFound.forEach(m => harvestSet.add(m));
-    }
-  }
-  const harvestMonths = Array.from(harvestSet);
+  const months = MONTHS;
+
+  // Parse harvest months using the shared utility
+  const harvestMonths = parseHarvestMonths(district.calendar);
 
 
   return (
