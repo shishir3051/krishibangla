@@ -176,10 +176,10 @@ export default function GenericCropGuide({ cropId }) {
         </div>
       </section>
 
-      <div className="max-w-[1200px] mx-auto px-4 lg:px-8 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* 2. Left Column: Lifecycle & Analytics */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-5 space-y-8">
           
           {/* Lifecycle timeline */}
           <div className="bg-[#0a1628] border border-white/5 rounded-[2rem] p-8 shadow-xl">
@@ -292,7 +292,7 @@ export default function GenericCropGuide({ cropId }) {
         </div>
 
         {/* 3. Right Column: Functional Inline AI Chat */}
-        <div className="lg:col-span-5 h-[700px]">
+         <div className="lg:col-span-7 h-[750px] lg:h-[850px]">
           <div className="bg-[#0a1628] border border-white/10 rounded-[2rem] h-full flex flex-col shadow-2xl relative overflow-hidden">
             {/* AI Header */}
             <div className={`p-6 border-b border-white/10 bg-gradient-to-r ${bgGradient.split(' ')[0]} to-[#0a1628] flex items-center gap-4 flex-shrink-0`}>
@@ -320,15 +320,17 @@ export default function GenericCropGuide({ cropId }) {
                 // Advanced Markdown to HTML parser
                 const renderMarkdown = (text) => {
                   let html = text
-                    .replace(/^### (.+)$/gm, '<h3 class="font-bold text-lg text-emerald-400 mt-6 mb-2">$1</h3>')
-                    .replace(/^## (.+)$/gm, '<h2 class="font-black text-xl text-emerald-400 mt-6 mb-3 border-b border-white/10 pb-2">$1</h2>')
-                    .replace(/^# (.+)$/gm, '<h1 class="font-black text-2xl text-emerald-400 mt-6 mb-4">$1</h1>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em class="text-white/80 italic">$1</em>')
-                    .replace(/^\* (.+)$/gm, '<li class="ml-4 mb-1 list-disc text-white/80">$1</li>')
-                    .replace(/^- (.+)$/gm, '<li class="ml-4 mb-1 list-disc text-white/80">$1</li>')
-                    .replace(/\n\n/g, '<div class="h-3"></div>');
-                  
+                   .replace(/^##### (.+)$/gm, '<strong class="block mt-[0.6rem] text-green-light text-[0.82rem] tracking-[0.04em] uppercase opacity-80">$1</strong>')
+      .replace(/^#### (.+)$/gm, '<strong class="block mt-[0.7rem] text-green-light text-[0.88rem]">$1</strong>')
+      .replace(/^### (.+)$/gm, '<strong class="block mt-[0.8rem] text-green-light text-[0.95rem]">$1</strong>')
+      .replace(/^## (.+)$/gm, '<strong class="block mt-4 text-gold text-[1rem]">$1</strong>')
+      .replace(/^# (.+)$/gm, '<strong class="block mt-4 text-gold text-[1.1rem]">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^- (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">• $1</span>')
+      .replace(/^(\d+)\. (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">$1. $2</span>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
                   return html;
                 };
 

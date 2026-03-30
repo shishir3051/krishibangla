@@ -34,8 +34,8 @@ export async function POST(req) {
   try {
     const { messages } = await req.json();
     
-    // Fallback key handling if environment variable fails to load
-    const GEMINI_KEY = process.env.GEMINI_API_KEY || "AIzaSyDcCXwAdRJQVpzjD-xFRImY2skgTdCUavI";
+    // Load API key strictly from environment variables — no hardcoded fallback
+    const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
     // Debug logging to verify key loading
     console.log("KrishiBangla Chat API: Checking for GEMINI_API_KEY...");
