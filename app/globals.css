@@ -52,6 +52,81 @@
   --animate-floatPulse: floatPulse 3s ease-in-out infinite;
 }
 
+/* 3b. 2026 design system (light-first, dark via [data-theme=dark]) — used by the rebuilt pages.
+   Semantic names only; values switch per theme below. Old pages keep the palette above. */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --font-ui: var(--font-inter), var(--font-hind), system-ui, sans-serif;
+  --font-bangla: var(--font-hind), var(--font-inter), system-ui, sans-serif;
+
+  --color-canvas: var(--kb-canvas);
+  --color-surface: var(--kb-surface);
+  --color-surface-2: var(--kb-surface-2);
+  --color-fg: var(--kb-fg);
+  --color-fg-muted: var(--kb-fg-muted);
+  --color-line: var(--kb-line);
+  --color-brand: var(--kb-brand);
+  --color-brand-soft: var(--kb-brand-soft);
+  --color-on-brand: var(--kb-on-brand);
+  --color-accent: var(--kb-accent);
+  --color-accent-soft: var(--kb-accent-soft);
+  --color-info: var(--kb-info);
+  --color-info-soft: var(--kb-info-soft);
+  --color-warning: var(--kb-warning);
+  --color-warning-soft: var(--kb-warning-soft);
+  --color-danger: var(--kb-danger);
+  --color-danger-soft: var(--kb-danger-soft);
+}
+
+:root {
+  --kb-canvas: #f6f7f2;
+  --kb-surface: #ffffff;
+  --kb-surface-2: #eef1ea;
+  --kb-fg: #17201a;
+  --kb-fg-muted: #55605a;
+  --kb-line: #dde3da;
+  --kb-brand: #1f7a3f;
+  --kb-brand-soft: #e3f1e7;
+  --kb-on-brand: #ffffff;
+  --kb-accent: #8a6209;
+  --kb-accent-soft: #fbf1d9;
+  --kb-info: #1d5f99;
+  --kb-info-soft: #e3eef8;
+  --kb-warning: #9a5200;
+  --kb-warning-soft: #fdf0dc;
+  --kb-danger: #b42318;
+  --kb-danger-soft: #fde8e6;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --kb-canvas: #0d1410;
+  --kb-surface: #141d17;
+  --kb-surface-2: #1b261f;
+  --kb-fg: #e7ede8;
+  --kb-fg-muted: #a3b0a7;
+  --kb-line: #2a372f;
+  --kb-brand: #4cc27a;
+  --kb-brand-soft: #173524;
+  --kb-on-brand: #062312;
+  --kb-accent: #e3b544;
+  --kb-accent-soft: #3a2e10;
+  --kb-info: #6fb1ec;
+  --kb-info-soft: #13283b;
+  --kb-warning: #f0a640;
+  --kb-warning-soft: #3a2a12;
+  --kb-danger: #f47b6f;
+  --kb-danger-soft: #3b1714;
+  color-scheme: dark;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
 /* 4. Root variables */
 :root {
   --green-deep: #1a3d1f;

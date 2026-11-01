@@ -43,6 +43,7 @@ export default function Navbar() {
     { en: 'Explore Agricultural Sectors', bn: 'কৃষি খাতসমূহ অনুসন্ধান', href: localePath(lang, '/#explorer'), id: 'explorer' },
     { en: 'Farmer Success Hub', bn: 'কৃষক সাফল্য হাব', href: localePath(lang, '/#farmer-success'), id: 'farmer-success' },
     { en: 'AI Disease Scanner', bn: 'এআই রোগ নির্ণয়', href: localePath(lang, '/#protection'), id: 'protection' },
+    { en: 'District Desk', bn: 'জেলা ডেস্ক', href: localePath(lang, '/districts'), id: 'districts' },
   ];
 
   return (

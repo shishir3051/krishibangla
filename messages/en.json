@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "brand": "KrishiBangla",
+    "home": "Home",
+    "districts": "Districts",
+    "switchLanguage": "বাংলা",
+    "switchLanguageLabel": "Switch to Bangla",
+    "themeLight": "Switch to light theme",
+    "themeDark": "Switch to dark theme"
+  },
+  "source": {
+    "label": "Source",
+    "updated": "Updated",
+    "curated": "Curated"
+  },
+  "districts": {
+    "title": "District desk",
+    "subtitle": "Live weather, irrigation advice and the farming profile for each of Bangladesh's 64 districts.",
+    "search": "Search for a district",
+    "searchPlaceholder": "e.g. Rajshahi or রাজশাহী",
+    "noResults": "No district matches your search.",
+    "useLocation": "Use my location",
+    "locating": "Finding your district…",
+    "locationDenied": "Location permission was denied. Choose your district from the list instead.",
+    "locationOutside": "Your location appears to be outside Bangladesh.",
+    "locationUnavailable": "Your location could not be found. Choose your district from the list instead.",
+    "mapTitle": "Map of Bangladesh districts — select a district",
+    "division": "{name} Division",
+    "count": "{n} districts"
+  },
+  "desk": {
+    "allDistricts": "All districts",
+    "print": "Print / save as PDF",
+    "weatherNow": "Weather now",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "rainNow": "Rain (last 15 min)",
+    "forecast": "7-day forecast",
+    "rainChance": "Chance of rain",
+    "weatherUnavailable": "Live weather is temporarily unavailable. Please try again in a few minutes.",
+    "irrigation": "Irrigation advice",
+    "irrigationLevels": {
+      "none": "No irrigation needed",
+      "low": "Light irrigation may be needed",
+      "medium": "Plan to irrigate in the next 2–3 days",
+      "high": "Irrigate soon"
+    },
+    "irrigationDetail": "Over the next {days} days crops will use about {demand} mm of water. Forecast rain is {rain} mm, of which about {effective} mm reaches the roots.",
+    "soilStates": {
+      "dry": "Topsoil is dry",
+      "moist": "Topsoil is moist",
+      "wet": "Topsoil is wet"
+    },
+    "soilDetail": "{state} ({value} m³/m³ at 3–9 cm).",
+    "irrigationNote": "General guidance for upland crops and vegetables, based on the forecast water balance. Flooded rice follows the alternate wetting and drying (AWD) water-level rule. Always check your own field.",
+    "profile": "Farming profile",
+    "crops": "Main crops and products",
+    "soil": "Soil",
+    "hazards": "Climate hazards",
+    "advisory": "Advisory",
+    "noProfile": "No farming profile has been written for this district yet.",
+    "curatedNote": "Editorial content, pending source review. Confirm with your local Department of Agricultural Extension (DAE) office.",
+    "location": "Location"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "body": "This page could not be loaded. Please try again.",
+    "retry": "Try again"
+  }
+}

@@ -1,0 +1,1542 @@
+{
+  "$comment": "All 64 districts of Bangladesh. Names/coordinates from lib/districts.js; profile fields migrated from the earlier curated districtsData.js (editorial, pending citation review). Invented metrics (quality score, fertility %, export tier, irrigation %) were removed.",
+  "districts": [
+    {
+      "slug": "bagerhat",
+      "name": {
+        "en": "Bagerhat",
+        "bn": "বাগেরহাট"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 22.6603,
+      "lon": 89.7895,
+      "profile": {
+        "crops": [
+          "shrimp",
+          "betel-nut"
+        ],
+        "hazards": [
+          "salinity",
+          "cyclone"
+        ],
+        "soil": {
+          "en": "Saline silt",
+          "bn": "লবণাক্ত পলিময় মাটি"
+        }
+      }
+    },
+    {
+      "slug": "bandarban",
+      "name": {
+        "en": "Bandarban",
+        "bn": "বান্দরবান"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 22.1953,
+      "lon": 92.2184,
+      "profile": {
+        "crops": [
+          "tobacco",
+          "ginger",
+          "coffee"
+        ],
+        "hazards": [
+          "landslide"
+        ],
+        "soil": {
+          "en": "Rocky hill soil",
+          "bn": "পাথুরে পাহাড়ি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "barguna",
+      "name": {
+        "en": "Barguna",
+        "bn": "বরগুনা"
+      },
+      "aliases": [],
+      "division": "barishal",
+      "lat": 22.1528,
+      "lon": 90.1105,
+      "profile": {
+        "crops": [
+          "rice",
+          "fish"
+        ],
+        "hazards": [
+          "salinity",
+          "cyclone"
+        ],
+        "soil": {
+          "en": "Saline silt",
+          "bn": "লবণাক্ত পলিময় মাটি"
+        }
+      }
+    },
+    {
+      "slug": "barishal",
+      "name": {
+        "en": "Barishal",
+        "bn": "বরিশাল"
+      },
+      "aliases": [
+        "Barisal"
+      ],
+      "division": "barishal",
+      "lat": 22.701,
+      "lon": 90.3535,
+      "profile": {
+        "crops": [
+          "rice",
+          "guava",
+          "coconut"
+        ],
+        "hazards": [
+          "coastal-flood"
+        ],
+        "soil": {
+          "en": "Saline silty alluvial",
+          "bn": "লবণাক্ত পলিময় মাটি"
+        }
+      }
+    },
+    {
+      "slug": "bhola",
+      "name": {
+        "en": "Bhola",
+        "bn": "ভোলা"
+      },
+      "aliases": [],
+      "division": "barishal",
+      "lat": 22.6859,
+      "lon": 90.6482,
+      "profile": {
+        "crops": [
+          "betel-nut",
+          "rice",
+          "buffalo-milk"
+        ],
+        "hazards": [
+          "cyclone"
+        ],
+        "soil": {
+          "en": "Marine alluvial",
+          "bn": "সামুদ্রিক পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "bogura",
+      "name": {
+        "en": "Bogura",
+        "bn": "বগুড়া"
+      },
+      "aliases": [
+        "Bogra"
+      ],
+      "division": "rajshahi",
+      "lat": 24.8465,
+      "lon": 89.3777,
+      "profile": {
+        "crops": [
+          "vegetables",
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "brahmanbaria",
+      "name": {
+        "en": "Brahmanbaria",
+        "bn": "ব্রাহ্মণবাড়িয়া"
+      },
+      "aliases": [
+        "Brahamanbaria"
+      ],
+      "division": "chattogram",
+      "lat": 23.9575,
+      "lon": 91.1128,
+      "profile": {
+        "crops": [
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Loam",
+          "bn": "দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "chandpur",
+      "name": {
+        "en": "Chandpur",
+        "bn": "চাঁদপুর"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 23.2323,
+      "lon": 90.6558,
+      "profile": {
+        "crops": [
+          "hilsa",
+          "rice"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Riverine",
+          "bn": "নদীবাহিত মাটি"
+        }
+      }
+    },
+    {
+      "slug": "chapai-nawabganj",
+      "name": {
+        "en": "Chapai Nawabganj",
+        "bn": "চাঁপাইনবাবগঞ্জ"
+      },
+      "aliases": [
+        "Nawabganj",
+        "Chapainawabganj"
+      ],
+      "division": "rajshahi",
+      "lat": 24.5947,
+      "lon": 88.275,
+      "profile": {
+        "crops": [
+          "mango",
+          "litchi"
+        ],
+        "hazards": [
+          "water-scarcity"
+        ],
+        "soil": {
+          "en": "High Barind Tract clay",
+          "bn": "উঁচু বরেন্দ্র ভূমির এঁটেল মাটি"
+        },
+        "advisory": {
+          "en": "Focus on Khirsapat and Langra mangoes. Prioritize drip irrigation.",
+          "bn": "ক্ষীরশাপাত ও ল্যাংড়া আমে গুরুত্ব দিন। ড্রিপ সেচকে অগ্রাধিকার দিন।"
+        }
+      }
+    },
+    {
+      "slug": "chattogram",
+      "name": {
+        "en": "Chattogram",
+        "bn": "চট্টগ্রাম"
+      },
+      "aliases": [
+        "Chittagong"
+      ],
+      "division": "chattogram",
+      "lat": 22.3569,
+      "lon": 91.7832,
+      "profile": {
+        "crops": [
+          "rice",
+          "watermelon",
+          "fish"
+        ],
+        "hazards": [
+          "cyclone",
+          "salinity"
+        ],
+        "soil": {
+          "en": "Saline / alluvial",
+          "bn": "লবণাক্ত / পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "chuadanga",
+      "name": {
+        "en": "Chuadanga",
+        "bn": "চুয়াডাঙ্গা"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.6455,
+      "lon": 88.8507,
+      "profile": {
+        "crops": [
+          "maize",
+          "mango"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "coxs-bazar",
+      "name": {
+        "en": "Cox's Bazar",
+        "bn": "কক্সবাজার"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 21.4272,
+      "lon": 91.9823,
+      "profile": {
+        "crops": [
+          "salt",
+          "betel-leaf",
+          "dry-fish"
+        ],
+        "hazards": [
+          "cyclone",
+          "salinity"
+        ],
+        "soil": {
+          "en": "Sandy saline",
+          "bn": "বেলে লবণাক্ত মাটি"
+        }
+      }
+    },
+    {
+      "slug": "cumilla",
+      "name": {
+        "en": "Cumilla",
+        "bn": "কুমিল্লা"
+      },
+      "aliases": [
+        "Comilla"
+      ],
+      "division": "chattogram",
+      "lat": 23.4607,
+      "lon": 91.1809,
+      "profile": {
+        "crops": [
+          "vegetables",
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Clay loam",
+          "bn": "এঁটেল দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "dhaka",
+      "name": {
+        "en": "Dhaka",
+        "bn": "ঢাকা"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.8103,
+      "lon": 90.4125,
+      "profile": {
+        "crops": [
+          "rice",
+          "vegetables",
+          "mustard"
+        ],
+        "hazards": [
+          "waterlogging"
+        ],
+        "soil": {
+          "en": "Alluvial / clay loam",
+          "bn": "পলি / এঁটেল দোআঁশ"
+        },
+        "advisory": {
+          "en": "Monitor for stem borer in Boro rice. Use balanced Fertilizer (Urea:TSP:MOP = 3:1:1).",
+          "bn": "বোরো ধানে মাজরা পোকার দিকে নজর রাখুন। সুষম সার ব্যবহার করুন (ইউরিয়া:টিএসপি:এমওপি = ৩:১:১)।"
+        }
+      }
+    },
+    {
+      "slug": "dinajpur",
+      "name": {
+        "en": "Dinajpur",
+        "bn": "দিনাজপুর"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.6279,
+      "lon": 88.6332,
+      "profile": {
+        "crops": [
+          "litchi",
+          "aromatic-rice"
+        ],
+        "hazards": [
+          "cold-wave"
+        ],
+        "soil": {
+          "en": "Old Himalayan piedmont",
+          "bn": "প্রাচীন হিমালয় পাদভূমি"
+        }
+      }
+    },
+    {
+      "slug": "faridpur",
+      "name": {
+        "en": "Faridpur",
+        "bn": "ফরিদপুর"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.6071,
+      "lon": 89.8429,
+      "profile": null
+    },
+    {
+      "slug": "feni",
+      "name": {
+        "en": "Feni",
+        "bn": "ফেনী"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 23.0159,
+      "lon": 91.3976,
+      "profile": {
+        "crops": [
+          "rice",
+          "fish"
+        ],
+        "hazards": [
+          "coastal-flood"
+        ],
+        "soil": {
+          "en": "Alluvial",
+          "bn": "পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "gaibandha",
+      "name": {
+        "en": "Gaibandha",
+        "bn": "গাইবান্ধা"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.3289,
+      "lon": 89.5488,
+      "profile": {
+        "crops": [
+          "rice",
+          "maize"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "gazipur",
+      "name": {
+        "en": "Gazipur",
+        "bn": "গাজীপুর"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 24.0023,
+      "lon": 90.4293,
+      "profile": {
+        "crops": [
+          "rice",
+          "jackfruit",
+          "pineapple"
+        ],
+        "hazards": [
+          "industrial-pollution"
+        ],
+        "soil": {
+          "en": "Red clay (Madhupur Tract)",
+          "bn": "লাল এঁটেল (মধুপুর গড়)"
+        },
+        "advisory": {
+          "en": "Apply potash to improve jackfruit sweetness. Guard against fruit borer.",
+          "bn": "কাঁঠালের মিষ্টতা বাড়াতে পটাশ সার দিন। ফল ছিদ্রকারী পোকা থেকে রক্ষা করুন।"
+        }
+      }
+    },
+    {
+      "slug": "gopalganj",
+      "name": {
+        "en": "Gopalganj",
+        "bn": "গোপালগঞ্জ"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.0051,
+      "lon": 89.8262,
+      "profile": null
+    },
+    {
+      "slug": "habiganj",
+      "name": {
+        "en": "Habiganj",
+        "bn": "হবিগঞ্জ"
+      },
+      "aliases": [],
+      "division": "sylhet",
+      "lat": 24.3749,
+      "lon": 91.4155,
+      "profile": {
+        "crops": [
+          "boro-rice",
+          "tea"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Wetland clay",
+          "bn": "জলাভূমির এঁটেল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "jamalpur",
+      "name": {
+        "en": "Jamalpur",
+        "bn": "জামালপুর"
+      },
+      "aliases": [],
+      "division": "mymensingh",
+      "lat": 24.9229,
+      "lon": 89.955,
+      "profile": {
+        "crops": [
+          "rice",
+          "mustard"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Loam",
+          "bn": "দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "jashore",
+      "name": {
+        "en": "Jashore",
+        "bn": "যশোর"
+      },
+      "aliases": [
+        "Jessore"
+      ],
+      "division": "khulna",
+      "lat": 23.1634,
+      "lon": 89.2182,
+      "profile": {
+        "crops": [
+          "vegetables",
+          "rice",
+          "flowers"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "jhalokathi",
+      "name": {
+        "en": "Jhalokathi",
+        "bn": "ঝালকাঠি"
+      },
+      "aliases": [
+        "Jhalokati"
+      ],
+      "division": "barishal",
+      "lat": 22.6432,
+      "lon": 90.1969,
+      "profile": {
+        "crops": [
+          "rice",
+          "guava"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Alluvial",
+          "bn": "পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "jhenaidah",
+      "name": {
+        "en": "Jhenaidah",
+        "bn": "ঝিনাইদহ"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.545,
+      "lon": 89.1729,
+      "profile": {
+        "crops": [
+          "banana",
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Loam",
+          "bn": "দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "joypurhat",
+      "name": {
+        "en": "Joypurhat",
+        "bn": "জয়পুরহাট"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 25.0968,
+      "lon": 89.0225,
+      "profile": {
+        "crops": [
+          "potato",
+          "rice"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Barind clay",
+          "bn": "বরেন্দ্র এঁটেল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "khagrachhari",
+      "name": {
+        "en": "Khagrachhari",
+        "bn": "খাগড়াছড়ি"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 23.1119,
+      "lon": 91.9709,
+      "profile": {
+        "crops": [
+          "ginger",
+          "turmeric",
+          "mango"
+        ],
+        "hazards": [
+          "landslide"
+        ],
+        "soil": {
+          "en": "Red hill soil",
+          "bn": "পাহাড়ি লাল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "khulna",
+      "name": {
+        "en": "Khulna",
+        "bn": "খুলনা"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 22.8456,
+      "lon": 89.5403,
+      "profile": {
+        "crops": [
+          "shrimp",
+          "coconut",
+          "rice"
+        ],
+        "hazards": [
+          "cyclone",
+          "salinity"
+        ],
+        "soil": {
+          "en": "Saline clay",
+          "bn": "লবণাক্ত এঁটেল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "kishoreganj",
+      "name": {
+        "en": "Kishoreganj",
+        "bn": "কিশোরগঞ্জ"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 24.4459,
+      "lon": 90.782,
+      "profile": {
+        "crops": [
+          "boro-rice",
+          "potato",
+          "fish"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Haor wetland peat",
+          "bn": "হাওরের জলাভূমি (পিট মাটি)"
+        }
+      }
+    },
+    {
+      "slug": "kurigram",
+      "name": {
+        "en": "Kurigram",
+        "bn": "কুড়িগ্রাম"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.8054,
+      "lon": 89.6366,
+      "profile": {
+        "crops": [
+          "maize",
+          "rice"
+        ],
+        "hazards": [
+          "river-erosion",
+          "monga"
+        ],
+        "soil": {
+          "en": "Sandy",
+          "bn": "বেলে মাটি"
+        }
+      }
+    },
+    {
+      "slug": "kushtia",
+      "name": {
+        "en": "Kushtia",
+        "bn": "কুষ্টিয়া"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.9011,
+      "lon": 89.1206,
+      "profile": {
+        "crops": [
+          "rice",
+          "tobacco"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Sandy alluvial",
+          "bn": "বেলে পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "lakshmipur",
+      "name": {
+        "en": "Lakshmipur",
+        "bn": "লক্ষ্মীপুর"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 22.9463,
+      "lon": 90.8385,
+      "profile": {
+        "crops": [
+          "soybean",
+          "betel-nut"
+        ],
+        "hazards": [
+          "cyclone"
+        ],
+        "soil": {
+          "en": "Silt loam",
+          "bn": "পলিময় দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "lalmonirhat",
+      "name": {
+        "en": "Lalmonirhat",
+        "bn": "লালমনিরহাট"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.9037,
+      "lon": 89.4475,
+      "profile": {
+        "crops": [
+          "tobacco",
+          "maize"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Teesta alluvial",
+          "bn": "তিস্তার পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "madaripur",
+      "name": {
+        "en": "Madaripur",
+        "bn": "মাদারীপুর"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.2396,
+      "lon": 90.187,
+      "profile": null
+    },
+    {
+      "slug": "magura",
+      "name": {
+        "en": "Magura",
+        "bn": "মাগুরা"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.4873,
+      "lon": 89.4184,
+      "profile": {
+        "crops": [
+          "guava",
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Clay loam",
+          "bn": "এঁটেল দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "manikganj",
+      "name": {
+        "en": "Manikganj",
+        "bn": "মানিকগঞ্জ"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.8615,
+      "lon": 90.0003,
+      "profile": {
+        "crops": [
+          "tobacco",
+          "rice"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "meherpur",
+      "name": {
+        "en": "Meherpur",
+        "bn": "মেহেরপুর"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.7711,
+      "lon": 88.6393,
+      "profile": {
+        "crops": [
+          "maize",
+          "vegetables"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "moulvibazar",
+      "name": {
+        "en": "Moulvibazar",
+        "bn": "মৌলভীবাজার"
+      },
+      "aliases": [
+        "Maulvibazar"
+      ],
+      "division": "sylhet",
+      "lat": 24.4829,
+      "lon": 91.7709,
+      "profile": {
+        "crops": [
+          "tea",
+          "pineapple"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Acidic hill soil",
+          "bn": "অম্লীয় পাহাড়ি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "munshiganj",
+      "name": {
+        "en": "Munshiganj",
+        "bn": "মুন্সীগঞ্জ"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.5422,
+      "lon": 90.5305,
+      "profile": {
+        "crops": [
+          "potato",
+          "rice"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Light alluvial",
+          "bn": "হালকা পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "mymensingh",
+      "name": {
+        "en": "Mymensingh",
+        "bn": "ময়মনসিংহ"
+      },
+      "aliases": [],
+      "division": "mymensingh",
+      "lat": 24.7471,
+      "lon": 90.4203,
+      "profile": {
+        "crops": [
+          "rice",
+          "fish",
+          "litchi"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Clay loam",
+          "bn": "এঁটেল দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "naogaon",
+      "name": {
+        "en": "Naogaon",
+        "bn": "নওগাঁ"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 24.8318,
+      "lon": 88.9282,
+      "profile": {
+        "crops": [
+          "rice",
+          "aromatic-rice"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Barind alluvial",
+          "bn": "বরেন্দ্র পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "narail",
+      "name": {
+        "en": "Narail",
+        "bn": "নড়াইল"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 23.1673,
+      "lon": 89.509,
+      "profile": {
+        "crops": [
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Clay loam",
+          "bn": "এঁটেল দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "narayanganj",
+      "name": {
+        "en": "Narayanganj",
+        "bn": "নারায়ণগঞ্জ"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.6236,
+      "lon": 90.5,
+      "profile": {
+        "crops": [
+          "rice",
+          "jute"
+        ],
+        "hazards": [
+          "industrial-pollution"
+        ],
+        "soil": {
+          "en": "Clay loam",
+          "bn": "এঁটেল দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "narsingdi",
+      "name": {
+        "en": "Narsingdi",
+        "bn": "নরসিংদী"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.9322,
+      "lon": 90.7188,
+      "profile": {
+        "crops": [
+          "banana",
+          "vegetables"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Loam",
+          "bn": "দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "natore",
+      "name": {
+        "en": "Natore",
+        "bn": "নাটোর"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 24.4095,
+      "lon": 89.0145,
+      "profile": {
+        "crops": [
+          "sugarcane",
+          "fish"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Clay",
+          "bn": "এঁটেল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "netrokona",
+      "name": {
+        "en": "Netrokona",
+        "bn": "নেত্রকোনা"
+      },
+      "aliases": [
+        "Netrakona"
+      ],
+      "division": "mymensingh",
+      "lat": 24.8709,
+      "lon": 90.7279,
+      "profile": {
+        "crops": [
+          "boro-rice",
+          "duck"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Peat / haor",
+          "bn": "পিট / হাওর"
+        }
+      }
+    },
+    {
+      "slug": "nilphamari",
+      "name": {
+        "en": "Nilphamari",
+        "bn": "নীলফামারী"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.9318,
+      "lon": 88.8475,
+      "profile": {
+        "crops": [
+          "ginger",
+          "rice"
+        ],
+        "hazards": [
+          "cold-wave"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "noakhali",
+      "name": {
+        "en": "Noakhali",
+        "bn": "নোয়াখালী"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 22.8222,
+      "lon": 91.0975,
+      "profile": {
+        "crops": [
+          "rice",
+          "coconut",
+          "soybean"
+        ],
+        "hazards": [
+          "salinity"
+        ],
+        "soil": {
+          "en": "Saline alluvial",
+          "bn": "লবণাক্ত পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "pabna",
+      "name": {
+        "en": "Pabna",
+        "bn": "পাবনা"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 24.0025,
+      "lon": 89.2435,
+      "profile": {
+        "crops": [
+          "spices",
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Loam",
+          "bn": "দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "panchagarh",
+      "name": {
+        "en": "Panchagarh",
+        "bn": "পঞ্চগড়"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 26.3312,
+      "lon": 88.5583,
+      "profile": {
+        "crops": [
+          "tea",
+          "rice"
+        ],
+        "hazards": [
+          "cold-wave"
+        ],
+        "soil": {
+          "en": "Himalayan foothill",
+          "bn": "হিমালয়ের পাদদেশীয় মাটি"
+        }
+      }
+    },
+    {
+      "slug": "patuakhali",
+      "name": {
+        "en": "Patuakhali",
+        "bn": "পটুয়াখালী"
+      },
+      "aliases": [],
+      "division": "barishal",
+      "lat": 22.3596,
+      "lon": 90.3299,
+      "profile": {
+        "crops": [
+          "rice",
+          "watermelon"
+        ],
+        "hazards": [
+          "salinity"
+        ],
+        "soil": {
+          "en": "Silty alluvial",
+          "bn": "পলিময় মাটি"
+        }
+      }
+    },
+    {
+      "slug": "pirojpur",
+      "name": {
+        "en": "Pirojpur",
+        "bn": "পিরোজপুর"
+      },
+      "aliases": [],
+      "division": "barishal",
+      "lat": 22.5807,
+      "lon": 89.9749,
+      "profile": {
+        "crops": [
+          "guava",
+          "hog-plum"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Saline loam",
+          "bn": "লবণাক্ত দোআঁশ"
+        }
+      }
+    },
+    {
+      "slug": "rajbari",
+      "name": {
+        "en": "Rajbari",
+        "bn": "রাজবাড়ী"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.757,
+      "lon": 89.6446,
+      "profile": null
+    },
+    {
+      "slug": "rajshahi",
+      "name": {
+        "en": "Rajshahi",
+        "bn": "রাজশাহী"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 24.3636,
+      "lon": 88.6241,
+      "profile": {
+        "crops": [
+          "mango",
+          "silk",
+          "rice"
+        ],
+        "hazards": [
+          "drought"
+        ],
+        "soil": {
+          "en": "Drought-prone Barind clay",
+          "bn": "খরাপ্রবণ বরেন্দ্র এঁটেল মাটি"
+        },
+        "advisory": {
+          "en": "Use pheromone traps for Mango fruit fly. Implement mulching to save water.",
+          "bn": "আমের মাছি পোকা দমনে ফেরোমন ফাঁদ ব্যবহার করুন। পানি বাঁচাতে মালচিং করুন।"
+        }
+      }
+    },
+    {
+      "slug": "rangamati",
+      "name": {
+        "en": "Rangamati",
+        "bn": "রাঙ্গামাটি"
+      },
+      "aliases": [],
+      "division": "chattogram",
+      "lat": 22.6556,
+      "lon": 92.1751,
+      "profile": {
+        "crops": [
+          "cashew",
+          "coffee",
+          "mango"
+        ],
+        "hazards": [
+          "landslide"
+        ],
+        "soil": {
+          "en": "Hill soil",
+          "bn": "পাহাড়ি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "rangpur",
+      "name": {
+        "en": "Rangpur",
+        "bn": "রংপুর"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 25.7468,
+      "lon": 89.2502,
+      "profile": {
+        "crops": [
+          "tobacco",
+          "rice",
+          "ginger"
+        ],
+        "hazards": [
+          "cold-wave",
+          "monga"
+        ],
+        "soil": {
+          "en": "Sandy alluvial (Teesta)",
+          "bn": "বেলে পলি (তিস্তা)"
+        }
+      }
+    },
+    {
+      "slug": "satkhira",
+      "name": {
+        "en": "Satkhira",
+        "bn": "সাতক্ষীরা"
+      },
+      "aliases": [],
+      "division": "khulna",
+      "lat": 22.7185,
+      "lon": 89.0703,
+      "profile": {
+        "crops": [
+          "shrimp",
+          "honey",
+          "mango"
+        ],
+        "hazards": [
+          "salinity",
+          "cyclone"
+        ],
+        "soil": {
+          "en": "Highly saline",
+          "bn": "উচ্চ লবণাক্ত মাটি"
+        }
+      }
+    },
+    {
+      "slug": "shariatpur",
+      "name": {
+        "en": "Shariatpur",
+        "bn": "শরীয়তপুর"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 23.2423,
+      "lon": 90.4348,
+      "profile": null
+    },
+    {
+      "slug": "sherpur",
+      "name": {
+        "en": "Sherpur",
+        "bn": "শেরপুর"
+      },
+      "aliases": [],
+      "division": "mymensingh",
+      "lat": 25.0211,
+      "lon": 90.0125,
+      "profile": {
+        "crops": [
+          "rice"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Hill alluvial",
+          "bn": "পাহাড়ি পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "sirajganj",
+      "name": {
+        "en": "Sirajganj",
+        "bn": "সিরাজগঞ্জ"
+      },
+      "aliases": [],
+      "division": "rajshahi",
+      "lat": 24.4533,
+      "lon": 89.6385,
+      "profile": {
+        "crops": [
+          "rice",
+          "dairy"
+        ],
+        "hazards": [
+          "river-erosion"
+        ],
+        "soil": {
+          "en": "Riverine alluvial",
+          "bn": "নদীবাহিত পলি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "sunamganj",
+      "name": {
+        "en": "Sunamganj",
+        "bn": "সুনামগঞ্জ"
+      },
+      "aliases": [],
+      "division": "sylhet",
+      "lat": 25.0683,
+      "lon": 91.4073,
+      "profile": {
+        "crops": [
+          "boro-rice",
+          "fish"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Peat / wetland",
+          "bn": "পিট / জলাভূমি"
+        }
+      }
+    },
+    {
+      "slug": "sylhet",
+      "name": {
+        "en": "Sylhet",
+        "bn": "সিলেট"
+      },
+      "aliases": [],
+      "division": "sylhet",
+      "lat": 24.8949,
+      "lon": 91.8687,
+      "profile": {
+        "crops": [
+          "tea",
+          "orange",
+          "rice"
+        ],
+        "hazards": [
+          "flash-flood"
+        ],
+        "soil": {
+          "en": "Acidic hill soil",
+          "bn": "অম্লীয় পাহাড়ি মাটি"
+        }
+      }
+    },
+    {
+      "slug": "tangail",
+      "name": {
+        "en": "Tangail",
+        "bn": "টাঙ্গাইল"
+      },
+      "aliases": [],
+      "division": "dhaka",
+      "lat": 24.2513,
+      "lon": 89.9167,
+      "profile": {
+        "crops": [
+          "pineapple",
+          "rice",
+          "banana"
+        ],
+        "hazards": [
+          "flood"
+        ],
+        "soil": {
+          "en": "Loam / red soil",
+          "bn": "দোআঁশ / লাল মাটি"
+        }
+      }
+    },
+    {
+      "slug": "thakurgaon",
+      "name": {
+        "en": "Thakurgaon",
+        "bn": "ঠাকুরগাঁও"
+      },
+      "aliases": [],
+      "division": "rangpur",
+      "lat": 26.0339,
+      "lon": 88.4617,
+      "profile": {
+        "crops": [
+          "potato",
+          "rice"
+        ],
+        "hazards": [
+          "cold-wave"
+        ],
+        "soil": {
+          "en": "Sandy loam",
+          "bn": "বেলে দোআঁশ"
+        }
+      }
+    }
+  ]
+}

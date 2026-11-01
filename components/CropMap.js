@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
+import Link from 'next/link';
 import { districtsData } from '@/data/districtsData';
-import DistrictReportModal from './DistrictReportModal';
+import { findDistrictByName } from '@/lib/domain/districts';
+import { localePath } from '@/lib/i18n';
 import { useLanguage } from './LanguageProvider';
 
 // Name normalizations between geoBoundaries shapeNames and our districtsData keys
@@ -27,7 +29,6 @@ export default function CropMap() {
   const [geoData, setGeoData] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [hoveredDistrict, setHoveredDistrict] = useState(null);
-  const [isReportOpen, setIsReportOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const t = {
@@ -44,7 +45,7 @@ export default function CropMap() {
       soilProfile: 'Soil Profile',
       climateRisk: 'Climate Risk',
       irrigation: 'Irrigation',
-      generateReport: 'Generate Full Intelligence Report',
+      generateReport: 'Open district desk — live weather & irrigation',
     },
     bn: {
       title: 'কৃষি ইন্টেলিজেন্স ম্যাপ',
@@ -59,7 +60,7 @@ export default function CropMap() {
       soilProfile: 'মাটির প্রোফাইল',
       climateRisk: 'জলবায়ু ঝুঁকি',
       irrigation: 'সেচ',
-      generateReport: 'সম্পূর্ণ ইন্টেলিজেন্স রিপোর্ট তৈরি করুন',
+      generateReport: 'জেলা ডেস্ক খুলুন — সরাসরি আবহাওয়া ও সেচ',
     }
   }[lang];
 
@@ -297,14 +298,14 @@ export default function CropMap() {
 
               {/* CTA */}
               <div style={{ padding:'0 2rem 1.5rem' }}>
-                <button
-                  onClick={() => setIsReportOpen(true)}
+                <Link
+                  href={localePath(lang, `/districts/${findDistrictByName(selectedDistrict)?.slug ?? ''}`)}
                   style={{
                     width:'100%',
                     background:'linear-gradient(135deg, #10b981, #059669)',
                     color:'#fff', fontWeight:700, fontSize:'15px',
                     border:'none', borderRadius:'1rem',
-                    padding:'1rem', cursor:'pointer',
+                    padding:'1rem', cursor:'pointer', textDecoration:'none',
                     display:'flex', alignItems:'center', justifyContent:'center', gap:'0.75rem',
                     boxShadow:'0 8px 30px rgba(16,185,129,0.35)',
                     transition:'transform 0.2s ease, box-shadow 0.2s ease',
@@ -313,17 +314,12 @@ export default function CropMap() {
                   onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 30px rgba(16,185,129,0.35)'; }}
                 >
                   <span>📊</span> {t.generateReport}
-                </button>
+                </Link>
               </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Report Modal */}
-      {stats && (
-        <DistrictReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} district={stats} />
-      )}
 
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </section>
