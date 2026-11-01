@@ -21,7 +21,7 @@ Krishi Bangla is an interactive, bilingual (English/Bengali) web platform dedica
 
 ## 🚀 Getting Started
 
-First, copy `.env.example` to `.env.local` and fill in your own keys. `GEMINI_API_KEY` powers the AI Chat and Disease Detection features, and `WEATHER_API_KEY` (WeatherAPI.com) powers the weather widget. Never commit real keys.
+First, copy `.env.example` to `.env.local` and fill in your own keys. `GEMINI_API_KEY` powers the AI chat and disease scan; all other data sources (Open-Meteo, WFP, World Bank, NASA POWER, GDACS) need no keys. Never commit real keys.
 
 To run the development server:
 

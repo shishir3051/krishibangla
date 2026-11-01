@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DistrictFinder } from '@/components/district/DistrictFinder';
 import { DistrictMap } from '@/components/map/DistrictMap';
-import { SiteHeader } from '@/components/shell/SiteHeader';
+import { PageShell } from '@/components/shell/PageShell';
 import { Card } from '@/components/ui/Card';
 import { getDictionary } from '@/lib/dictionary';
 import { hasLocale } from '@/lib/i18n';
@@ -20,8 +20,7 @@ export default async function DistrictsPage({ params }: PageProps<'/[locale]/dis
   const t = await getDictionary(locale);
 
   return (
-    <div className="min-h-screen bg-canvas font-ui text-fg">
-      <SiteHeader locale={locale} nav={t.nav} />
+    <PageShell locale={locale} t={t}>
       <main className="mx-auto max-w-6xl px-4 py-8">
         <h1 className="text-3xl font-semibold">{t.districts.title}</h1>
         <p className="mt-2 max-w-2xl text-fg-muted">{t.districts.subtitle}</p>
@@ -46,6 +45,6 @@ export default async function DistrictsPage({ params }: PageProps<'/[locale]/dis
           />
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

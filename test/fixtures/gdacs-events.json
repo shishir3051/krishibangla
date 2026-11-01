@@ -1,0 +1,282 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "bbox": [
+    96.672,
+    24.982,
+    96.672,
+    24.982
+   ],
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     96.672,
+     24.982
+    ]
+   },
+   "properties": {
+    "eventtype": "DR",
+    "eventid": 1027462,
+    "episodeid": 1,
+    "eventname": "India, Myanmar, China-2026",
+    "glide": "",
+    "name": "Drought in Bangladesh, Bhutan, China, India, Myanmar, Nepal",
+    "description": "Drought in Bangladesh, Bhutan, China, India, Myanmar, Nepal",
+    "htmldescription": "Green Drought in Bangladesh, Bhutan, China, India, Myanmar, Nepal from: 21 May 2026  to: 30 Oct 2026 .",
+    "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/DR.png",
+    "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Green/DR.png",
+    "url": {
+     "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=DR&eventid=1027462&episodeid=1",
+     "report": "https://www.gdacs.org/report.aspx?eventid=1027462&episodeid=1&eventtype=DR",
+     "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=DR&eventid=1027462"
+    },
+    "alertlevel": "Green",
+    "alertscore": 1,
+    "episodealertlevel": "Green",
+    "episodealertscore": 0.25,
+    "istemporary": "false",
+    "iscurrent": "true",
+    "country": "Bangladesh, Bhutan, China, India, Myanmar, Nepal",
+    "fromdate": "2026-05-21T00:00:00",
+    "todate": "2026-10-30T00:00:00",
+    "datemodified": "2026-11-01T05:57:10",
+    "iso3": "BGD",
+    "source": "GDO",
+    "sourceid": "",
+    "polygonlabel": "Centroid",
+    "Class": "Point_Centroid",
+    "affectedcountries": [
+     {
+      "iso2": "BD",
+      "iso3": "BGD",
+      "countryname": "Bangladesh"
+     },
+     {
+      "iso2": "BT",
+      "iso3": "BTN",
+      "countryname": "Bhutan"
+     },
+     {
+      "iso2": "CN",
+      "iso3": "CHN",
+      "countryname": "China"
+     },
+     {
+      "iso2": "IN",
+      "iso3": "IND",
+      "countryname": "India"
+     },
+     {
+      "iso2": "MM",
+      "iso3": "MMR",
+      "countryname": "Myanmar"
+     },
+     {
+      "iso2": "NP",
+      "iso3": "NPL",
+      "countryname": "Nepal"
+     }
+    ],
+    "severitydata": {
+     "severity": 289978,
+     "severitytext": "Minor impact for agricultural drought in 289978 km2",
+     "severityunit": "km2"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "bbox": [
+    88.9764,
+    23.9479,
+    88.9764,
+    23.9479
+   ],
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     88.9764,
+     23.9479
+    ]
+   },
+   "properties": {
+    "eventtype": "FL",
+    "eventid": 1104156,
+    "episodeid": 1,
+    "eventname": "",
+    "glide": "",
+    "name": "Flood in Bangladesh",
+    "description": "Flood in Bangladesh",
+    "htmldescription": "Green Flood in Bangladesh from: 10 Sep 2026 01 to: 12 Sep 2026 01.",
+    "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
+    "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Green/FL.png",
+    "url": {
+     "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104156&episodeid=1",
+     "report": "https://www.gdacs.org/report.aspx?eventid=1104156&episodeid=1&eventtype=FL",
+     "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104156"
+    },
+    "alertlevel": "Green",
+    "alertscore": 1,
+    "episodealertlevel": "Green",
+    "episodealertscore": 0.5,
+    "istemporary": "false",
+    "iscurrent": "false",
+    "country": "Bangladesh",
+    "fromdate": "2026-09-10T01:00:00",
+    "todate": "2026-09-12T01:00:00",
+    "datemodified": "2026-09-14T06:59:11",
+    "iso3": "BGD",
+    "source": "GLOFAS",
+    "sourceid": "",
+    "polygonlabel": "Centroid",
+    "Class": "Point_Centroid",
+    "affectedcountries": [
+     {
+      "iso2": "BD",
+      "iso3": "BGD",
+      "countryname": "Bangladesh"
+     }
+    ],
+    "severitydata": {
+     "severity": 0,
+     "severitytext": "Magnitude 0 ",
+     "severityunit": ""
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "bbox": [
+    88.4,
+    21.7,
+    88.4,
+    21.7
+   ],
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     88.4,
+     21.7
+    ]
+   },
+   "properties": {
+    "eventtype": "TC",
+    "eventid": 1001064,
+    "episodeid": 6,
+    "eventname": "REMAL-24",
+    "glide": "",
+    "name": "Tropical Cyclone REMAL-24",
+    "description": "Tropical Cyclone REMAL-24",
+    "htmldescription": "Orange Tropical Cyclone REMAL-24 in Bangladesh, India, Bhutan from: 25 May 2024  to: 26 May 2024 .",
+    "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+    "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Orange/TC.png",
+    "url": {
+     "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001064&episodeid=6",
+     "report": "https://www.gdacs.org/report.aspx?eventid=1001064&episodeid=6&eventtype=TC",
+     "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001064"
+    },
+    "alertlevel": "Orange",
+    "alertscore": 2,
+    "episodealertlevel": "Orange",
+    "episodealertscore": 2,
+    "istemporary": "false",
+    "iscurrent": "false",
+    "country": "Bangladesh, India, Bhutan",
+    "fromdate": "2024-05-25T12:00:00",
+    "todate": "2024-05-26T18:00:00",
+    "datemodified": "2026-02-11T15:18:59.037",
+    "iso3": "BGD",
+    "source": "JTWC",
+    "sourceid": "",
+    "polygonlabel": "Centroid",
+    "Class": "Point_Centroid",
+    "countryonland": "",
+    "affectedcountries": [
+     {
+      "iso2": "BD",
+      "iso3": "BGD",
+      "countryname": "Bangladesh"
+     },
+     {
+      "iso2": "IN",
+      "iso3": "IND",
+      "countryname": "India"
+     },
+     {
+      "iso2": "BT",
+      "iso3": "BTN",
+      "countryname": "Bhutan"
+     }
+    ],
+    "severitydata": {
+     "severity": 101.8512,
+     "severitytext": "Tropical Storm (maximum wind speed of 102 km/h)",
+     "severityunit": "km/h"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "bbox": [
+    93.1,
+    20.8,
+    93.1,
+    20.8
+   ],
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     93.1,
+     20.8
+    ]
+   },
+   "properties": {
+    "eventtype": "TC",
+    "eventid": 1000970,
+    "episodeid": 15,
+    "eventname": "MOCHA-23",
+    "glide": "TC-2023-000071-BGD",
+    "name": "Tropical Cyclone MOCHA-23",
+    "description": "Tropical Cyclone MOCHA-23",
+    "htmldescription": "Red Tropical Cyclone MOCHA-23 in Myanmar from: 11 May 2023  to: 14 May 2023 .",
+    "icon": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+    "iconoverall": "https://www.gdacs.org/images/gdacs_icons/maps/Red/TC.png",
+    "url": {
+     "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1000970&episodeid=15",
+     "report": "https://www.gdacs.org/report.aspx?eventid=1000970&episodeid=15&eventtype=TC",
+     "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1000970"
+    },
+    "alertlevel": "Red",
+    "alertscore": 3,
+    "episodealertlevel": "Red",
+    "episodealertscore": 3,
+    "istemporary": "false",
+    "iscurrent": "false",
+    "country": "Myanmar",
+    "fromdate": "2023-05-11T00:00:00",
+    "todate": "2023-05-14T12:00:00",
+    "datemodified": "2023-06-13T17:03:10",
+    "iso3": "MMR",
+    "source": "JTWC",
+    "sourceid": "",
+    "polygonlabel": "Centroid",
+    "Class": "Point_Centroid",
+    "countryonland": "",
+    "affectedcountries": [
+     {
+      "iso2": "MM",
+      "iso3": "MMR",
+      "countryname": "Myanmar"
+     }
+    ],
+    "severitydata": {
+     "severity": 259.2576,
+     "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 259 km/h)",
+     "severityunit": "km/h"
+    }
+   }
+  }
+ ]
+}

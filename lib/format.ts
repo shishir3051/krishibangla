@@ -21,6 +21,18 @@ export function formatDayMonth(locale: Locale, isoDate: string): string {
   return new Intl.DateTimeFormat(intlLocale(locale), { day: 'numeric', month: 'short', timeZone: TZ }).format(new Date(`${isoDate}T12:00:00+06:00`));
 }
 
+/** ISO timestamp → day, month and time in Dhaka, e.g. "1 Nov, 14:05" / "১ নভে, ১৪:০৫". */
+export function formatDateTime(locale: Locale, iso: string): string {
+  return new Intl.DateTimeFormat(intlLocale(locale), {
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: TZ,
+  }).format(new Date(iso));
+}
+
 /** ISO timestamp → time of day in Dhaka, e.g. "14:05" / "১৪:০৫". */
 export function formatTime(locale: Locale, iso: string): string {
   return new Intl.DateTimeFormat(intlLocale(locale), { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: TZ }).format(new Date(iso));

@@ -1,0 +1,497 @@
+{
+  "crops": [
+    {
+      "id": "rice",
+      "icon": "🌾",
+      "wfpCommodity": "Rice (coarse)",
+      "adviceOffice": "agriculture",
+      "name": { "en": "Rice", "bn": "ধান" },
+      "summary": {
+        "en": "Bangladesh's staple food, grown in three seasons: Aus, Aman and Boro.",
+        "bn": "বাংলাদেশের প্রধান খাদ্য; আউশ, আমন ও বোরো — তিন মৌসুমে চাষ হয়।"
+      },
+      "description": {
+        "en": "Rice is the staple food of Bangladesh. Because it is grown in three seasons — Aus, Aman and Boro — some rice is in the field almost all year round. High-yielding varieties released by the Bangladesh Rice Research Institute (BRRI) are widely grown.",
+        "bn": "ধান বাংলাদেশের প্রধান খাদ্যশস্য। আউশ, আমন ও বোরো — এই তিন মৌসুমে চাষ হয় বলে বছরের প্রায় সব সময়ই মাঠে কোনো না কোনো ধান থাকে। বাংলাদেশ ধান গবেষণা ইনস্টিটিউট (ব্রি) উদ্ভাবিত উচ্চফলনশীল জাত ব্যাপকভাবে চাষ হয়।"
+      },
+      "lifecycle": [
+        {
+          "icon": "🌱",
+          "name": { "en": "Seedbed", "bn": "বীজতলা" },
+          "timing": { "en": "About 25–30 days (longer for Boro)", "bn": "প্রায় ২৫–৩০ দিন (বোরোতে বেশি)" },
+          "action": {
+            "en": "Raise seedlings in a well-prepared seedbed from good-quality, certified seed.",
+            "bn": "ভালো মানের প্রত্যায়িত বীজ দিয়ে ভালোভাবে তৈরি বীজতলায় চারা গজান।"
+          }
+        },
+        {
+          "icon": "🌿",
+          "name": { "en": "Transplanting", "bn": "চারা রোপণ" },
+          "timing": { "en": "After the seedbed stage", "bn": "বীজতলা পর্বের পর" },
+          "action": {
+            "en": "Transplant in lines, 2–3 seedlings per hill.",
+            "bn": "সারি করে প্রতি গোছায় ২–৩টি চারা রোপণ করুন।"
+          }
+        },
+        {
+          "icon": "🌾",
+          "name": { "en": "Tillering", "bn": "কুশি পর্যায়" },
+          "timing": { "en": "The first weeks after transplanting", "bn": "রোপণের পরের কয়েক সপ্তাহ" },
+          "action": {
+            "en": "Top-dress urea in split doses and keep the field free of weeds.",
+            "bn": "ইউরিয়া কয়েক কিস্তিতে উপরি প্রয়োগ করুন এবং জমি আগাছামুক্ত রাখুন।"
+          }
+        },
+        {
+          "icon": "🚜",
+          "name": { "en": "Harvest", "bn": "ধান কাটা" },
+          "timing": { "en": "When 80–85% of the grains are golden", "bn": "শীষের ৮০–৮৫% ধান সোনালি হলে" },
+          "action": {
+            "en": "Cut by hand or with a combine harvester, then thresh and dry the grain promptly.",
+            "bn": "হাতে বা কম্বাইন হারভেস্টারে কেটে দ্রুত মাড়াই করে ধান শুকিয়ে নিন।"
+          }
+        }
+      ],
+      "seasons": [
+        {
+          "id": "aus",
+          "name": { "en": "Aus", "bn": "আউশ" },
+          "type": { "en": "Pre-monsoon (summer)", "bn": "প্রাক-বর্ষা (গ্রীষ্ম)" },
+          "months": { "en": "April–August", "bn": "এপ্রিল–আগস্ট" },
+          "range": [4, 8],
+          "description": {
+            "en": "A short-duration crop grown with the pre-monsoon and early monsoon rains.",
+            "bn": "প্রাক-বর্ষা ও বর্ষার শুরুর বৃষ্টিতে চাষ করা স্বল্পমেয়াদি ধান।"
+          }
+        },
+        {
+          "id": "aman",
+          "name": { "en": "Aman", "bn": "আমন" },
+          "type": { "en": "Monsoon", "bn": "বর্ষা" },
+          "months": { "en": "July–December", "bn": "জুলাই–ডিসেম্বর" },
+          "range": [7, 12],
+          "description": {
+            "en": "Monsoon rice, transplanted during the rains and harvested in late autumn. Largely rain-fed.",
+            "bn": "বর্ষার ধান; বর্ষায় রোপণ করে হেমন্তে কাটা হয়। মূলত বৃষ্টিনির্ভর।"
+          }
+        },
+        {
+          "id": "boro",
+          "name": { "en": "Boro", "bn": "বোরো" },
+          "type": { "en": "Dry season (winter–spring)", "bn": "শুষ্ক মৌসুম (শীত–বসন্ত)" },
+          "months": { "en": "December–May", "bn": "ডিসেম্বর–মে" },
+          "range": [12, 5],
+          "description": {
+            "en": "Dry-season rice grown with irrigation: transplanted in winter and harvested in April–May.",
+            "bn": "সেচনির্ভর শুষ্ক মৌসুমের ধান; শীতে রোপণ করে এপ্রিল–মে মাসে কাটা হয়।"
+          }
+        }
+      ],
+      "steps": [
+        {
+          "title": { "en": "Seed selection", "bn": "বীজ নির্বাচন" },
+          "text": {
+            "en": "Choose a variety recommended for your season and area by BRRI or your local agriculture office, and use good-quality seed.",
+            "bn": "আপনার মৌসুম ও এলাকার জন্য ব্রি বা স্থানীয় কৃষি অফিসের সুপারিশ করা জাত বেছে নিন এবং ভালো মানের বীজ ব্যবহার করুন।"
+          }
+        },
+        {
+          "title": { "en": "Seedbed", "bn": "বীজতলা তৈরি" },
+          "text": {
+            "en": "Prepare a fertile, well-drained seedbed with loose soil so the seedlings grow strong.",
+            "bn": "সবল চারার জন্য পানি নিষ্কাশনের ব্যবস্থাসহ ঝুরঝুরে, উর্বর মাটির বীজতলা তৈরি করুন।"
+          }
+        },
+        {
+          "title": { "en": "Land preparation", "bn": "জমি তৈরি ও কাদা করা" },
+          "text": {
+            "en": "Level the field and puddle the soil so it holds water and fewer weeds grow.",
+            "bn": "পানি ধরে রাখতে ও আগাছা কমাতে জমি সমান করে কাদা করুন।"
+          }
+        },
+        {
+          "title": { "en": "Transplanting", "bn": "চারা রোপণ" },
+          "text": {
+            "en": "Transplant in lines with even spacing (commonly 20 × 15 cm or 20 × 20 cm), 2–3 seedlings per hill, so every plant gets light and nutrients.",
+            "bn": "প্রতিটি গাছ যেন আলো ও পুষ্টি পায়, সেজন্য সমান দূরত্বে সারি করে রোপণ করুন (সাধারণত ২০ × ১৫ সেমি বা ২০ × ২০ সেমি), প্রতি গোছায় ২–৩টি চারা।"
+          }
+        },
+        {
+          "title": { "en": "Irrigation (AWD)", "bn": "সেচ (এডব্লিউডি)" },
+          "text": {
+            "en": "Alternate wetting and drying (AWD) — letting the field dry a little between irrigations — saves water and reduces methane emissions.",
+            "bn": "পর্যায়ক্রমে ভেজানো ও শুকানো (এডব্লিউডি) পদ্ধতিতে — দুই সেচের মাঝে জমি কিছুটা শুকাতে দিলে — পানি সাশ্রয় হয় এবং মিথেন নিঃসরণ কমে।"
+          }
+        },
+        {
+          "title": { "en": "Fertiliser", "bn": "সার প্রয়োগ" },
+          "text": {
+            "en": "Apply urea, TSP and MoP in balanced doses based on a soil test.",
+            "bn": "মাটি পরীক্ষার ভিত্তিতে ইউরিয়া, টিএসপি ও এমওপি সার সুষম মাত্রায় প্রয়োগ করুন।"
+          }
+        },
+        {
+          "title": { "en": "Weeding", "bn": "আগাছা দমন" },
+          "text": {
+            "en": "Keep the field free of weeds for the first 45 days after transplanting, by hand or with a weeder.",
+            "bn": "রোপণের পর প্রথম ৪৫ দিন জমি আগাছামুক্ত রাখুন — হাতে বা নিড়ানি যন্ত্র দিয়ে।"
+          }
+        },
+        {
+          "title": { "en": "Pest management (IPM)", "bn": "পোকামাকড় দমন (আইপিএম)" },
+          "text": {
+            "en": "Check the field regularly for pests such as brown planthopper and stem borer. Set up perches (sticks or branches) so birds can feed on insects, and spray only when needed.",
+            "bn": "বাদামি গাছফড়িং, মাজরা পোকা ইত্যাদির জন্য নিয়মিত জমি পর্যবেক্ষণ করুন। পাখি বসে যাতে পোকা খেতে পারে, সেজন্য জমিতে ডালপালা পুঁতে দিন (পার্চিং); প্রয়োজন হলেই কেবল কীটনাশক দিন।"
+          }
+        },
+        {
+          "title": { "en": "Disease management", "bn": "রোগ দমন" },
+          "text": {
+            "en": "Watch for blast, sheath blight and bacterial leaf blight. For fungal diseases, use an approved fungicide only when needed, as the label or your agriculture office advises.",
+            "bn": "ব্লাস্ট, খোলপোড়া ও ব্যাকটেরিয়াজনিত পাতাপোড়া রোগের লক্ষণ খেয়াল করুন। ছত্রাকজনিত রোগে প্রয়োজন হলে কেবল অনুমোদিত ছত্রাকনাশক লেবেল বা কৃষি অফিসের পরামর্শমতো ব্যবহার করুন।"
+          }
+        },
+        {
+          "title": { "en": "Harvest", "bn": "ধান কাটা" },
+          "text": {
+            "en": "Harvest when 80–85% of the grains have turned golden, to keep losses low.",
+            "bn": "ক্ষতি কমাতে শীষের ৮০–৮৫% ধান সোনালি রং ধারণ করলে কাটুন।"
+          }
+        },
+        {
+          "title": { "en": "Threshing and cleaning", "bn": "মাড়াই ও ঝাড়াই" },
+          "text": {
+            "en": "Thresh soon after cutting and winnow to remove empty grains.",
+            "bn": "কাটার পর দ্রুত মাড়াই করুন এবং ঝেড়ে চিটা আলাদা করুন।"
+          }
+        },
+        {
+          "title": { "en": "Storage", "bn": "সংরক্ষণ" },
+          "text": {
+            "en": "Dry the grain well (to about 12% moisture) and store it in a motka (earthen jar) or another airtight container.",
+            "bn": "ধান ভালোভাবে শুকিয়ে (প্রায় ১২% আর্দ্রতায়) মটকা বা অন্য কোনো বায়ুরোধী পাত্রে সংরক্ষণ করুন।"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fisheries",
+      "icon": "🐟",
+      "wfpCommodity": "Fish (live, pangasius)",
+      "adviceOffice": "fisheries",
+      "name": { "en": "Fisheries", "bn": "মৎস্য" },
+      "summary": {
+        "en": "Inland, pond and marine fisheries, including hilsa and pangasius.",
+        "bn": "অভ্যন্তরীণ, পুকুর ও সামুদ্রিক মৎস্য — ইলিশ ও পাঙ্গাশসহ।"
+      },
+      "description": {
+        "en": "Fish is one of the main sources of animal protein in Bangladesh. It comes from rivers, haors, beels and floodplains, from ponds and other farmed waters, and from the Bay of Bengal. Hilsa (ilish) is the national fish.",
+        "bn": "মাছ বাংলাদেশের মানুষের আমিষের অন্যতম প্রধান উৎস। নদী, হাওর, বিল ও প্লাবনভূমি, পুকুরসহ বিভিন্ন চাষের জলাশয় এবং বঙ্গোপসাগর — সব জায়গা থেকেই মাছ আসে। ইলিশ বাংলাদেশের জাতীয় মাছ।"
+      },
+      "lifecycleTitle": { "en": "Pond farming stages", "bn": "পুকুরে মাছ চাষের ধাপ" },
+      "lifecycle": [
+        {
+          "icon": "💧",
+          "name": { "en": "Pond preparation", "bn": "পুকুর প্রস্তুতি" },
+          "timing": { "en": "About 2 weeks before stocking", "bn": "পোনা ছাড়ার প্রায় ২ সপ্তাহ আগে" },
+          "action": {
+            "en": "Remove unwanted fish and aquatic weeds, repair the banks, apply lime and then fertilise so natural food grows.",
+            "bn": "রাক্ষুসে ও অবাঞ্ছিত মাছ এবং জলজ আগাছা সরান, পাড় মেরামত করুন, চুন দিন, তারপর প্রাকৃতিক খাবার জন্মাতে সার দিন।"
+          }
+        },
+        {
+          "icon": "🐟",
+          "name": { "en": "Stocking", "bn": "পোনা মজুদ" },
+          "timing": { "en": "Once the pond is ready", "bn": "পুকুর প্রস্তুত হলে" },
+          "action": {
+            "en": "Stock healthy fingerlings from a reliable hatchery or nursery, at the density recommended for each species.",
+            "bn": "নির্ভরযোগ্য হ্যাচারি বা নার্সারি থেকে সুস্থ পোনা প্রজাতিভেদে সুপারিশ করা ঘনত্বে ছাড়ুন।"
+          }
+        },
+        {
+          "icon": "⚗️",
+          "name": { "en": "Care", "bn": "পরিচর্যা" },
+          "timing": { "en": "Through the growing period (varies by species)", "bn": "বাড়ন্ত সময়জুড়ে (প্রজাতিভেদে ভিন্ন)" },
+          "action": {
+            "en": "Feed regularly, check the water's colour and quality, and watch for disease or low oxygen (fish gulping at the surface).",
+            "bn": "নিয়মিত খাবার দিন, পানির রং ও গুণমান দেখুন, এবং রোগ বা অক্সিজেনের ঘাটতি (মাছ ওপরে এসে খাবি খাওয়া) খেয়াল করুন।"
+          }
+        },
+        {
+          "icon": "🧺",
+          "name": { "en": "Harvest", "bn": "আহরণ" },
+          "timing": { "en": "When the fish reach market size", "bn": "মাছ বাজারজাত করার উপযোগী হলে" },
+          "action": {
+            "en": "Harvest with nets — some at a time or all at once — and sort by size for market.",
+            "bn": "জাল টেনে আংশিক বা একবারে আহরণ করুন এবং আকার অনুযায়ী বাছাই করে বাজারে নিন।"
+          }
+        }
+      ],
+      "notes": [
+        {
+          "title": { "en": "Hilsa conservation seasons", "bn": "ইলিশ সংরক্ষণের মৌসুম" },
+          "points": [
+            {
+              "en": "Jatka (young hilsa under 25 cm) may not be caught, sold or transported from November to June, so they can grow and reach the sea.",
+              "bn": "জাটকা (২৫ সেন্টিমিটারের ছোট ইলিশ) যাতে বড় হয়ে সাগরে যেতে পারে, সেজন্য নভেম্বর থেকে জুন পর্যন্ত জাটকা ধরা, বিক্রি ও পরিবহন নিষিদ্ধ।"
+            },
+            {
+              "en": "During the main spawning season, usually in October, catching, selling and transporting hilsa is banned for about three weeks so mother hilsa can lay their eggs. The government announces the exact dates each year.",
+              "bn": "প্রধান প্রজনন মৌসুমে, সাধারণত অক্টোবরে, মা ইলিশ যাতে নিরাপদে ডিম ছাড়তে পারে, সেজন্য প্রায় তিন সপ্তাহ ইলিশ ধরা, বিক্রি ও পরিবহন নিষিদ্ধ থাকে। সরকার প্রতিবছর নির্দিষ্ট তারিখ ঘোষণা করে।"
+            },
+            {
+              "en": "Some river stretches are declared hilsa sanctuaries, where all fishing stops during set months each year.",
+              "bn": "নদীর কিছু নির্দিষ্ট অংশ ইলিশের অভয়াশ্রম ঘোষিত; সেখানে প্রতিবছর নির্দিষ্ট মাসগুলোতে সব ধরনের মাছ ধরা বন্ধ থাকে।"
+            },
+            {
+              "en": "A seasonal fishing ban also applies in the Bay of Bengal. Check the current dates with your Upazila Fisheries Office or the Department of Fisheries before going out.",
+              "bn": "বঙ্গোপসাগরেও মৌসুমি মাছ ধরার নিষেধাজ্ঞা থাকে। মাছ ধরতে যাওয়ার আগে উপজেলা মৎস্য অফিস বা মৎস্য অধিদপ্তর থেকে চলতি তারিখ জেনে নিন।"
+            }
+          ]
+        },
+        {
+          "title": { "en": "Fish farming in ponds", "bn": "পুকুরে মাছ চাষ" },
+          "points": [
+            {
+              "en": "Choose a pond that gets plenty of sun and does not flood; trim overhanging branches and repair the banks.",
+              "bn": "রোদ পড়ে এবং বন্যায় ডোবে না — এমন পুকুর বেছে নিন; পাড়ে ঝুঁকে থাকা ডালপালা ছেঁটে পাড় মেরামত করুন।"
+            },
+            {
+              "en": "In mixed carp farming, species that feed at different depths share one pond — for example catla near the surface, rui in the middle and mrigal at the bottom.",
+              "bn": "মিশ্র কার্প চাষে পানির বিভিন্ন স্তরে খাবার খায় এমন মাছ একসঙ্গে চাষ করা হয় — যেমন ওপরের স্তরে কাতলা, মাঝের স্তরে রুই এবং তলায় মৃগেল।"
+            },
+            {
+              "en": "Lime and fertilise as your fisheries office advises, so that natural food (plankton) grows in the pond.",
+              "bn": "মৎস্য অফিসের পরামর্শমতো চুন ও সার দিন, যাতে পুকুরে প্রাকৃতিক খাবার (প্ল্যাংকটন) জন্মায়।"
+            },
+            {
+              "en": "Feed at the same time every day and do not overfeed — leftover feed spoils the water.",
+              "bn": "প্রতিদিন একই সময়ে খাবার দিন, বেশি খাবার দেবেন না — উচ্ছিষ্ট খাবার পানি নষ্ট করে।"
+            },
+            {
+              "en": "On hot, cloudy days oxygen can run low, especially around dawn. If fish gulp air at the surface, stop feeding and add fresh water or aerate the pond.",
+              "bn": "গরম ও মেঘলা দিনে, বিশেষ করে ভোরের দিকে, পানিতে অক্সিজেন কমে যেতে পারে। মাছ ওপরে এসে খাবি খেলে খাবার দেওয়া বন্ধ রাখুন এবং নতুন পানি দিন বা বায়ু সঞ্চালনের ব্যবস্থা করুন।"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "potato",
+      "icon": "🥔",
+      "wfpCommodity": "Potatoes (Holland, white)",
+      "adviceOffice": "agriculture",
+      "name": { "en": "Potato", "bn": "আলু" },
+      "summary": {
+        "en": "A major winter crop, planted in November–December and harvested in February–March.",
+        "bn": "শীতের প্রধান ফসল; নভেম্বর–ডিসেম্বরে রোপণ, ফেব্রুয়ারি–মার্চে তোলা হয়।"
+      },
+      "description": {
+        "en": "Potato is one of the main winter (rabi) crops of Bangladesh. It is planted in November–December and harvested in February–March, and many farmers keep potatoes in cold storage to sell later in the year. Varieties released by the Bangladesh Agricultural Research Institute (BARI) are commonly grown.",
+        "bn": "আলু বাংলাদেশের প্রধান রবি (শীতকালীন) ফসলগুলোর একটি। নভেম্বর–ডিসেম্বরে রোপণ করে ফেব্রুয়ারি–মার্চে তোলা হয়; পরে বিক্রির জন্য অনেক কৃষক আলু হিমাগারে রাখেন। বাংলাদেশ কৃষি গবেষণা ইনস্টিটিউট (বারি) উদ্ভাবিত জাত বহুল প্রচলিত।"
+      },
+      "lifecycle": [
+        {
+          "icon": "🥔",
+          "name": { "en": "Planting", "bn": "রোপণ" },
+          "timing": { "en": "November–December", "bn": "নভেম্বর–ডিসেম্বর" },
+          "range": [11, 12],
+          "action": {
+            "en": "Plant healthy, certified seed potatoes.",
+            "bn": "সুস্থ, প্রত্যায়িত বীজআলু রোপণ করুন।"
+          }
+        },
+        {
+          "icon": "⛏️",
+          "name": { "en": "Earthing up", "bn": "মাটি তোলা" },
+          "timing": { "en": "About 30 days after planting", "bn": "রোপণের প্রায় ৩০ দিন পর" },
+          "action": {
+            "en": "Top-dress urea (and potash if advised), then pile soil up along the rows.",
+            "bn": "ইউরিয়া (এবং পরামর্শমতো পটাশ) উপরি প্রয়োগ করে সারির গোড়ায় মাটি তুলে দিন।"
+          }
+        },
+        {
+          "icon": "🛡️",
+          "name": { "en": "Tuber growth", "bn": "আলুর বৃদ্ধি" },
+          "timing": { "en": "About 45–60 days after planting", "bn": "রোপণের প্রায় ৪৫–৬০ দিন পর" },
+          "action": {
+            "en": "Watch for late blight, especially in cold, foggy weather; spray an approved fungicide when advised.",
+            "bn": "নাবি ধসা (লেট ব্লাইট) রোগের দিকে নজর রাখুন, বিশেষ করে ঠান্ডা ও কুয়াশাচ্ছন্ন আবহাওয়ায়; পরামর্শমতো অনুমোদিত ছত্রাকনাশক স্প্রে করুন।"
+          }
+        },
+        {
+          "icon": "📦",
+          "name": { "en": "Harvest", "bn": "আলু তোলা" },
+          "timing": { "en": "February–March (about 85–100 days after planting)", "bn": "ফেব্রুয়ারি–মার্চ (রোপণের প্রায় ৮৫–১০০ দিন পর)" },
+          "range": [2, 3],
+          "action": {
+            "en": "Lift the tubers, let them cure in the shade, and sort out damaged ones before cold storage.",
+            "bn": "আলু তুলে কিছুদিন ছায়ায় রেখে শুকিয়ে নিন (কিউরিং) এবং কাটা-ফাটা আলু বাছাই করে তারপর হিমাগারে পাঠান।"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tomato",
+      "icon": "🍅",
+      "wfpCommodity": "Tomatoes (red)",
+      "adviceOffice": "agriculture",
+      "name": { "en": "Tomato", "bn": "টমেটো" },
+      "summary": {
+        "en": "A winter vegetable grown widely for local markets.",
+        "bn": "স্থানীয় বাজারের জন্য ব্যাপকভাবে চাষ করা শীতকালীন সবজি।"
+      },
+      "description": {
+        "en": "Tomato is mainly a winter (rabi) vegetable in Bangladesh, grown widely for local markets. Heat-tolerant varieties released by BARI also allow some summer growing, usually under a rain shelter.",
+        "bn": "টমেটো বাংলাদেশে মূলত রবি মৌসুমের (শীতকালীন) সবজি, স্থানীয় বাজারের জন্য ব্যাপকভাবে চাষ হয়। বারি উদ্ভাবিত তাপসহনশীল জাত দিয়ে গ্রীষ্মকালেও — সাধারণত বৃষ্টি ঠেকানোর ছাউনির নিচে — কিছু চাষ হয়।"
+      },
+      "lifecycle": [
+        {
+          "icon": "🌱",
+          "name": { "en": "Seedbed", "bn": "বীজতলা" },
+          "timing": { "en": "About 25–30 days", "bn": "প্রায় ২৫–৩০ দিন" },
+          "action": {
+            "en": "Raise seedlings in a seedbed; cover it with net or shade to protect against insects, strong sun and heavy rain.",
+            "bn": "বীজতলায় চারা তৈরি করুন; পোকা, কড়া রোদ ও ভারী বৃষ্টি থেকে রক্ষায় নেট বা ছাউনি দিন।"
+          }
+        },
+        {
+          "icon": "🌿",
+          "name": { "en": "Vegetative growth", "bn": "বাড়ন্ত পর্যায়" },
+          "timing": { "en": "The first weeks after transplanting", "bn": "রোপণের পরের কয়েক সপ্তাহ" },
+          "action": {
+            "en": "Stake the plants, weed, and apply fertiliser in split doses.",
+            "bn": "গাছে খুঁটি দিন, আগাছা পরিষ্কার করুন এবং কয়েক কিস্তিতে সার দিন।"
+          }
+        },
+        {
+          "icon": "🌼",
+          "name": { "en": "Flowering and fruiting", "bn": "ফুল ও ফল" },
+          "timing": { "en": "Mid-season", "bn": "মৌসুমের মাঝামাঝি" },
+          "action": {
+            "en": "Water regularly and evenly — uneven watering makes fruit crack — and apply micronutrients such as boron if advised.",
+            "bn": "নিয়মিত ও সমানভাবে সেচ দিন — অনিয়মিত সেচে ফল ফেটে যায় — এবং পরামর্শমতো বোরনের মতো অণুখাদ্য দিন।"
+          }
+        },
+        {
+          "icon": "🍅",
+          "name": { "en": "Harvest", "bn": "ফল তোলা" },
+          "timing": { "en": "Starts roughly 2–3 months after transplanting", "bn": "রোপণের মোটামুটি ২–৩ মাস পর থেকে" },
+          "action": {
+            "en": "Pick at the turning stage (just starting to colour) for distant markets, or ripe for local sale.",
+            "bn": "দূরের বাজারের জন্য রং ধরতে শুরু করলেই তুলুন, স্থানীয় বিক্রির জন্য পাকা অবস্থায় তুলুন।"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jute",
+      "icon": "🪢",
+      "adviceOffice": "agriculture",
+      "name": { "en": "Jute", "bn": "পাট" },
+      "summary": {
+        "en": "The golden fibre, sown in spring and harvested in the monsoon.",
+        "bn": "সোনালি আঁশ; বসন্তে বোনা হয়, বর্ষায় কাটা হয়।"
+      },
+      "description": {
+        "en": "Jute, the ‘golden fibre’, has long been part of Bangladesh's farming and heritage. It is sown in spring, harvested in the monsoon and then retted in water to separate the fibre. Jute is biodegradable, which makes it a natural alternative to synthetic fibres.",
+        "bn": "‘সোনালি আঁশ’ পাট দীর্ঘদিন ধরে বাংলাদেশের কৃষি ও ঐতিহ্যের অংশ। বসন্তে বোনা হয়, বর্ষায় কাটা হয়, তারপর পানিতে জাগ দিয়ে আঁশ ছাড়ানো হয়। পাট পচনশীল, তাই কৃত্রিম আঁশের প্রাকৃতিক বিকল্প।"
+      },
+      "lifecycle": [
+        {
+          "icon": "🌱",
+          "name": { "en": "Sowing", "bn": "বপন" },
+          "timing": { "en": "March–April", "bn": "মার্চ–এপ্রিল" },
+          "range": [3, 4],
+          "action": {
+            "en": "Sow in lines rather than broadcasting — it makes weeding and thinning easier.",
+            "bn": "ছিটিয়ে না বুনে সারিতে বুনুন — এতে নিড়ানি ও চারা পাতলা করা সহজ হয়।"
+          }
+        },
+        {
+          "icon": "🌿",
+          "name": { "en": "Weeding and thinning", "bn": "আগাছা দমন ও পাতলাকরণ" },
+          "timing": { "en": "About 20–40 days after sowing", "bn": "বপনের প্রায় ২০–৪০ দিন পর" },
+          "action": {
+            "en": "Weed and thin the plants early; it matters a lot for yield and fibre quality.",
+            "bn": "শুরুতেই আগাছা পরিষ্কার করে চারা পাতলা করুন — ফলন ও আঁশের মানের জন্য এটি খুব জরুরি।"
+          }
+        },
+        {
+          "icon": "✂️",
+          "name": { "en": "Harvest", "bn": "পাট কাটা" },
+          "timing": { "en": "July–August (about 100–120 days after sowing)", "bn": "জুলাই–আগস্ট (বপনের প্রায় ১০০–১২০ দিন পর)" },
+          "range": [7, 8],
+          "action": {
+            "en": "Cut when about half the plants are flowering, for good fibre quality.",
+            "bn": "প্রায় অর্ধেক গাছে ফুল এলে কাটুন — তাতে আঁশের মান ভালো হয়।"
+          }
+        },
+        {
+          "icon": "💧",
+          "name": { "en": "Retting", "bn": "জাগ দেওয়া" },
+          "timing": { "en": "About 15–20 days in water", "bn": "পানিতে প্রায় ১৫–২০ দিন" },
+          "action": {
+            "en": "Steep the bundles in clean, slow-moving water. Don't weigh them down with mud, which darkens the fibre.",
+            "bn": "আঁটিগুলো পরিষ্কার, ধীরে বয়ে চলা পানিতে জাগ দিন। ওপরে কাদামাটি চাপা দেবেন না — এতে আঁশ কালচে হয়ে যায়।"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mango",
+      "icon": "🥭",
+      "adviceOffice": "agriculture",
+      "name": { "en": "Mango", "bn": "আম" },
+      "summary": {
+        "en": "A summer fruit, grown mostly in the north-west — Rajshahi, Chapai Nawabganj and Naogaon.",
+        "bn": "গ্রীষ্মের ফল; প্রধানত উত্তর-পশ্চিমাঞ্চলে — রাজশাহী, চাঁপাইনবাবগঞ্জ ও নওগাঁয় — চাষ হয়।"
+      },
+      "description": {
+        "en": "Mango is Bangladesh's best-known summer fruit. It is grown in many districts, most of all in the north-west around Rajshahi, Chapai Nawabganj and Naogaon. Well-known varieties include Himsagar (Khirsapat), Langra, Fazli and Amrapali.",
+        "bn": "আম বাংলাদেশের সবচেয়ে পরিচিত গ্রীষ্মকালীন ফল। অনেক জেলায় চাষ হলেও সবচেয়ে বেশি হয় উত্তর-পশ্চিমের রাজশাহী, চাঁপাইনবাবগঞ্জ ও নওগাঁ এলাকায়। হিমসাগর (ক্ষীরশাপাতি), ল্যাংড়া, ফজলি ও আম্রপালি পরিচিত জাত।"
+      },
+      "lifecycle": [
+        {
+          "icon": "✂️",
+          "name": { "en": "Pruning", "bn": "ডালপালা ছাঁটাই" },
+          "timing": { "en": "After harvest", "bn": "ফল সংগ্রহের পর" },
+          "action": {
+            "en": "Remove dead, diseased and crowded branches so light and air reach the canopy; apply manure and fertiliser.",
+            "bn": "মরা, রোগাক্রান্ত ও ঘন ডাল ছেঁটে দিন যাতে গাছের ভেতরে আলো-বাতাস ঢোকে; জৈব ও রাসায়নিক সার দিন।"
+          }
+        },
+        {
+          "icon": "🌼",
+          "name": { "en": "Flowering", "bn": "মুকুল আসা" },
+          "timing": { "en": "January–February", "bn": "জানুয়ারি–ফেব্রুয়ারি" },
+          "range": [1, 2],
+          "action": {
+            "en": "Watch the flowers for mango hoppers and anthracnose; spray only as your agriculture office advises.",
+            "bn": "মুকুলে হপার পোকা ও অ্যানথ্রাকনোজ রোগের দিকে নজর রাখুন; কৃষি অফিসের পরামর্শমতোই কেবল স্প্রে করুন।"
+          }
+        },
+        {
+          "icon": "🥭",
+          "name": { "en": "Fruit set", "bn": "গুটি বাঁধা" },
+          "timing": { "en": "March–April", "bn": "মার্চ–এপ্রিল" },
+          "range": [3, 4],
+          "action": {
+            "en": "Irrigate during dry spells to reduce fruit drop, and bag the fruit to protect it from pests and blemishes.",
+            "bn": "খরার সময় সেচ দিন — এতে গুটি ঝরা কমে; পোকা ও দাগ থেকে রক্ষায় ফল ব্যাগিং করুন।"
+          }
+        },
+        {
+          "icon": "🧺",
+          "name": { "en": "Harvest", "bn": "আম পাড়া" },
+          "timing": { "en": "May–July (varies by variety)", "bn": "মে–জুলাই (জাতভেদে ভিন্ন)" },
+          "range": [5, 7],
+          "action": {
+            "en": "Pick mature fruit with a short piece of stalk attached, and handle gently to avoid bruising and sap burn.",
+            "bn": "পরিপক্ব আম বোঁটাসহ পাড়ুন এবং আঘাত ও কষের দাগ এড়াতে সাবধানে নাড়াচাড়া করুন।"
+          }
+        }
+      ]
+    }
+  ]
+}

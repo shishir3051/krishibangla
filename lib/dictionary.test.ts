@@ -1,25 +1,36 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import bn from '@/messages/bn.json';
-import en from '@/messages/en.json';
 import { fill } from './dictionary';
 import { formatNumber, formatTime, formatWeekday } from './format';
 
+const dir = new URL('../messages/', import.meta.url);
+const read = (file: string) => JSON.parse(readFileSync(new URL(file, dir), 'utf8'));
+// en.json ↔ bn.json, home.en.json ↔ home.bn.json, …
+const pairs = readdirSync(dir)
+  .filter((f) => f.endsWith('en.json'))
+  .map((en) => [en, en.replace(/en\.json$/, 'bn.json')] as const);
+
 // Every key path, e.g. "desk.irrigationLevels.high"
 const keys = (obj: object, prefix = ''): string[] =>
-  Object.entries(obj).flatMap(([k, v]) => (typeof v === 'object' ? keys(v, `${prefix}${k}.`) : [`${prefix}${k}`]));
+  Object.entries(obj).flatMap(([k, v]) => (v && typeof v === 'object' && !Array.isArray(v) ? keys(v, `${prefix}${k}.`) : [`${prefix}${k}`]));
+const get = (obj: object, path: string) => path.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown>)[k], obj);
+const placeholders = (s: unknown) => (typeof s === 'string' ? (s.match(/\{\w+\}/g) ?? []).sort() : []);
 
-describe('dictionaries', () => {
+describe.each(pairs)('dictionaries %s ↔ %s', (enFile, bnFile) => {
+  const en = read(enFile);
+  const bn = read(bnFile);
+
   it('have the same keys in Bangla and English', () => {
     expect(keys(bn).sort()).toEqual(keys(en).sort());
   });
 
   it('use the same placeholders in both languages', () => {
-    const placeholders = (s: string) => (s.match(/\{\w+\}/g) ?? []).sort();
-    const get = (obj: object, path: string) => path.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown>)[k], obj) as string;
     for (const key of keys(en)) expect(placeholders(get(bn, key)), key).toEqual(placeholders(get(en, key)));
   });
+});
 
-  it('fill replaces known placeholders only', () => {
+describe('fill', () => {
+  it('replaces known placeholders only', () => {
     expect(fill('{n} districts in {name}', { n: 64 })).toBe('64 districts in {name}');
   });
 });

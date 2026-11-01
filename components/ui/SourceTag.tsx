@@ -1,4 +1,4 @@
-import { formatTime } from '@/lib/format';
+import { formatDateTime } from '@/lib/format';
 import type { Locale } from '@/lib/i18n';
 
 type SourceTagProps = {
@@ -6,12 +6,16 @@ type SourceTagProps = {
   labels: { label: string; updated: string; curated: string };
   source: string;
   url?: string;
-  /** ISO time the upstream was fetched; omit for curated/editorial content. */
+  /** ISO time the upstream was fetched — shown with its date, since cached data can be days old. */
   fetchedAt?: string;
+  /** Short qualifier, e.g. "yearly data" or "monthly data to Sep 2026". */
+  note?: string;
+  /** Editorial content written by the KrishiBangla team. */
+  curated?: boolean;
 };
 
-/** "Source: Open-Meteo · Updated 17:05" — every number on the page says where it came from. */
-export function SourceTag({ locale, labels, source, url, fetchedAt }: SourceTagProps) {
+/** "Source: Open-Meteo · Updated 1 Nov, 17:05" — every number on the page says where it came from. */
+export function SourceTag({ locale, labels, source, url, fetchedAt, note, curated }: SourceTagProps) {
   return (
     <p className="text-xs text-fg-muted">
       {labels.label}:{' '}
@@ -22,14 +26,14 @@ export function SourceTag({ locale, labels, source, url, fetchedAt }: SourceTagP
       ) : (
         source
       )}
-      {fetchedAt ? (
+      {fetchedAt && (
         <>
           {' · '}
-          {labels.updated} <time dateTime={fetchedAt}>{formatTime(locale, fetchedAt)}</time>
+          {labels.updated} <time dateTime={fetchedAt}>{formatDateTime(locale, fetchedAt)}</time>
         </>
-      ) : (
-        <> · {labels.curated}</>
       )}
+      {note && <> · {note}</>}
+      {curated && <> · {labels.curated}</>}
     </p>
   );
 }

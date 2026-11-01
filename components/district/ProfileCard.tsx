@@ -15,7 +15,7 @@ export function ProfileCard({ district, locale, t }: { district: District; local
       footer={
         profile && (
           <>
-            <SourceTag locale={locale} labels={t.source} source="KrishiBangla" />
+            <SourceTag locale={locale} labels={t.source} source={t.nav.brand} curated />
             <p className="mt-1 text-xs text-fg-muted">{t.desk.curatedNote}</p>
           </>
         )

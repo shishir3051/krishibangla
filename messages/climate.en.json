@@ -1,0 +1,100 @@
+{
+  "title": "Climate and disaster alerts",
+  "metaTitle": "Climate and disaster alerts for Bangladesh",
+  "subtitle": "How temperature and rainfall in each division compared with the long-term average over the last 12 months, and cyclone, flood and drought alerts for Bangladesh.",
+  "anomalies": {
+    "title": "The last 12 months compared with normal",
+    "period": "{from} to {to} · NASA POWER estimates for each division headquarters (satellite and model data, not weather-station readings).",
+    "whatTitle": "What does “compared with normal” mean?",
+    "whatBody": "Each month is compared with the long-term average for the same calendar month — the “normal”. This difference is called an anomaly. A temperature of +0.5 °C means the month was half a degree warmer than usual. Rainfall is shown as a percentage of normal: 100% is a typical month, 50% is half the usual rain and 150% is one and a half times as much.",
+    "dryNote": "From November to March normal rainfall is only a few millimetres, so the percentage can swing a lot. Check the millimetres in the table as well.",
+    "baseline": "Normal = NASA POWER monthly average for {start}–{end}.",
+    "baselineUnknown": "Normal = NASA POWER long-term monthly average.",
+    "legendTitle": "How to read the charts",
+    "scaleNote": "Every chart uses the same scale: up to ±{max} °C for temperature and 0–200% of normal for rainfall (taller bars are cut off at 200%).",
+    "temperature": "Temperature vs normal",
+    "rainfall": "Rainfall, % of normal",
+    "tempSummary": "{value} °C on average",
+    "rainSummary": "{value}% of normal rain",
+    "warmer": "Warmer than normal",
+    "cooler": "Cooler than normal",
+    "wetter": "More rain than normal",
+    "drier": "Less rain than normal",
+    "barTemp": "{month}: {temp} °C (normal {normal} °C), {diff} °C",
+    "barRain": "{month}: {rain} mm (normal {normal} mm), {pct}% of normal",
+    "noData": "{month}: no data",
+    "chartTemp": "{division}: monthly temperature difference from normal, {from} to {to}. Average {value} °C.",
+    "chartRain": "{division}: monthly rainfall as a percentage of normal, {from} to {to}. Total {value}% of normal.",
+    "showTable": "Show the numbers",
+    "tableTemp": "Monthly mean temperature in °C (difference from normal in brackets)",
+    "tableRain": "Monthly rainfall in mm (percentage of normal in brackets)",
+    "month": "Month",
+    "average": "12-month average",
+    "total": "12-month total",
+    "unavailable": "Climate data from NASA POWER is temporarily unavailable. Please try again later.",
+    "missingDivisions": "Data for these divisions could not be loaded: {names}.",
+    "sourceNote": "monthly data to {month}"
+  },
+  "alerts": {
+    "title": "Disaster alerts",
+    "historyTitle": "GDACS alerts for Bangladesh in the last 12 months",
+    "intro": "GDACS, the Global Disaster Alert and Coordination System of the United Nations and the European Commission, issues automatic alerts for cyclones, floods and droughts worldwide. These are not official national warnings — follow the Bangladesh Meteorological Department and the Department of Disaster Management.",
+    "none": "No active GDACS alerts for Bangladesh",
+    "lastEvent": "Most recent event",
+    "noneInYear": "GDACS recorded no cyclone, flood or drought events for Bangladesh in the last 12 months.",
+    "activeBadge": "Active",
+    "activeNote": "“Active” means the event is ongoing or ended within the last 7 days.",
+    "levelHelp": "The alert level is GDACS’s estimate of the likely impact on people: red high, orange medium, green low.",
+    "report": "GDACS report",
+    "reportLabel": "GDACS report: {name} (opens in a new tab)",
+    "countries": "{n} countries affected",
+    "seeAll": "Alerts from the last 12 months",
+    "byType": "Events in the last 12 months",
+    "unavailable": "GDACS alerts are temporarily unavailable. Please try again in a few minutes.",
+    "levels": {
+      "Red": "Red alert",
+      "Orange": "Orange alert",
+      "Green": "Green alert"
+    },
+    "types": {
+      "TC": "Cyclone",
+      "FL": "Flood",
+      "DR": "Drought"
+    }
+  },
+  "kpi": {
+    "title": "Bangladesh agriculture in numbers",
+    "subtitle": "The latest yearly figures published by the World Bank, with the trend over the past 20 years.",
+    "unavailable": "World Bank figures are temporarily unavailable. Please try again later.",
+    "sourceYear": "World Bank · {year}",
+    "annual": "yearly data",
+    "trendLabel": "{label}, {from}–{to}: from {first} to {last}",
+    "point": "{year}: {value}",
+    "labels": {
+      "agriGdp": "Agriculture, forestry and fishing",
+      "agriEmployment": "Employment in agriculture",
+      "cerealProduction": "Cereal production",
+      "cerealYield": "Cereal yield",
+      "fisheries": "Total fisheries production",
+      "agriLand": "Agricultural land"
+    },
+    "notes": {
+      "agriGdp": "Value added, % of GDP",
+      "agriEmployment": "% of all employment (ILO modelled estimate)",
+      "cerealProduction": "Rice, wheat, maize and other grains harvested for dry grain",
+      "cerealYield": "Per hectare harvested",
+      "fisheries": "Capture fisheries plus aquaculture",
+      "agriLand": "% of land area: arable land, permanent crops and pasture"
+    },
+    "units": {
+      "percent": "{n}%",
+      "kgPerHa": "{n} kg/ha",
+      "tonnesLarge": "{n} million t",
+      "tonnesMedium": "{n} thousand t",
+      "tonnes": "{n} t"
+    },
+    "aquaculture": "Aquaculture",
+    "capture": "Capture",
+    "splitLabel": "In {year}, aquaculture was {aqua}% and capture fisheries {capture}% of fisheries production."
+  }
+}

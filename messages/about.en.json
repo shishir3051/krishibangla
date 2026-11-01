@@ -1,0 +1,51 @@
+{
+  "metaTitle": "Data sources and licences — KrishiBangla",
+  "title": "Where our data comes from",
+  "intro": "Every number on KrishiBangla shows its source and when it was updated. Nothing is invented: if a source is unavailable we say so instead of showing a placeholder.",
+  "usedFor": "Used for",
+  "frequency": "Updates",
+  "terms": "Licence / terms",
+  "visit": "Visit source",
+  "sources": {
+    "openMeteo": {
+      "name": "Open-Meteo",
+      "usedFor": "Current weather, 7-day forecast, evapotranspiration and soil moisture for each district; irrigation advice.",
+      "frequency": "Hourly (we refresh at most once an hour).",
+      "terms": "Data under CC BY 4.0. The free API is for non-commercial use."
+    },
+    "wfp": {
+      "name": "World Food Programme (WFP), via the Humanitarian Data Exchange",
+      "usedFor": "Monthly retail prices of staple foods in markets across Bangladesh.",
+      "frequency": "Monthly; published with a delay of a few weeks.",
+      "terms": "CC BY-IGO."
+    },
+    "worldBank": {
+      "name": "World Bank — World Development Indicators",
+      "usedFor": "National figures: agriculture's share of GDP, cereal and fish production, agricultural land and employment.",
+      "frequency": "Yearly; the latest year is often one or two years behind.",
+      "terms": "CC BY 4.0."
+    },
+    "nasa": {
+      "name": "NASA POWER (Langley Research Center)",
+      "usedFor": "Monthly temperature and rainfall compared with the long-term normal for each division.",
+      "frequency": "Monthly.",
+      "terms": "Free to use with acknowledgement of the NASA Langley Research Center POWER Project."
+    },
+    "gdacs": {
+      "name": "GDACS — Global Disaster Alert and Coordination System (UN and European Commission)",
+      "usedFor": "Cyclone, flood and drought alerts affecting Bangladesh.",
+      "frequency": "Checked about every 15 minutes.",
+      "terms": "Automatic estimates for awareness. Always follow official warnings from the Bangladesh Meteorological Department and the Department of Disaster Management."
+    },
+    "geoBoundaries": {
+      "name": "geoBoundaries (district boundaries; original data from the Bangladesh Bureau of Statistics and OCHA)",
+      "usedFor": "The district map.",
+      "frequency": "Static.",
+      "terms": "CC BY 3.0 IGO."
+    }
+  },
+  "aiTitle": "AI features",
+  "aiBody": "The chat assistant and the disease scan use Google Gemini. AI answers can be wrong or out of date — check important decisions with your local Department of Agricultural Extension (DAE) office.",
+  "curatedTitle": "Editorial content",
+  "curatedBody": "District profiles (main crops, soil, hazards) and crop guides are written by the KrishiBangla team as general guidance and are pending source review. They are marked as such wherever they appear."
+}

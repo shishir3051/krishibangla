@@ -1,0 +1,100 @@
+date,admin1,admin2,market,market_id,latitude,longitude,category,commodity,commodity_id,unit,priceflag,pricetype,currency,price,usdprice
+1900-08-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,non-food,Fuel (petrol),1041,L,actual,Retail,BDT,125,1.82
+1998-07-15,Dhaka,Dhaka,Dhaka,2574,23.81,90.41,cereals and tubers,"Rice (coarse, BR-8/ 11/, Guti Sharna)",588,100 KG,actual,Wholesale,BDT,1261.4,18.41
+1998-07-15,Dhaka,Dhaka,Dhaka,2574,23.81,90.41,cereals and tubers,Wheat,84,100 KG,actual,Wholesale,BDT,1055.6,15.41
+2020-06-15,Barisal,Barisal,Barisal Division,112,22.7,90.37,cereals and tubers,Rice (coarse),60,KG,aggregate,Retail,BDT,42.4,0.5
+2020-06-15,Chittagong,Chittagong,Chittagong Division,114,22.33,91.84,cereals and tubers,Rice (coarse),60,KG,aggregate,Retail,BDT,39.08,0.46
+2020-06-15,Dhaka,Dhaka,Dhaka Division,116,23.72,90.41,cereals and tubers,Rice (coarse),60,KG,aggregate,Retail,BDT,39.45,0.47
+2020-06-15,Khulna,Khulna,Khulna Division,118,22.82,89.56,cereals and tubers,Rice (coarse),60,KG,aggregate,Retail,BDT,39.96,0.47
+2025-10-15,Khulna,Bagerhat,Bagerhat Sadar,4020,22.67,89.79,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,164.75,1.35
+2025-10-15,Khulna,Jessore,Jessore Sadar,4022,23.16,89.23,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,146.5,1.2
+2025-10-15,Khulna,Jhenaidah,Jhenaidah Sadar,4023,23.54,89.17,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,137.25,1.13
+2025-10-15,Khulna,Kushtia,Kushtia Sadar,4024,23.89,89.09,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,135.79,1.12
+2025-10-15,Khulna,Magura,Magura Sadar,4025,23.49,89.42,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,144,1.18
+2025-10-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,160,1.31
+2025-11-15,Chittagong,Chittagong,Bhashan Char,6424,22.33,91.16,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,120,0.98
+2025-11-15,Chittagong,Cox'S Bazar,Cox`s Bazar Sadar,4054,21.47,91.98,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,120,0.98
+2025-11-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,120,0.98
+2025-11-15,Chittagong,Cox'S Bazar,Ukhia Market,3162,21.24,92.14,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,120,0.98
+2025-12-15,Khulna,Bagerhat,Bagerhat Sadar,4020,22.67,89.79,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,68.25,0.56
+2025-12-15,Khulna,Jessore,Jessore Sadar,4022,23.16,89.23,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,61.63,0.5
+2025-12-15,Khulna,Jhenaidah,Jhenaidah Sadar,4023,23.54,89.17,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,57.5,0.47
+2025-12-15,Khulna,Kushtia,Kushtia Sadar,4024,23.89,89.09,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,52.5,0.43
+2025-12-15,Khulna,Magura,Magura Sadar,4025,23.49,89.42,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,64,0.52
+2025-12-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,50,0.41
+2026-01-15,Chittagong,Chittagong,Bhashan Char,6424,22.33,91.16,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,145,1.19
+2026-01-15,Chittagong,Cox'S Bazar,Cox`s Bazar Sadar,4054,21.47,91.98,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,120,0.98
+2026-01-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,100,0.82
+2026-01-15,Chittagong,Cox'S Bazar,Ukhia Market,3162,21.24,92.14,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,80,0.65
+2026-02-15,Khulna,Bagerhat,Bagerhat Sadar,4020,22.67,89.79,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,135.31,1.11
+2026-02-15,Khulna,Jessore,Jessore Sadar,4022,23.16,89.23,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,117.94,0.96
+2026-02-15,Khulna,Jhenaidah,Jhenaidah Sadar,4023,23.54,89.17,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,131.5,1.08
+2026-02-15,Khulna,Kushtia,Kushtia Sadar,4024,23.89,89.09,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,107.35,0.88
+2026-02-15,Khulna,Magura,Magura Sadar,4025,23.49,89.42,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,127.65,1.04
+2026-02-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Chili (green),90,KG,actual,Retail,BDT,85,0.69
+2026-05-15,Chittagong,Chittagong,Bhashan Char,6424,22.33,91.16,"meat, fish and eggs","Fish (dry, belt 10-12"")",1076,KG,actual,Retail,BDT,450,3.67
+2026-05-15,Chittagong,Chittagong,Bhashan Char,6424,22.33,91.16,non-food,Fuel (petrol),1041,L,actual,Retail,BDT,170,1.38
+2026-05-15,Chittagong,Chittagong,Bhashan Char,6424,22.33,91.16,vegetables and fruits,Tomatoes (red),1147,KG,actual,Retail,BDT,100,0.81
+2026-05-15,Chittagong,Cox'S Bazar,Cox`s Bazar Sadar,4054,21.47,91.98,vegetables and fruits,Tomatoes (red),1147,KG,actual,Retail,BDT,70,0.57
+2026-05-15,Chittagong,Cox'S Bazar,Teknaf Market,3159,20.87,92.3,vegetables and fruits,Tomatoes (red),1147,KG,actual,Retail,BDT,70,0.57
+2026-05-15,Chittagong,Cox'S Bazar,Ukhia Market,3162,21.24,92.14,vegetables and fruits,Tomatoes (red),1147,KG,actual,Retail,BDT,70,0.57
+2026-06-15,Khulna,Jessore,Jessore Sadar,4022,23.16,89.23,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,49.2,0.4
+2026-06-15,Barisal,Jhalokati,Jhalokati Sadar,4031,22.7,90.2,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,46.6,0.38
+2026-06-15,Khulna,Jhenaidah,Jhenaidah Sadar,4023,23.54,89.17,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,42.5,0.35
+2026-06-15,Khulna,Kushtia,Kushtia Sadar,4024,23.89,89.09,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,44.5,0.36
+2026-06-15,Khulna,Meherpur,Meherpur Sadar,4026,23.77,88.63,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,49,0.4
+2026-06-15,Khulna,Narail,Narail Sadar,4027,23.16,89.51,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,47.2,0.38
+2026-06-15,Khulna,Satkhira,Satkhira Sadar,4028,22.71,89.07,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,49.5,0.4
+2026-07-15,Dhaka,Dhaka,Dhaka Sadar,4083,23.73,90.38,"meat, fish and eggs",Eggs (brown),1073,1 piece,actual,Retail,BDT,11.1,0.09
+2026-07-15,Barisal,Barguna,Amtali,11783,22.13,90.23,oil and fats,Oil (palm),62,L,actual,Retail,BDT,169,1.37
+2026-07-15,Chittagong,Bandarban,Bandarban Sadar,4049,22.22,92.22,oil and fats,Oil (palm),62,L,actual,Retail,BDT,171,1.39
+2026-07-15,Barisal,Barisal,Barisal Sadar,4082,22.71,90.36,oil and fats,Oil (palm),62,L,actual,Retail,BDT,164.5,1.33
+2026-07-15,Chittagong,Brahamanbaria,Brahmonbaria Sadar,4050,23.98,91.11,oil and fats,Oil (palm),62,L,actual,Retail,BDT,169.8,1.38
+2026-07-15,Barisal,Jhalokati,Jhalokati Sadar,4031,22.7,90.2,oil and fats,Oil (palm),62,L,actual,Retail,BDT,171,1.39
+2026-07-15,Barisal,Pirojpur,Pirojpur Sadar,4033,22.58,89.97,oil and fats,Oil (palm),62,L,actual,Retail,BDT,163,1.32
+2026-07-15,Khulna,Jessore,Jessore Sadar,4022,23.16,89.23,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,50,0.41
+2026-07-15,Barisal,Jhalokati,Jhalokati Sadar,4031,22.7,90.2,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,48.6,0.39
+2026-07-15,Khulna,Jhenaidah,Jhenaidah Sadar,4023,23.54,89.17,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,42.1,0.34
+2026-07-15,Khulna,Kushtia,Kushtia Sadar,4024,23.89,89.09,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,44.5,0.36
+2026-07-15,Khulna,Meherpur,Meherpur Sadar,4026,23.77,88.63,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,49.6,0.4
+2026-07-15,Khulna,Narail,Narail Sadar,4027,23.16,89.51,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,47,0.38
+2026-07-15,Khulna,Satkhira,Satkhira Sadar,4028,22.71,89.07,cereals and tubers,Rice (coarse),60,KG,actual,Retail,BDT,50.5,0.41
+2026-07-15,Barisal,Barguna,Amtali,11783,22.13,90.23,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,57.5,0.47
+2026-07-15,Barisal,Barguna,Barguna Sadar,4029,22.16,90.12,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,57.5,0.47
+2026-07-15,Chittagong,Noakhali,Begumganj,11785,22.87,91.1,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,53.5,0.43
+2026-07-15,Chittagong,Feni,Chagalnaiya,11786,23.08,91.5,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,62.5,0.51
+2026-07-15,Dhaka,Dhaka,Dhaka Sadar,4083,23.73,90.38,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,62.5,0.51
+2026-07-15,Khulna,Khulna,Dumuria,11833,22.81,89.42,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,53.3,0.43
+2026-07-15,Chittagong,Feni,Feni Sadar,4055,23.01,91.4,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,62.5,0.51
+2026-07-15,Rajshahi,Joypurhat,Jaipurhat Sadar,4069,25.1,89.03,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,52.5,0.43
+2026-07-15,Dhaka,Dhaka,Kawran Bazar Dhaka,7942,23.75,90.39,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-07-15,Khulna,Khulna,Khulna Sadar,4081,22.81,89.55,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,57.5,0.47
+2026-07-15,Dhaka,Dhaka,Mirpur 1 no.,11796,23.8,90.35,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-07-15,Rangpur,Rangpur,Mithapukur,11810,25.57,89.28,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,52.5,0.43
+2026-07-15,Chittagong,Noakhali,Noakhali Sadar,4058,22.89,91.11,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,57.5,0.47
+2026-07-15,Rangpur,Rangpur,Rangpur Municipality Market,4066,25.75,89.25,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,53.2,0.43
+2026-07-15,Sylhet,Sylhet,Sylhet Sadar,4079,24.89,91.87,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-08-15,Barisal,Barguna,Amtali,11783,22.13,90.23,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-08-15,Barisal,Barguna,Barguna Sadar,4029,22.16,90.12,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60.1,0.49
+2026-08-15,Chittagong,Noakhali,Begumganj,11785,22.87,91.1,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,53.5,0.44
+2026-08-15,Chittagong,Feni,Chagalnaiya,11786,23.08,91.5,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60.4,0.49
+2026-08-15,Dhaka,Dhaka,Dhaka Sadar,4083,23.73,90.38,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,62.5,0.51
+2026-08-15,Khulna,Khulna,Dumuria,11833,22.81,89.42,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,54.9,0.45
+2026-08-15,Chittagong,Feni,Feni Sadar,4055,23.01,91.4,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60.5,0.49
+2026-08-15,Rajshahi,Joypurhat,Jaipurhat Sadar,4069,25.1,89.03,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,189.9,1.55
+2026-08-15,Dhaka,Dhaka,Kawran Bazar Dhaka,7942,23.75,90.39,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-08-15,Khulna,Khulna,Khulna Sadar,4081,22.81,89.55,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-08-15,Dhaka,Dhaka,Mirpur 1 no.,11796,23.8,90.35,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-08-15,Rangpur,Rangpur,Mithapukur,11810,25.57,89.28,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,52.5,0.43
+2026-08-15,Chittagong,Noakhali,Noakhali Sadar,4058,22.89,91.11,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,182.5,1.49
+2026-08-15,Rangpur,Rangpur,Rangpur Municipality Market,4066,25.75,89.25,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,54,0.44
+2026-08-15,Sylhet,Sylhet,Sylhet Sadar,4079,24.89,91.87,cereals and tubers,Wheat flour,58,KG,actual,Retail,BDT,60,0.49
+2026-09-15,Chittagong,Cox'S Bazar,Chakaria,12298,21.76,92.07,oil and fats,Oil (palm),62,L,actual,Retail,BDT,167.6,1.36
+2026-09-15,Khulna,Chuadanga,Damurhuda,12294,23.61,88.78,oil and fats,Oil (palm),62,L,actual,Retail,BDT,169.6,1.38
+2026-09-15,Mymensingh,Mymensingh,Fulbaria,12309,24.61,90.72,oil and fats,Oil (palm),62,L,actual,Retail,BDT,170.7,1.39
+2026-09-15,Khulna,Meherpur,Gangni,12306,23.82,88.76,oil and fats,Oil (palm),62,L,actual,Retail,BDT,173,1.41
+2026-09-15,Khulna,Jessore,Manirampur,12302,23.02,89.23,oil and fats,Oil (palm),62,L,actual,Retail,BDT,167.5,1.36
+2026-09-15,Khulna,Jessore,Navaron,12303,23.06,88.99,oil and fats,Oil (palm),62,L,actual,Retail,BDT,164,1.33
+2026-09-15,Barisal,Pirojpur,Nazirpur,12312,22.71,89.97,oil and fats,Oil (palm),62,L,actual,Retail,BDT,164.7,1.34
+2026-09-15,Rajshahi,Sirajganj,Sirajganj Sadar,12313,24.45,89.71,oil and fats,Oil (palm),62,L,actual,Retail,BDT,169,1.37
+2026-09-15,Dhaka,Gopalganj,Tungipara,12301,22.89,89.9,oil and fats,Oil (palm),62,L,actual,Retail,BDT,176.5,1.43

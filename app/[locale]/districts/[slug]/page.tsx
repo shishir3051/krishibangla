@@ -6,7 +6,7 @@ import { LiveWeather, LiveWeatherSkeleton } from '@/components/district/LiveWeat
 import { PrintButton } from '@/components/district/PrintButton';
 import { ProfileCard } from '@/components/district/ProfileCard';
 import { DistrictMap } from '@/components/map/DistrictMap';
-import { SiteHeader } from '@/components/shell/SiteHeader';
+import { PageShell } from '@/components/shell/PageShell';
 import { Card } from '@/components/ui/Card';
 import { fill, getDictionary } from '@/lib/dictionary';
 import { DISTRICTS, getDistrict } from '@/lib/domain/districts';
@@ -33,8 +33,7 @@ export default async function DistrictPage({ params }: PageProps<'/[locale]/dist
   const otherName = district.name[locale === 'bn' ? 'en' : 'bn'];
 
   return (
-    <div className="min-h-screen bg-canvas font-ui text-fg">
-      <SiteHeader locale={locale} nav={t.nav} />
+    <PageShell locale={locale} t={t}>
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Link href={localePath(locale, '/districts')} className="no-print text-sm text-fg-muted hover:text-fg">
           ← {t.desk.allDistricts}
@@ -63,6 +62,6 @@ export default async function DistrictPage({ params }: PageProps<'/[locale]/dist
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 }

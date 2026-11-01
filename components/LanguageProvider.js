@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { LOCALE_COOKIE, switchLocalePath } from "@/lib/i18n";
 
@@ -15,14 +15,6 @@ export function LanguageProvider({ lang, children }) {
     document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
     router.push(switchLocalePath(pathname, next), { scroll: false });
   };
-
-  useEffect(() => {
-    if (lang === "bn") {
-      document.body.style.fontFamily = "'Tiro Bangla', 'Lora', serif";
-    } else {
-      document.body.style.fontFamily = "'Lora', serif";
-    }
-  }, [lang]);
 
   return (
     <LanguageContext.Provider value={{ lang, toggleLang }}>

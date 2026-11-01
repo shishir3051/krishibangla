@@ -1,0 +1,21 @@
+{
+  "title": "Crop guides",
+  "about": "About",
+  "lifecycle": "Growing stages",
+  "calendar": "Calendar",
+  "calendarNote": "Typical months; they shift with the variety, the weather and your area.",
+  "seasons": "Rice seasons",
+  "steps": "Step-by-step guide ({n} steps)",
+  "guideNote": "Guide — general practice; varies by variety, season and location.",
+  "confirmAgriculture": "Check with your local agriculture office (DAE) before you act on it.",
+  "confirmFisheries": "Check with your Upazila Fisheries Office before you act on it.",
+  "ask": "Ask AI about {crop}",
+  "askTitle": "Have a question?",
+  "askBody": "Ask about growing, care, pests or diseases — in Bangla or English.",
+  "aiNote": "AI answers can be wrong.",
+  "scanTitle": "Spotted a disease?",
+  "scanBody": "Take a photo of the affected leaf, stem or fruit and get a likely diagnosis.",
+  "scanCta": "Open disease scan",
+  "otherCrops": "Other crop guides",
+  "monthInitials": ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
+}
