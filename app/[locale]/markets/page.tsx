@@ -11,13 +11,14 @@ import { fill, getDictionary } from '@/lib/dictionary';
 import { MAX_GAP_MONTHS, MIN_DISTRICTS } from '@/lib/domain/prices';
 import { formatNumber } from '@/lib/format';
 import { hasLocale } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 import { getWfpPrices } from '@/lib/sources/wfp';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/markets'>): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: `${t.markets.title} — ${t.nav.brand}`, description: t.markets.subtitle };
+  return pageMetadata(locale, '/markets', { title: `${t.markets.title} — ${t.nav.brand}`, description: t.markets.subtitle });
 }
 
 // Monthly WFP data, cached for days (lib/sources/wfp.ts), so the whole page is part of the static shell.

@@ -18,6 +18,10 @@ const schema = z.object({
   KV_REST_API_URL: optional(z.url()),
   KV_REST_API_TOKEN: optional(z.string()),
   WORLD_BANK_API_URL: optional(z.url()).transform((v) => v ?? 'https://api.worldbank.org/v2'),
+  /** Public origin for canonical URLs, sitemap and share cards, e.g. https://krishibangla.example. */
+  NEXT_PUBLIC_SITE_URL: optional(z.url()),
+  /** Set automatically by Vercel (host only, no protocol); used when NEXT_PUBLIC_SITE_URL is unset. */
+  VERCEL_PROJECT_PRODUCTION_URL: optional(z.string()),
 });
 
 export const env = schema.parse(process.env);

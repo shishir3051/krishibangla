@@ -6,12 +6,13 @@ import { ClimateAnomalies } from '@/components/climate/ClimateAnomalies';
 import { PageShell } from '@/components/shell/PageShell';
 import { getDictionary } from '@/lib/dictionary';
 import { hasLocale } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/climate'>): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: `${t.climate.metaTitle} — ${t.nav.brand}`, description: t.climate.subtitle };
+  return pageMetadata(locale, '/climate', { title: `${t.climate.metaTitle} — ${t.nav.brand}`, description: t.climate.subtitle });
 }
 
 export default async function ClimatePage({ params }: PageProps<'/[locale]/climate'>) {

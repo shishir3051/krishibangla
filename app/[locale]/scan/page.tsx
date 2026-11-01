@@ -4,6 +4,7 @@ import { DiseaseScanner } from '@/components/scan/DiseaseScanner';
 import { PageShell } from '@/components/shell/PageShell';
 import { getDictionary } from '@/lib/dictionary';
 import { hasLocale } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 // Krishi Call Center (short code 16123, 8 am–8 pm except Fri, Sat and government holidays), as published
 // by the Agriculture Information Service, Ministry of Agriculture — checked 2026-11-01.
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/scan'>):
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: `${t.scan.metaTitle} · ${t.nav.brand}`, description: t.scan.metaDescription };
+  return pageMetadata(locale, '/scan', { title: `${t.scan.metaTitle} · ${t.nav.brand}`, description: t.scan.metaDescription });
 }
 
 export default async function ScanPage({ params }: PageProps<'/[locale]/scan'>) {

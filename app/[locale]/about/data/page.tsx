@@ -4,6 +4,7 @@ import { PageShell } from '@/components/shell/PageShell';
 import { Card } from '@/components/ui/Card';
 import { getDictionary } from '@/lib/dictionary';
 import { hasLocale } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 const SOURCE_URLS = {
   openMeteo: 'https://open-meteo.com/',
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/about/da
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: t.about.metaTitle };
+  return pageMetadata(locale, '/about/data', { title: t.about.metaTitle, description: t.about.intro });
 }
 
 export default async function DataSourcesPage({ params }: PageProps<'/[locale]/about/data'>) {

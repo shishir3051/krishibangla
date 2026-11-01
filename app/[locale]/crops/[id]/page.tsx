@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { fill, getDictionary } from '@/lib/dictionary';
 import { CROP_PAGES, getCrop } from '@/lib/domain/crops';
 import { hasLocale, localePath } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 // Prerender every crop guide (for each locale from the layout); any other id is a 404.
 export function generateStaticParams() {
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/crops/[i
   const crop = getCrop(id);
   if (!hasLocale(locale) || !crop) return {};
   const t = await getDictionary(locale);
-  return { title: `${crop.name[locale]} — ${t.crops.title} · ${t.nav.brand}`, description: crop.summary[locale] };
+  return pageMetadata(locale, `/crops/${id}`, { title: `${crop.name[locale]} — ${t.crops.title} · ${t.nav.brand}`, description: crop.summary[locale] });
 }
 
 export default async function CropPage({ params }: PageProps<'/[locale]/crops/[id]'>) {

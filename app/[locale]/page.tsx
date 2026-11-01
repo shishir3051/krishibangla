@@ -12,12 +12,13 @@ import { Card } from '@/components/ui/Card';
 import { getDictionary } from '@/lib/dictionary';
 import { CROP_PAGES } from '@/lib/domain/crops';
 import { hasLocale, localePath } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: t.home.metaTitle, description: t.home.metaDescription };
+  return pageMetadata(locale, '/', { title: t.home.metaTitle, description: t.home.metaDescription });
 }
 
 export default async function HomePage({ params }: PageProps<'/[locale]'>) {

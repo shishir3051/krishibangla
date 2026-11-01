@@ -6,12 +6,13 @@ import { PageShell } from '@/components/shell/PageShell';
 import { Card } from '@/components/ui/Card';
 import { getDictionary } from '@/lib/dictionary';
 import { hasLocale } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]/districts'>): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(locale)) return {};
   const t = await getDictionary(locale);
-  return { title: `${t.districts.title} — ${t.nav.brand}`, description: t.districts.subtitle };
+  return pageMetadata(locale, '/districts', { title: `${t.districts.title} — ${t.nav.brand}`, description: t.districts.subtitle });
 }
 
 export default async function DistrictsPage({ params }: PageProps<'/[locale]/districts'>) {

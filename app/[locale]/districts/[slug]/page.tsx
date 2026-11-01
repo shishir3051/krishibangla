@@ -12,6 +12,7 @@ import { fill, getDictionary } from '@/lib/dictionary';
 import { DISTRICTS, getDistrict } from '@/lib/domain/districts';
 import { DIVISIONS } from '@/lib/domain/vocab';
 import { hasLocale, localePath } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/site';
 
 export function generateStaticParams() {
   return DISTRICTS.map((d) => ({ slug: d.slug }));
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/district
   const district = getDistrict(slug);
   if (!hasLocale(locale) || !district) return {};
   const t = await getDictionary(locale);
-  return { title: `${district.name[locale]} — ${t.districts.title} · ${t.nav.brand}`, description: t.districts.subtitle };
+  return pageMetadata(locale, `/districts/${slug}`, { title: `${district.name[locale]} — ${t.districts.title} · ${t.nav.brand}`, description: t.districts.subtitle });
 }
 
 export default async function DistrictPage({ params }: PageProps<'/[locale]/districts/[slug]'>) {

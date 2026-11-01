@@ -1,16 +1,29 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Hind_Siliguri, Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import { hasLocale, locales } from '@/lib/i18n';
+import { siteUrl } from '@/lib/site';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const hind = Hind_Siliguri({ subsets: ['bengali', 'latin'], weight: ['400', '500', '600', '700'], variable: '--font-hind', display: 'swap' });
+// Two weights keep the Bangla font download small on mobile data (medium falls back to 400, bold to 600).
+const hind = Hind_Siliguri({ subsets: ['bengali', 'latin'], weight: ['400', '600'], variable: '--font-hind', display: 'swap' });
 
+// Pages set their own title, description, canonical and alternates via lib/site.ts → pageMetadata().
 export const metadata: Metadata = {
-  title: 'কৃষি বাংলাদেশ — Agriculture Intelligence Portal',
-  description: 'AI-Powered Agriculture Intelligence Portal for Bangladesh',
+  metadataBase: siteUrl(),
+  applicationName: 'KrishiBangla',
+  title: 'কৃষিবাংলা · KrishiBangla',
+  description: 'Weather, irrigation advice, market prices and climate alerts for farmers in Bangladesh.',
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f7f2' },
+    { media: '(prefers-color-scheme: dark)', color: '#0d1410' },
+  ],
+  colorScheme: 'light dark',
 };
 
 // Runs before first paint so the saved (or system) theme applies without a flash.

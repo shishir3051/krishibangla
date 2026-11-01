@@ -2,13 +2,18 @@
   "name": "krishibangla",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:map": "node scripts/build-map.mjs",
+    "check:map": "node scripts/build-map.mjs --check"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
