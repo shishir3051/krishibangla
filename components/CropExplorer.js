@@ -5,6 +5,7 @@ import Text from "./Text";
 import { useLanguage } from "./LanguageProvider";
 import { useStats } from "./StatsProvider";
 import { cropsList } from "@/data/cropsData";
+import { localePath } from "@/lib/i18n";
 
 export default function CropExplorer() {
   const { lang } = useLanguage();
@@ -72,7 +73,7 @@ export default function CropExplorer() {
         >
           {crops.map((crop) => (
             <motion.div key={crop.id} variants={itemVariants}>
-              <Link href={`/crop/${crop.id}`}>
+              <Link href={localePath(lang, `/crops/${crop.id}`)}>
                 <div className={`block h-[260px] md:h-[280px] lg:h-[300px] rounded-[2.5rem] p-6 md:p-8 border border-white/5 bg-gradient-to-br transition-all duration-500 group relative overflow-hidden bg-[#0a1628] ${crop.color} ${crop.border} hover:-translate-y-2 hover:shadow-2xl`}>
                   
                   {/* Background Accents */}

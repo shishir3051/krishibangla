@@ -1,17 +1,22 @@
 "use client";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { LOCALE_COOKIE, switchLocalePath } from "@/lib/i18n";
 
 const LanguageContext = createContext();
 
-export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("en");
+// The language comes from the URL (/bn/..., /en/...); toggling navigates and remembers the choice.
+export function LanguageProvider({ lang, children }) {
+  const router = useRouter();
+  const pathname = usePathname();
 
   const toggleLang = () => {
-    setLang((prev) => (prev === "en" ? "bn" : "en"));
+    const next = lang === "en" ? "bn" : "en";
+    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
+    router.push(switchLocalePath(pathname, next), { scroll: false });
   };
 
   useEffect(() => {
-    document.documentElement.lang = lang;
     if (lang === "bn") {
       document.body.style.fontFamily = "'Tiro Bangla', 'Lora', serif";
     } else {

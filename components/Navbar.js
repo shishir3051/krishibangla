@@ -4,14 +4,18 @@ import { useState, useEffect } from 'react';
 import Text from "./Text";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLanguage } from './LanguageProvider';
+import { localePath } from '@/lib/i18n';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { lang } = useLanguage();
+  const home = localePath(lang);
   const [activeSegment, setActiveSegment] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname !== '/') {
+    if (pathname !== home) {
       setActiveSegment('');
       return;
     }
@@ -31,20 +35,20 @@ export default function Navbar() {
     });
 
     return () => observer.disconnect();
-  }, [pathname]);
+  }, [pathname, home]);
 
   const links = [
-    { en: 'Crop Map', bn: 'শস্য মানচিত্র', href: '/#map', id: 'map' },
-    { en: 'Sector Overview', bn: 'সেক্টর ওভারভিউ', href: '/#overview', id: 'overview' },
-    { en: 'Explore Agricultural Sectors', bn: 'কৃষি খাতসমূহ অনুসন্ধান', href: '/#explorer', id: 'explorer' },
-    { en: 'Farmer Success Hub', bn: 'কৃষক সাফল্য হাব', href: '/#farmer-success', id: 'farmer-success' },
-    { en: 'AI Disease Scanner', bn: 'এআই রোগ নির্ণয়', href: '/#protection', id: 'protection' },
+    { en: 'Crop Map', bn: 'শস্য মানচিত্র', href: localePath(lang, '/#map'), id: 'map' },
+    { en: 'Sector Overview', bn: 'সেক্টর ওভারভিউ', href: localePath(lang, '/#overview'), id: 'overview' },
+    { en: 'Explore Agricultural Sectors', bn: 'কৃষি খাতসমূহ অনুসন্ধান', href: localePath(lang, '/#explorer'), id: 'explorer' },
+    { en: 'Farmer Success Hub', bn: 'কৃষক সাফল্য হাব', href: localePath(lang, '/#farmer-success'), id: 'farmer-success' },
+    { en: 'AI Disease Scanner', bn: 'এআই রোগ নির্ণয়', href: localePath(lang, '/#protection'), id: 'protection' },
   ];
 
   return (
     <nav className="sticky top-0 z-[100] bg-[#05111e]/95 backdrop-blur-xl border-b border-white/10 py-3 px-4 md:px-8 flex justify-between items-center shadow-2xl">
       <div className="flex gap-4 md:gap-8 items-center">
-        <Link href="/" className="font-playfair font-black text-emerald-400 text-lg md:text-xl whitespace-nowrap mr-2 md:mr-4 tracking-tighter hover:scale-110 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
+        <Link href={home} className="font-playfair font-black text-emerald-400 text-lg md:text-xl whitespace-nowrap mr-2 md:mr-4 tracking-tighter hover:scale-110 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
           <span className="bg-emerald-500 text-[#05111e] px-2 py-0.5 rounded text-sm group-hover:bg-white transition-colors duration-300">কৃষি</span>
           <span className="text-white group-hover:text-emerald-400 transition-colors duration-300 tracking-widest font-mono text-xs uppercase">Intelligenz</span>
         </Link>

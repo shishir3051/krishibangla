@@ -12,6 +12,7 @@ import Fisheries from '@/components/Fisheries';
 import Climate from '@/components/Climate';
 import GenericCropGuide from '@/components/GenericCropGuide';
 import Link from 'next/link';
+import { localePath } from '@/lib/i18n';
 
 export default function CropPageClient({ id }) {
   const { lang } = useLanguage();
@@ -24,7 +25,7 @@ export default function CropPageClient({ id }) {
         {/* Navigation Bar for Back to Home */}
         <div className="border-b border-white/5 bg-[#0a1628] sticky top-[72px] z-40">
           <div className="max-w-[1200px] mx-auto px-8 py-4 flex items-center justify-between">
-            <Link href="/#explorer" className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors font-mono text-xs font-black uppercase tracking-widest">
+            <Link href={localePath(lang, '/#explorer')} className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors font-mono text-xs font-black uppercase tracking-widest">
               <span>←</span> {lang === 'bn' ? 'হোমে ফিরে যান' : 'Back to Dashboard'}
             </Link>
             <div className="text-white/30 font-mono text-[10px] tracking-[0.2em] uppercase">
