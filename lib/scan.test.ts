@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_IMAGE_BYTES, parseDiagnosis, parseImageDataUrl } from './scan';
+import { MAX_IMAGE_BYTES, parseDiagnosis, parseImageDataUrl, SCAN_GENERATION } from './scan';
 
 describe('parseImageDataUrl', () => {
   it('accepts JPEG, PNG and WebP data URLs', () => {
@@ -24,44 +24,70 @@ describe('parseImageDataUrl', () => {
 });
 
 describe('parseDiagnosis', () => {
-  it('parses a disease result and normalises percentage confidence', () => {
-    const result = parseDiagnosis(
-      JSON.stringify({
-        detected: true,
-        crop_en: 'Rice',
-        crop_bn: 'ধান',
-        disease_en: 'Blast',
-        disease_bn: 'ব্লাস্ট',
-        confidence: 92,
-        treatment_en: ['Apply tricyclazole'],
-      })
-    );
-    expect(result).toMatchObject({ detected: true, disease_en: 'Blast', confidence: 0.92, treatment_bn: [], description_en: '' });
+  const tomato = {
+    detected: true,
+    crop_en: 'Tomato',
+    crop_bn: 'টমেটো',
+    candidates: [
+      { disease_en: 'Anthracnose', disease_bn: 'অ্যানথ্রাকনোজ', check_en: 'Circular sunken spots on ripe fruit', check_bn: 'পাকা ফলে গোল বসে যাওয়া দাগ' },
+      { disease_en: 'Late blight', disease_bn: 'নাবি ধসা', check_en: 'Dark greasy patches on leaves too', check_bn: 'পাতায়ও কালচে তেলতেলে দাগ' },
+    ],
+    description_en: 'A large dark sunken lesion.',
+    description_bn: 'একটি বড় কালো বসে যাওয়া দাগ।',
+    treatment_en: ['Remove infected fruit'],
+    treatment_bn: ['আক্রান্ত ফল সরিয়ে ফেলুন'],
+    message_en: '',
+    message_bn: '',
+    photo_ok: false,
+    photo_tip_en: 'Take a closer photo in daylight.',
+    photo_tip_bn: 'দিনের আলোয় আরও কাছ থেকে ছবি তুলুন।',
+  };
+
+  it('keeps the ranked candidates, most likely first, and drops empty message fields', () => {
+    const result = parseDiagnosis(JSON.stringify(tomato));
+    expect(result).toMatchObject({ detected: true, crop_en: 'Tomato', photo_ok: false, photo_tip_en: 'Take a closer photo in daylight.' });
+    expect(result?.detected && result.candidates.map((c) => c.disease_en)).toEqual(['Anthracnose', 'Late blight']);
+    expect(result).not.toHaveProperty('message_en');
+    expect(result).not.toHaveProperty('confidence');
+  });
+
+  it('skips unusable candidates and keeps at most three', () => {
+    const many = Array.from({ length: 5 }, (_, i) => ({ disease_en: `D${i}`, disease_bn: `রোগ${i}`, check_en: '', check_bn: '' }));
+    const result = parseDiagnosis(JSON.stringify({ ...tomato, candidates: [{ disease_en: '', disease_bn: '' }, ...many] }));
+    expect(result?.detected && result.candidates.map((c) => c.disease_en)).toEqual(['D0', 'D1', 'D2']);
+  });
+
+  it('rejects a disease result without any usable candidate', () => {
+    expect(parseDiagnosis(JSON.stringify({ ...tomato, candidates: [] }))).toBeNull();
+    expect(parseDiagnosis(JSON.stringify({ ...tomato, candidates: [{ disease_en: ' ', disease_bn: '' }] }))).toBeNull();
   });
 
   it('keeps model messages and only falls back for blank ones', () => {
-    expect(parseDiagnosis('{"detected":false,"message_en":"Not a plant.","message_bn":"এটি গাছ নয়।"}')).toEqual({
+    expect(parseDiagnosis('{"detected":false,"message_en":"Not a plant.","message_bn":"এটি গাছ নয়।","photo_ok":true}')).toEqual({
       detected: false,
       message_en: 'Not a plant.',
       message_bn: 'এটি গাছ নয়।',
+      photo_ok: true,
+      photo_tip_en: '',
+      photo_tip_bn: '',
     });
-    expect(parseDiagnosis('{"detected":false,"message_en":"","message_bn":"  "}')).toEqual({
-      detected: false,
+    expect(parseDiagnosis('{"detected":false,"message_en":"","message_bn":"  "}')).toMatchObject({
       message_en: 'No disease was detected in this photo.',
       message_bn: 'এই ছবিতে কোনো রোগ শনাক্ত হয়নি।',
+      photo_ok: true,
     });
-  });
-
-  it('drops the empty message fields that come back with a disease result', () => {
-    const result = parseDiagnosis(
-      JSON.stringify({ detected: true, crop_en: 'Potato', crop_bn: 'আলু', disease_en: 'Black scurf', disease_bn: 'কালো দাগ', confidence: 0.8, message_en: '', message_bn: '' })
-    );
-    expect(result).not.toHaveProperty('message_en');
   });
 
   it('returns null for missing, malformed or incomplete output', () => {
     expect(parseDiagnosis(undefined)).toBeNull();
     expect(parseDiagnosis('not json')).toBeNull();
     expect(parseDiagnosis('{"detected":true,"crop_en":"Rice"}')).toBeNull();
+  });
+});
+
+describe('scan generation settings', () => {
+  it('uses no sampling randomness so the same photo gets the same answer', () => {
+    expect(SCAN_GENERATION.temperature).toBe(0);
+    expect(typeof SCAN_GENERATION.seed).toBe('number');
   });
 });

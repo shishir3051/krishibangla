@@ -1,5 +1,5 @@
 import { buildSystemPrompt, detectLanguage, findCrop, MAX_MESSAGES, parseChatRequest, toGeminiContents } from '@/lib/chat';
-import { GEMINI_MODEL, getGemini, missingKeyResponse } from '@/lib/gemini';
+import { GEMINI_MODEL, geminiErrorResponse, getGemini, missingKeyResponse } from '@/lib/gemini';
 import { rateLimit } from '@/lib/rateLimit';
 
 const encoder = new TextEncoder();
@@ -53,7 +53,6 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' },
     });
   } catch (error) {
-    console.error('Gemini chat error:', error);
-    return Response.json({ error: error instanceof Error ? error.message : 'Chat failed.' }, { status: 502 });
+    return geminiErrorResponse(error, 'chat');
   }
 }

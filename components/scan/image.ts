@@ -5,10 +5,17 @@
 
 /** Longest edge sent to /api/detect — keeps uploads well under the server's 4 MB limit. */
 export const MAX_SIDE = 1280;
+/** Below this on the longest edge, warn that the AI may miss details. */
+export const MIN_GOOD_SIDE = 800;
 export const ACCEPTED_TYPES = 'image/jpeg,image/png,image/webp';
 
-/** Re-encodes a photo as a JPEG data URL no larger than `maxSide` on its longest edge. */
-export function downscaleImage(file: Blob, maxSide = MAX_SIDE): Promise<string> {
+export type PreparedPhoto = { dataUrl: string; width: number; height: number };
+
+/** True when the original photo is too small for the AI to see fine detail. */
+export const isSmallPhoto = ({ width, height }: { width: number; height: number }) => Math.max(width, height) < MIN_GOOD_SIDE;
+
+/** Re-encodes a photo as a JPEG data URL no larger than `maxSide` on its longest edge; reports the original size. */
+export function downscaleImage(file: Blob, maxSide = MAX_SIDE): Promise<PreparedPhoto> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -24,7 +31,7 @@ export function downscaleImage(file: Blob, maxSide = MAX_SIDE): Promise<string> 
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve(canvas.toDataURL('image/jpeg', 0.85));
+      resolve({ dataUrl: canvas.toDataURL('image/jpeg', 0.85), width: img.naturalWidth, height: img.naturalHeight });
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
@@ -34,11 +41,12 @@ export function downscaleImage(file: Blob, maxSide = MAX_SIDE): Promise<string> 
   });
 }
 
-export type ScanErrorKey = 'rateLimited' | 'badImage' | 'failed';
+export type ScanErrorKey = 'rateLimited' | 'badImage' | 'busy' | 'failed';
 
 /** Maps an /api/detect error status to the message shown to the farmer. */
 export function scanErrorKey(status: number): ScanErrorKey {
   if (status === 429) return 'rateLimited';
   if (status === 400 || status === 413 || status === 415) return 'badImage';
+  if (status === 503) return 'busy'; // the AI provider's usage limit — retrying now won't help
   return 'failed';
 }

@@ -8,16 +8,19 @@ import type { Dictionary } from '@/lib/dictionary';
 import { formatNumber } from '@/lib/format';
 import type { Locale } from '@/lib/i18n';
 import type { Diagnosis } from '@/lib/scan';
-import { ACCEPTED_TYPES, downscaleImage, scanErrorKey } from './image';
+import { ACCEPTED_TYPES, downscaleImage, isSmallPhoto, MIN_GOOD_SIDE, scanErrorKey } from './image';
 
 type Labels = Dictionary['scan'];
 type Phase = 'idle' | 'preparing' | 'ready' | 'scanning' | 'done';
 
 const hasFiles = (e: DragEvent) => Array.from(e.dataTransfer.types).includes('Files');
+// lib/dictionary's fill() is server-only; this client copy fills `{name}` placeholders the same way.
+const fillText = (template: string, values: Record<string, string>) => template.replace(/\{(\w+)\}/g, (m, key) => values[key] ?? m);
 
 export function DiseaseScanner({ locale, labels, notice }: { locale: Locale; labels: Labels; notice?: ReactNode }) {
   const [phase, setPhase] = useState<Phase>('idle');
   const [image, setImage] = useState<string | null>(null);
+  const [photoSize, setPhotoSize] = useState<{ width: number; height: number } | null>(null);
   const [result, setResult] = useState<Diagnosis | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -45,10 +48,13 @@ export function DiseaseScanner({ locale, labels, notice }: { locale: Locale; lab
     }
     setPhase('preparing');
     try {
-      setImage(await downscaleImage(file));
+      const prepared = await downscaleImage(file);
+      setImage(prepared.dataUrl);
+      setPhotoSize({ width: prepared.width, height: prepared.height });
       setPhase('ready');
     } catch {
       setImage(null);
+      setPhotoSize(null);
       setPhase('idle');
       setError(labels.badImage);
     }
@@ -154,6 +160,16 @@ export function DiseaseScanner({ locale, labels, notice }: { locale: Locale; lab
                 {phase === 'done' ? labels.scanAgain : labels.change}
               </button>
             </div>
+            {photoSize && isSmallPhoto(photoSize) && (
+              <p className="mt-3 flex gap-2 rounded-xl bg-warning-soft p-3 text-sm text-warning">
+                <span aria-hidden>📏</span>
+                {fillText(labels.smallPhoto, {
+                  width: formatNumber(locale, photoSize.width),
+                  height: formatNumber(locale, photoSize.height),
+                  min: formatNumber(locale, MIN_GOOD_SIDE),
+                })}
+              </p>
+            )}
           </div>
         ) : (
           <div className="flex min-h-72 flex-col items-center justify-center gap-3 text-center">
@@ -227,6 +243,15 @@ function ResultView({
   labels: Labels;
   headingRef: RefObject<HTMLHeadingElement | null>;
 }) {
+  const bn = locale === 'bn';
+  const photoTip = !result.photo_ok && (bn ? result.photo_tip_bn : result.photo_tip_en);
+  const tipBox = photoTip && (
+    <div className="mt-4 rounded-xl bg-warning-soft p-3 text-sm text-warning">
+      <p className="font-medium">{labels.photoTipTitle}</p>
+      <p className="mt-1">{photoTip}</p>
+    </div>
+  );
+
   if (!result.detected) {
     return (
       <div className="flex min-h-48 flex-col items-center justify-center gap-2 text-center">
@@ -236,38 +261,56 @@ function ResultView({
         <h2 ref={headingRef} tabIndex={-1} className="text-xl font-semibold text-fg outline-none">
           {labels.noDisease}
         </h2>
-        <p className="max-w-md text-fg-muted">{locale === 'bn' ? result.message_bn : result.message_en}</p>
+        <p className="max-w-md text-fg-muted">{bn ? result.message_bn : result.message_en}</p>
+        {tipBox}
       </div>
     );
   }
 
-  const bn = locale === 'bn';
   const crop = bn ? result.crop_bn : result.crop_en;
-  const disease = bn ? result.disease_bn : result.disease_en;
   const description = bn ? result.description_bn : result.description_en;
   const treatment = bn ? result.treatment_bn : result.treatment_en;
-  const percent = Math.round(result.confidence * 100);
+  const [first, ...others] = result.candidates;
+  const name = (c: typeof first) => (bn ? c.disease_bn : c.disease_en);
+  const check = (c: typeof first) => (bn ? c.check_bn : c.check_en);
 
   return (
     <div>
-      <p className="text-sm font-medium text-brand">{labels.resultTitle}</p>
-      <h2 ref={headingRef} tabIndex={-1} className="mt-1 text-2xl font-semibold text-fg outline-none">
-        {disease}
-      </h2>
-      <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
-        <div className="rounded-xl bg-surface-2 px-3 py-2">
-          <dt className="text-fg-muted">{labels.crop}</dt>
-          <dd className="font-medium text-fg">{crop}</dd>
-        </div>
-        <div className="rounded-xl bg-surface-2 px-3 py-2">
-          <dt className="text-fg-muted">{labels.confidence}</dt>
-          <dd className="font-medium tabular-nums text-fg">{formatNumber(locale, percent)}%</dd>
-        </div>
-      </dl>
-      <div aria-hidden className="mt-3 h-2 overflow-hidden rounded-full bg-surface-2">
-        <div className="h-full rounded-full bg-brand" style={{ width: `${percent}%` }} />
+      <p className="text-sm font-medium text-brand">
+        {labels.resultTitle} · {crop}
+      </p>
+
+      <div className="mt-2 rounded-xl border border-brand/40 bg-brand-soft p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-brand">{labels.mostLikely}</p>
+        <h2 ref={headingRef} tabIndex={-1} className="mt-1 text-2xl font-semibold text-fg outline-none">
+          {name(first)}
+        </h2>
+        {check(first) && (
+          <p className="mt-2 text-sm text-fg">
+            <span className="font-medium">{labels.howToCheck}:</span> {check(first)}
+          </p>
+        )}
       </div>
-      <p className="mt-1 text-xs text-fg-muted">{labels.confidenceNote}</p>
+
+      {others.length > 0 && (
+        <div className="mt-3">
+          <p className="text-sm font-medium text-fg-muted">{labels.alsoPossible}</p>
+          <ul className="mt-2 grid gap-2">
+            {others.map((c) => (
+              <li key={c.disease_en} className="rounded-xl bg-surface-2 p-3 text-sm">
+                <p className="font-semibold text-fg">{name(c)}</p>
+                {check(c) && (
+                  <p className="mt-1 text-fg-muted">
+                    <span className="font-medium text-fg">{labels.howToCheck}:</span> {check(c)}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <p className="mt-2 text-xs text-fg-muted">{labels.rankNote}</p>
+      {tipBox}
 
       {description && (
         <>

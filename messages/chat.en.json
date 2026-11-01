@@ -18,61 +18,134 @@
   "connection": "Connection issue — please try again.",
   "note": "AI answers can be wrong. Check important advice with your local agriculture office.",
   "prompts": [
-    { "label": "Boro rice", "prompt": "How do I grow Boro rice? Explain step by step." },
-    { "label": "Balanced fertiliser", "prompt": "How do I apply fertiliser to my crops in a balanced way?" },
-    { "label": "Safe pest control", "prompt": "How can I control pests safely with integrated pest management (IPM)?" },
-    { "label": "Pond fish farming", "prompt": "How do I start fish farming in a pond?" }
+    {
+      "label": "Boro rice",
+      "prompt": "How do I grow Boro rice? Explain step by step."
+    },
+    {
+      "label": "Balanced fertiliser",
+      "prompt": "How do I apply fertiliser to my crops in a balanced way?"
+    },
+    {
+      "label": "Safe pest control",
+      "prompt": "How can I control pests safely with integrated pest management (IPM)?"
+    },
+    {
+      "label": "Pond fish farming",
+      "prompt": "How do I start fish farming in a pond?"
+    }
   ],
   "crops": {
     "rice": {
       "greeting": "Ask me anything about rice — choosing a variety, seedbeds, fertiliser, irrigation, pests and diseases.",
       "prompts": [
-        { "label": "Choosing a variety", "prompt": "Which rice variety should I grow this season in my area?" },
-        { "label": "Fertiliser timing", "prompt": "Which fertilisers should I apply to transplanted rice, and when?" },
-        { "label": "Rice blast", "prompt": "How do I recognise and manage rice blast?" },
-        { "label": "AWD irrigation", "prompt": "How does alternate wetting and drying (AWD) irrigation work in rice?" }
+        {
+          "label": "Choosing a variety",
+          "prompt": "Which rice variety should I grow this season in my area?"
+        },
+        {
+          "label": "Fertiliser timing",
+          "prompt": "Which fertilisers should I apply to transplanted rice, and when?"
+        },
+        {
+          "label": "Rice blast",
+          "prompt": "How do I recognise and manage rice blast?"
+        },
+        {
+          "label": "AWD irrigation",
+          "prompt": "How does alternate wetting and drying (AWD) irrigation work in rice?"
+        }
       ]
     },
     "fisheries": {
       "greeting": "Ask me anything about fish — pond preparation, stocking, feeding, fish health and hilsa conservation.",
       "prompts": [
-        { "label": "Preparing a pond", "prompt": "How do I prepare a pond before stocking fish?" },
-        { "label": "Mixed carp farming", "prompt": "Which carp species can I stock together in one pond?" },
-        { "label": "Hilsa bans", "prompt": "Why are there bans on catching hilsa and jatka, and when do they apply?" },
-        { "label": "Fish gulping air", "prompt": "What should I do if fish are gulping air at the pond surface?" }
+        {
+          "label": "Preparing a pond",
+          "prompt": "How do I prepare a pond before stocking fish?"
+        },
+        {
+          "label": "Mixed carp farming",
+          "prompt": "Which carp species can I stock together in one pond?"
+        },
+        {
+          "label": "Hilsa bans",
+          "prompt": "Why are there bans on catching hilsa and jatka, and when do they apply?"
+        },
+        {
+          "label": "Fish gulping air",
+          "prompt": "What should I do if fish are gulping air at the pond surface?"
+        }
       ]
     },
     "potato": {
       "greeting": "Ask me anything about potatoes — seed potatoes, planting, fertiliser, late blight and storage.",
       "prompts": [
-        { "label": "Late blight", "prompt": "How do I prevent and control late blight in potatoes?" },
-        { "label": "Seed potatoes", "prompt": "How do I choose and prepare seed potatoes for planting?" },
-        { "label": "Storage", "prompt": "How should I store potatoes after harvest?" }
+        {
+          "label": "Late blight",
+          "prompt": "How do I prevent and control late blight in potatoes?"
+        },
+        {
+          "label": "Seed potatoes",
+          "prompt": "How do I choose and prepare seed potatoes for planting?"
+        },
+        {
+          "label": "Storage",
+          "prompt": "How should I store potatoes after harvest?"
+        }
       ]
     },
     "tomato": {
       "greeting": "Ask me anything about tomatoes — seedlings, staking, watering, pests and diseases.",
       "prompts": [
-        { "label": "Leaf curl", "prompt": "How do I manage tomato leaf curl virus?" },
-        { "label": "Staking", "prompt": "How should I stake and prune tomato plants?" },
-        { "label": "Cracked fruit", "prompt": "Why do my tomatoes crack, and how can I prevent it?" }
+        {
+          "label": "Leaf curl",
+          "prompt": "How do I manage tomato leaf curl virus?"
+        },
+        {
+          "label": "Staking",
+          "prompt": "How should I stake and prune tomato plants?"
+        },
+        {
+          "label": "Cracked fruit",
+          "prompt": "Why do my tomatoes crack, and how can I prevent it?"
+        }
       ]
     },
     "jute": {
       "greeting": "Ask me anything about jute — sowing, weeding, harvest timing, retting and fibre quality.",
       "prompts": [
-        { "label": "Sowing", "prompt": "When and how should I sow jute?" },
-        { "label": "Retting", "prompt": "How do I ret jute to get good-quality fibre?" },
-        { "label": "Pests", "prompt": "What are the common pests of jute, and how do I control them?" }
+        {
+          "label": "Sowing",
+          "prompt": "When and how should I sow jute?"
+        },
+        {
+          "label": "Retting",
+          "prompt": "How do I ret jute to get good-quality fibre?"
+        },
+        {
+          "label": "Pests",
+          "prompt": "What are the common pests of jute, and how do I control them?"
+        }
       ]
     },
     "mango": {
       "greeting": "Ask me anything about mangoes — flowering care, fruit drop, bagging, pests and harvest.",
       "prompts": [
-        { "label": "Flowering care", "prompt": "How should I care for mango trees during flowering?" },
-        { "label": "Fruit drop", "prompt": "Why do young mangoes drop, and how can I reduce it?" },
-        { "label": "Fruit bagging", "prompt": "How and when should I bag mangoes?" }
+        {
+          "label": "Flowering care",
+          "prompt": "How should I care for mango trees during flowering?"
+        },
+        {
+          "label": "Fruit drop",
+          "prompt": "Why do young mangoes drop, and how can I reduce it?"
+        },
+        {
+          "label": "Fruit bagging",
+          "prompt": "How and when should I bag mangoes?"
+        }
       ]
     }
-  }
+  },
+  "busy": "The AI assistant has reached its usage limit for now. Please try again later."
 }

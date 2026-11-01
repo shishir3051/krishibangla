@@ -1,6 +1,6 @@
-import { GEMINI_MODEL, getGemini, missingKeyResponse } from '@/lib/gemini';
+import { GEMINI_MODEL, geminiErrorResponse, getGemini, missingKeyResponse } from '@/lib/gemini';
 import { rateLimit } from '@/lib/rateLimit';
-import { diagnosisResponseSchema, parseDiagnosis, parseImageDataUrl, SCAN_PROMPT } from '@/lib/scan';
+import { diagnosisResponseSchema, parseDiagnosis, parseImageDataUrl, SCAN_GENERATION, SCAN_PROMPT } from '@/lib/scan';
 
 export async function POST(req: Request) {
   const limited = await rateLimit('detect', req);
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const response = await gemini.models.generateContent({
       model: GEMINI_MODEL,
       contents: [{ role: 'user', parts: [{ inlineData: parsed.image }, { text: SCAN_PROMPT }] }],
-      config: { responseMimeType: 'application/json', responseSchema: diagnosisResponseSchema },
+      config: { ...SCAN_GENERATION, responseMimeType: 'application/json', responseSchema: diagnosisResponseSchema },
     });
 
     const diagnosis = parseDiagnosis(response.text);
@@ -32,7 +32,6 @@ export async function POST(req: Request) {
     }
     return Response.json(diagnosis);
   } catch (error) {
-    console.error('Gemini detection error:', error);
-    return Response.json({ error: error instanceof Error ? error.message : 'Scan failed.' }, { status: 502 });
+    return geminiErrorResponse(error, 'scan');
   }
 }

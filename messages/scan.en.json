@@ -20,13 +20,10 @@
   "scan": "Scan this photo",
   "scanning": "Analysing the photo…",
   "change": "Use a different photo",
-  "resultTitle": "Likely diagnosis",
+  "resultTitle": "Possible causes",
   "emptyTitle": "Your result will appear here",
   "emptyBody": "Choose a photo, then press “Scan this photo”.",
   "crop": "Crop",
-  "disease": "Disease",
-  "confidence": "AI confidence",
-  "confidenceNote": "How sure the AI says it is — not a guarantee.",
   "description": "What the AI sees",
   "treatment": "Suggested steps",
   "noDisease": "No disease identified",
@@ -39,5 +36,12 @@
   "callCenter": "You can also call the Krishi Call Center on {number}, 8 am to 8 pm, except Fridays, Saturdays and government holidays.",
   "callCenterNumber": "16123",
   "callCenterSource": "Agriculture Information Service (AIS)",
-  "privacy": "Your photo is sent to Google's Gemini AI for analysis. KrishiBangla does not save it."
+  "privacy": "Your photo is sent to Google's Gemini AI for analysis. KrishiBangla does not save it.",
+  "mostLikely": "Most likely",
+  "alsoPossible": "Also possible",
+  "howToCheck": "How to check",
+  "rankNote": "Ranked by the AI from this photo — a photo alone cannot confirm the cause.",
+  "photoTipTitle": "A better photo gives a better answer",
+  "smallPhoto": "This photo is small ({width} × {height} px). The AI may miss details — if you can, take a closer, sharper photo of at least {min} px.",
+  "busy": "The AI scanner has reached its usage limit for now. Please try again later."
 }

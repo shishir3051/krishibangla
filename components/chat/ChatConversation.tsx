@@ -80,7 +80,11 @@ export function ChatConversation({ labels, cropId, open }: { labels: Labels; cro
       });
     } catch (error) {
       if (controller.signal.aborted) updateReply({ status: 'stopped' });
-      else updateReply({ content: error instanceof ChatError && error.status === 429 ? labels.tooMany : labels.connection, status: 'error' });
+      else {
+        const status = error instanceof ChatError ? error.status : 0;
+        // 429: this visitor asked too much (our rate limit); 503: the AI provider's usage limit.
+        updateReply({ content: status === 429 ? labels.tooMany : status === 503 ? labels.busy : labels.connection, status: 'error' });
+      }
     } finally {
       if (requestRef.current === id) {
         abortRef.current = null;
