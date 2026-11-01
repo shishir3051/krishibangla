@@ -18,5 +18,8 @@
   "climateBody": "Rainfall and temperature compared with normal for each division, plus disaster alerts.",
   "askTitle": "Ask the assistant",
   "askBody": "Questions about crops, fish, pests or weather — answered in your language.",
-  "open": "Open"
+  "open": "Open",
+  "mapTitle": "Choose your district",
+  "mapHint": "Click any district on the map to see its live weather, 7-day forecast and irrigation advice.",
+  "mapAll": "Or search the list of all 64 districts"
 }

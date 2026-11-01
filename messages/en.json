@@ -8,7 +8,7 @@
     "scan": "Scan",
     "ask": "Ask AI",
     "dataSources": "Data sources",
-    "footer": "Data from Open-Meteo, WFP, the World Bank, NASA POWER and GDACS. AI answers can be wrong — check with your local agriculture office.",
+    "footer": "Data from Open-Meteo, TCB, WFP, the World Bank, NASA POWER and GDACS. AI answers can be wrong — check with your local agriculture office.",
     "switchLanguage": "বাংলা",
     "switchLanguageLabel": "Switch to Bangla",
     "themeLight": "Switch to light theme",
@@ -32,7 +32,9 @@
     "locationUnavailable": "Your location could not be found. Choose your district from the list instead.",
     "mapTitle": "Map of Bangladesh districts — select a district",
     "division": "{name} Division",
-    "count": "{n} districts"
+    "count": "{n} districts",
+    "mapIdle": "Point at a district to see its name",
+    "mapOpen": "click to open →"
   },
   "desk": {
     "allDistricts": "All districts",
@@ -42,6 +44,7 @@
     "humidity": "Humidity",
     "wind": "Wind",
     "rainNow": "Rain (last 15 min)",
+    "measuredAt": "Measured at",
     "forecast": "7-day forecast",
     "rainChance": "Chance of rain",
     "weatherUnavailable": "Live weather is temporarily unavailable. Please try again in a few minutes.",

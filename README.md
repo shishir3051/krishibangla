@@ -19,7 +19,8 @@ Every figure on the site shows its source and when it was updated. Nothing is in
 
 | Source | Used for | Refreshed |
 |---|---|---|
-| [Open-Meteo](https://open-meteo.com/) | Weather, forecast, evapotranspiration, soil moisture | Hourly |
+| [Open-Meteo](https://open-meteo.com/) | Weather, forecast, evapotranspiration, soil moisture | Every 15 minutes (current), hourly (forecast) |
+| [TCB](https://tcb.gov.bd/pages/daily-rmps) | Today's retail food prices in Dhaka | Hourly check (data is daily) |
 | [WFP via HDX](https://data.humdata.org/dataset/wfp-food-prices-for-bangladesh) | Retail food prices | Daily check (data is monthly) |
 | [World Bank WDI](https://data.worldbank.org/country/bangladesh) | National agriculture indicators | Weekly check (data is yearly) |
 | [NASA POWER](https://power.larc.nasa.gov/) | Temperature and rainfall vs normal | Weekly check (data is monthly) |
@@ -88,7 +89,7 @@ Each adapter in `lib/sources/` returns its data together with source metadata, n
 app/[locale]/          Pages (bn | en): home, districts, markets, climate, crops, scan, about/data
 app/api/               chat (streaming Gemini) and detect (disease scan), both rate limited
 proxy.ts               Locale redirects (/ → /bn or your saved choice), old /crop/* URLs
-lib/sources/           One adapter per upstream (Open-Meteo, WFP, World Bank, NASA POWER, GDACS)
+lib/sources/           One adapter per upstream (Open-Meteo, TCB, WFP, World Bank, NASA POWER, GDACS)
 lib/domain/            Pure, unit-tested logic: parsing, prices, irrigation, climate, alerts, districts
 data/                  districts.json (64 districts), crops.json, map paths and source GeoJSON
 messages/              UI text: <feature>.en.json / <feature>.bn.json (same keys, enforced by tests)

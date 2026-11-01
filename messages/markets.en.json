@@ -1,6 +1,6 @@
 {
   "title": "Market prices",
-  "subtitle": "Monthly retail prices of staple foods across Bangladesh, from the World Food Programme's market monitoring.",
+  "subtitle": "Retail food prices in Bangladesh: today's prices in Dhaka from the Trading Corporation of Bangladesh (TCB), and monthly prices across the country from the World Food Programme (WFP).",
   "dataUpTo": "Monthly data · latest month {month}",
   "snapshotTitle": "Market prices",
   "snapshotSubtitle": "National retail prices of key staples",
@@ -39,5 +39,20 @@
   "note1": "These are monthly retail prices — what shoppers pay in local markets — collected by the World Food Programme (WFP) in a sample of markets. They are not wholesale prices, and not the farm-gate prices farmers receive.",
   "note2": "The national price is the median of the markets that reported that month, and is shown only when markets in at least {n} districts reported. A district's price is the median of its monitored markets.",
   "note3": "The change compares the same markets with the previous month that has data, and is left out when that month is more than {gap} months earlier.",
-  "note4": "WFP publishes with a delay, so the latest month is often one to three months ago and can differ between items. Prices in your own market may differ."
+  "note4": "WFP publishes with a delay, so the latest month is often one to three months ago and can differ between items. Prices in your own market may differ.",
+  "snapshotSubtitleToday": "Today's retail prices in Dhaka",
+  "todayTitle": "Today's retail prices in Dhaka",
+  "todaySubtitle": "Collected every day by the Trading Corporation of Bangladesh (TCB) in Dhaka city markets.",
+  "dailyData": "Daily data · {date}",
+  "todayCaption": "Lowest and highest retail price of each item in Dhaka on {date}, with the change from a week, a month and a year earlier",
+  "colToday": "Today",
+  "colVsWeek": "vs last week",
+  "colVsMonth": "vs last month",
+  "colVsYear": "vs last year",
+  "notOnSale": "Not in the market",
+  "todayFootnote": "Lowest–highest retail price in Dhaka city markets. The change compares the middle of each price range.",
+  "todayUnavailable": "Today's Dhaka prices are temporarily unavailable. Please try again later.",
+  "monthlyTitle": "Monthly prices across Bangladesh",
+  "todayMarkets": "Markets surveyed:",
+  "noEarlierPrice": "No earlier price to compare"
 }

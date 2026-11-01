@@ -21,6 +21,17 @@ export function formatDayMonth(locale: Locale, isoDate: string): string {
   return new Intl.DateTimeFormat(intlLocale(locale), { day: 'numeric', month: 'short', timeZone: TZ }).format(new Date(`${isoDate}T12:00:00+06:00`));
 }
 
+/**
+ * "YYYY-MM-DD" → "1 November 2026" / "১ নভেম্বর, ২০২৬".
+ * ICU spells জানুয়ারী/ফেব্রুয়ারী; the Bangla Academy spelling is জানুয়ারি/ফেব্রুয়ারি.
+ */
+export function formatDate(locale: Locale, isoDate: string): string {
+  const text = new Intl.DateTimeFormat(intlLocale(locale), { day: 'numeric', month: 'long', year: 'numeric', timeZone: TZ }).format(
+    new Date(`${isoDate}T12:00:00+06:00`)
+  );
+  return locale === 'bn' ? text.replace('ুয়ারী', 'ুয়ারি') : text;
+}
+
 /** ISO timestamp → day, month and time in Dhaka, e.g. "1 Nov, 14:05" / "১ নভে, ১৪:০৫". */
 export function formatDateTime(locale: Locale, iso: string): string {
   return new Intl.DateTimeFormat(intlLocale(locale), {

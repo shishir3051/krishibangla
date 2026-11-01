@@ -1,29 +1,52 @@
 /**
- * open-meteo.ts — Live forecast for all 64 districts in one request, shared across instances.
- * Cached for an hour (Open-Meteo updates hourly); failures are retried after a few minutes.
+ * open-meteo.ts — Live weather for all 64 districts, one request per part, shared across instances.
+ * Current conditions: Open-Meteo updates them every 15 minutes, so they are refreshed every 15 minutes.
+ * Daily forecast: model runs land a few times a day, so it is refreshed hourly.
+ * Free-tier budget (10,000 calls/day; 64 districts = 64 calls per request): at most
+ * 96 × 64 + 24 × 64 ≈ 7,700 calls/day. Failures are retried after a few minutes.
  */
 import 'server-only';
 import { cacheLife, cacheTag } from 'next/cache';
 import { DISTRICTS } from '@/lib/domain/districts';
-import { forecastUrl, parseForecast, type DistrictWeather } from '@/lib/domain/weather';
+import { forecastUrl, parseCurrent, parseDaily, type CurrentConditions, type DailyForecast } from '@/lib/domain/weather';
 import type { SourceResult } from './types';
 
 const SOURCE = { source: 'Open-Meteo', url: 'https://open-meteo.com/' };
+const KEYS = DISTRICTS.map((d) => d.slug);
 
-export async function getDistrictForecasts(): Promise<SourceResult<Record<string, DistrictWeather>>> {
+export async function getCurrentConditions(): Promise<SourceResult<Record<string, CurrentConditions>>> {
   'use cache: remote';
   cacheTag('weather');
   const meta = { ...SOURCE, fetchedAt: new Date().toISOString() };
 
   try {
-    const res = await fetch(forecastUrl(DISTRICTS), { signal: AbortSignal.timeout(15_000) });
+    const res = await fetch(forecastUrl(DISTRICTS, 'current'), { signal: AbortSignal.timeout(15_000) });
     if (!res.ok) throw new Error(`Open-Meteo responded ${res.status}`);
-    const data = parseForecast(await res.json(), DISTRICTS.map((d) => d.slug));
-    if (!data) throw new Error('Open-Meteo response did not match the expected shape');
+    const data = parseCurrent(await res.json(), KEYS);
+    if (!data) throw new Error('Open-Meteo current response did not match the expected shape');
+    cacheLife({ stale: 300, revalidate: 900, expire: 3600 });
+    return { ok: true, data, meta };
+  } catch (error) {
+    console.error('Open-Meteo current conditions failed:', error);
+    cacheLife('minutes');
+    return { ok: false, error: error instanceof Error ? error.message : 'Current weather unavailable', meta };
+  }
+}
+
+export async function getDailyForecasts(): Promise<SourceResult<Record<string, DailyForecast[]>>> {
+  'use cache: remote';
+  cacheTag('weather');
+  const meta = { ...SOURCE, fetchedAt: new Date().toISOString() };
+
+  try {
+    const res = await fetch(forecastUrl(DISTRICTS, 'daily'), { signal: AbortSignal.timeout(15_000) });
+    if (!res.ok) throw new Error(`Open-Meteo responded ${res.status}`);
+    const data = parseDaily(await res.json(), KEYS);
+    if (!data) throw new Error('Open-Meteo daily response did not match the expected shape');
     cacheLife('hours');
     return { ok: true, data, meta };
   } catch (error) {
-    console.error('Open-Meteo forecast failed:', error);
+    console.error('Open-Meteo daily forecast failed:', error);
     cacheLife('minutes');
     return { ok: false, error: error instanceof Error ? error.message : 'Forecast unavailable', meta };
   }

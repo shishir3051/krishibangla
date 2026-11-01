@@ -22,10 +22,10 @@ export function DistrictMap({ locale, title, highlight, className = '' }: Distri
         const name = getDistrict(slug)?.name[locale] ?? slug;
         const active = slug === highlight;
         return (
-          <a key={slug} href={localePath(locale, `/districts/${slug}`)} aria-label={name}>
+          <a key={slug} href={localePath(locale, `/districts/${slug}`)} aria-label={name} data-district-name={name} className="group outline-none">
             <path
               d={d}
-              className={`stroke-surface transition-colors ${active ? 'fill-brand' : 'fill-line hover:fill-brand/50'}`}
+              className={`stroke-surface transition-colors ${active ? 'fill-brand' : 'fill-brand/25 group-hover:fill-brand group-focus-visible:fill-brand'}`}
               strokeWidth={0.8}
             >
               <title>{name}</title>

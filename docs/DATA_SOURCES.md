@@ -7,10 +7,23 @@ Each source has one adapter in `lib/sources/` (fetching and caching) and pure, u
 ## Open-Meteo — weather, forecast and irrigation advice
 
 - **Adapter:** `lib/sources/open-meteo.ts`; parsing in `lib/domain/weather.ts`.
-- **Request:** one call to `api.open-meteo.com/v1/forecast` for all 64 district headquarters (comma-separated coordinates), `timezone=Asia/Dhaka`, 7 forecast days. Variables: temperature, apparent temperature, humidity, precipitation, weather code, wind, soil moisture at 3–9 cm (current); weather code, max/min temperature, precipitation sum and probability, FAO-56 reference evapotranspiration (daily).
-- **Caching:** `'use cache: remote'`, refreshed hourly; rendered per request inside `<Suspense>`.
+- **Requests:** two calls to `api.open-meteo.com/v1/forecast`, each for all 64 district headquarters (comma-separated coordinates), `timezone=Asia/Dhaka`:
+  - *Current conditions:* temperature, apparent temperature, humidity, precipitation, weather code, wind, soil moisture at 3–9 cm, and day/night (`is_day`, so clear nights show a moon). Open-Meteo updates these every 15 minutes; the card shows when they were measured.
+  - *Daily forecast (7 days):* weather code, max/min temperature, precipitation sum and probability, FAO-56 reference evapotranspiration.
+- **Caching:** `'use cache: remote'`, rendered per request inside `<Suspense>`. Current conditions are refreshed every 15 minutes, the forecast hourly.
+- **Quota:** each request has at most 10 variables, so Open-Meteo counts it as one call per location: at most 96 × 64 + 24 × 64 ≈ 7,700 calls a day, within the free 10,000.
 - **Irrigation advice** (`lib/domain/irrigation.ts`): over the next 3 days, crop water demand = sum of reference evapotranspiration (ET0); effective rain = 80% of each day's rain above 2 mm; deficit = demand − effective rain. Deficit ≤ 0 mm → none, ≤ 4 mm → low, ≤ 9 mm → medium, otherwise high. Wet topsoil (> 0.35 m³/m³) lowers the level one step; dry topsoil (< 0.15 m³/m³) raises it one step, unless rain already covers demand. The page shows the numbers behind the advice. It is general guidance for upland crops and vegetables, not a crop model; flooded rice follows the AWD water-level rule.
 - **Terms:** data CC BY 4.0. The free API is for non-commercial use.
+
+## TCB — today's retail prices in Dhaka
+
+- **Adapter:** `lib/sources/tcb.ts`; parsing in `lib/domain/tcb.ts`; spreadsheet reading in `lib/xlsx.ts` (Node's built-in zlib, no dependency).
+- **Source:** the Trading Corporation of Bangladesh publishes *ঢাকা মহানগরীর নিত্য প্রয়োজনীয় পণ্যের দৈনিক খুচরা বাজার দর* every day (around 12:30 Dhaka time) as an Excel sheet linked from `tcb.gov.bd/pages/daily-rmps`. The adapter reads that page, takes the newest sheet (only from TCB's own storage hosts) and parses it.
+- **Content:** about 50 food items from 7 Dhaka city markets (Mirpur-6, Mohammadpur Town Hall, Malibag, Rampura, Mohakhali, Hatirpool, West Agargaon), each with a lowest–highest retail price for the day, a week earlier, a month earlier and a year earlier. A price of 0 means the item was not on sale (e.g. hilsa during the fishing ban) and is shown as "not in the market". Writing paper, steel rods and branded milk powder are left out.
+- **Processing:** item and unit names are matched to a bilingual catalog in `lib/domain/tcb.ts` (spacing and Unicode forms are normalised); items TCB adds later still appear, under their Bangla name. Changes compare the **midpoints** of the two price ranges, which is how TCB computes its own percentages.
+- **Caching:** `'use cache: remote'`, refreshed hourly; rendered per request inside `<Suspense>` on the markets page and the home page. If the sheet cannot be read, the home page falls back to the WFP monthly prices.
+- **Caveats:** Dhaka city only, and retail (not wholesale or farm-gate). For prices by district, see WFP below. The Department of Agricultural Marketing (DAM) also publishes divisional and district prices, but only as occasional PDFs or through a web form, which cannot be read reliably.
+- **Terms:** public information from a Government of Bangladesh agency; no specific licence is stated. TCB is credited as the source on every price block.
 
 ## WFP food prices (via the Humanitarian Data Exchange)
 

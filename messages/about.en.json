@@ -10,13 +10,19 @@
     "openMeteo": {
       "name": "Open-Meteo",
       "usedFor": "Current weather, 7-day forecast, evapotranspiration and soil moisture for each district; irrigation advice.",
-      "frequency": "Hourly (we refresh at most once an hour).",
+      "frequency": "Current conditions every 15 minutes; the forecast every hour.",
       "terms": "Data under CC BY 4.0. The free API is for non-commercial use."
+    },
+    "tcb": {
+      "name": "Trading Corporation of Bangladesh (TCB)",
+      "usedFor": "Today's retail prices of food in Dhaka city markets, with the prices a week, a month and a year earlier.",
+      "frequency": "Daily (we check every hour).",
+      "terms": "Public information from TCB, a Government of Bangladesh agency; no specific licence is stated. TCB is credited as the source."
     },
     "wfp": {
       "name": "World Food Programme (WFP), via the Humanitarian Data Exchange",
       "usedFor": "Monthly retail prices of staple foods in markets across Bangladesh.",
-      "frequency": "Monthly; published with a delay of a few weeks.",
+      "frequency": "Monthly; published one to three months late.",
       "terms": "CC BY-IGO."
     },
     "worldBank": {

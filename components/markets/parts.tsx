@@ -35,16 +35,19 @@ export function trendLabel(locale: Locale, t: Dictionary, c: CommodityPrices): s
  */
 export function PriceChange({ locale, labels, change, compact = false }: { locale: Locale; labels: Labels; change: CommodityPrices['change']; compact?: boolean }) {
   if (!change) return <span className="text-xs text-fg-muted">{labels.noComparison}</span>;
+  return <ChangeFigure locale={locale} labels={labels} pct={change.pct} since={fill(labels.vsMonth, { month: formatMonth(locale, change.since) })} compact={compact} />;
+}
 
-  const pct = formatPct(locale, change.pct);
-  const rounded = Math.round(change.pct * 10) / 10;
+/** Arrow + percentage, then what it is compared with (`since`, e.g. "vs Jun 2026" or "1 Oct"). Colours as PriceChange. */
+export function ChangeFigure({ locale, labels, pct: change, since, compact = false }: { locale: Locale; labels: Labels; pct: number; since: string; compact?: boolean }) {
+  const pct = formatPct(locale, change);
+  const rounded = Math.round(change * 10) / 10;
   const [arrow, text, tone] =
     rounded > 0
       ? ['▲', fill(labels.changeUp, { pct }), 'text-accent']
       : rounded < 0
         ? ['▼', fill(labels.changeDown, { pct }), 'text-info']
         : ['→', labels.changeSame, 'text-fg-muted'];
-  const since = fill(labels.vsMonth, { month: formatMonth(locale, change.since) });
 
   return (
     <span className={compact ? 'inline-flex flex-wrap items-baseline gap-x-1.5 text-sm' : 'text-sm'}>

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import { DhakaTodayPrices, DhakaTodayPricesSkeleton } from '@/components/markets/DhakaTodayPrices';
 import { DistrictPrices } from '@/components/markets/DistrictPrices';
 import { formatMonth } from '@/components/markets/format';
 import { NationalPriceTable } from '@/components/markets/NationalPriceTable';
@@ -21,7 +23,8 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/markets'
   return pageMetadata(locale, '/markets', { title: `${t.markets.title} — ${t.nav.brand}`, description: t.markets.subtitle });
 }
 
-// Monthly WFP data, cached for days (lib/sources/wfp.ts), so the whole page is part of the static shell.
+// TCB's daily Dhaka prices stream in per request (refreshed hourly); the monthly WFP data is cached for
+// days (lib/sources/wfp.ts), so the rest of the page is part of the static shell.
 export default async function MarketsPage({ params }: PageProps<'/[locale]/markets'>) {
   const { locale } = await params;
   if (!hasLocale(locale)) notFound();
@@ -47,12 +50,19 @@ export default async function MarketsPage({ params }: PageProps<'/[locale]/marke
         <h1 className="text-3xl font-semibold">{m.title}</h1>
         <p className="mt-2 max-w-2xl text-fg-muted">{m.subtitle}</p>
 
+        <div className="mt-6">
+          <Suspense fallback={<DhakaTodayPricesSkeleton />}>
+            <DhakaTodayPrices locale={locale} t={t} />
+          </Suspense>
+        </div>
+
+        <h2 className="mt-10 text-xl font-semibold">{m.monthlyTitle}</h2>
         {result.ok ? (
           <>
-            <div className="mt-4">
+            <div className="mt-3">
               <Badge tone="info">{fill(m.dataUpTo, { month: formatMonth(locale, result.data.latestMonth) })}</Badge>
             </div>
-            <div className="mt-6">
+            <div className="mt-4">
               <NationalPriceTable locale={locale} t={t} data={result.data} meta={result.meta} />
             </div>
             <div className="mt-6 grid items-start gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">

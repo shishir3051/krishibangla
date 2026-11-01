@@ -64,7 +64,7 @@
   },
   "kpi": {
     "title": "Bangladesh agriculture in numbers",
-    "subtitle": "The latest yearly figures published by the World Bank, with the trend over the past 20 years.",
+    "subtitle": "The latest yearly figures published by the World Bank, with the trend over the past 20 years. Yearly figures are published one to two years after the year ends, so the current year is not included yet.",
     "unavailable": "World Bank figures are temporarily unavailable. Please try again later.",
     "sourceYear": "World Bank · {year}",
     "annual": "yearly data",

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DistrictFinder } from '@/components/district/DistrictFinder';
 import { DistrictMap } from '@/components/map/DistrictMap';
+import { MapExplorer } from '@/components/map/MapExplorer';
 import { PageShell } from '@/components/shell/PageShell';
 import { Card } from '@/components/ui/Card';
 import { getDictionary } from '@/lib/dictionary';
@@ -28,7 +29,9 @@ export default async function DistrictsPage({ params }: PageProps<'/[locale]/dis
 
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
           <Card>
-            <DistrictMap locale={locale} title={t.districts.mapTitle} className="mx-auto h-auto w-full max-w-md" />
+            <MapExplorer idle={t.districts.mapIdle} open={t.districts.mapOpen}>
+              <DistrictMap locale={locale} title={t.districts.mapTitle} className="mx-auto h-auto w-full max-w-md" />
+            </MapExplorer>
           </Card>
           <DistrictFinder
             locale={locale}

@@ -27,3 +27,9 @@ export function formatTaka(locale: Locale, value: number): string {
 export function formatPct(locale: Locale, pct: number): string {
   return `${formatNumber(locale, Math.abs(pct), 1)}%`;
 }
+
+/** Lowest–highest price, e.g. ৳50–55 / ৳৫০–৫৫; a single price when both ends are equal. */
+export function formatTakaRange(locale: Locale, range: { min: number; max: number }): string {
+  if (range.min === range.max) return formatTaka(locale, range.min);
+  return `${formatTaka(locale, range.min)}–${formatNumber(locale, range.max, range.max < 100 ? 1 : 0)}`;
+}

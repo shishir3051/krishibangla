@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { AskButton } from '@/components/chat/AskButton';
 import { DistrictMap } from '@/components/map/DistrictMap';
-import { MarketSnapshot } from '@/components/markets/MarketSnapshot';
+import { MapExplorer } from '@/components/map/MapExplorer';
+import { MarketSnapshot, MarketSnapshotSkeleton } from '@/components/markets/MarketSnapshot';
 import { AlertsCard, AlertsCardSkeleton } from '@/components/national/AlertsCard';
 import { KpiTiles } from '@/components/national/KpiTiles';
 import { PageShell } from '@/components/shell/PageShell';
@@ -53,8 +54,15 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
               </Link>
             </div>
           </div>
-          <Card className="hidden lg:block">
-            <DistrictMap locale={locale} title={t.districts.mapTitle} className="mx-auto h-80 w-auto" />
+          {/* Desktop: the map is the district picker; phones get the map in the Districts section below. */}
+          <Card className="hidden lg:block" title={<>🗺️ {h.mapTitle}</>}>
+            <p className="-mt-2 text-sm text-fg-muted">{h.mapHint}</p>
+            <MapExplorer idle={t.districts.mapIdle} open={t.districts.mapOpen}>
+              <DistrictMap locale={locale} title={t.districts.mapTitle} className="mx-auto mt-3 h-72 w-auto" />
+            </MapExplorer>
+            <Link href={localePath(locale, '/districts')} className="mt-2 block text-center text-sm font-medium text-brand underline-offset-2 hover:underline">
+              {h.mapAll} <span aria-hidden>→</span>
+            </Link>
           </Card>
         </section>
 
@@ -64,7 +72,9 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
         {/* Markets + live alerts */}
         <section className="grid items-start gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <MarketSnapshot locale={locale} t={t} />
+            <Suspense fallback={<MarketSnapshotSkeleton />}>
+              <MarketSnapshot locale={locale} t={t} />
+            </Suspense>
           </div>
           <Suspense fallback={<AlertsCardSkeleton />}>
             <AlertsCard locale={locale} t={t} />

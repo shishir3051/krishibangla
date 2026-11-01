@@ -8,6 +8,7 @@ import { pageMetadata } from '@/lib/site';
 
 const SOURCE_URLS = {
   openMeteo: 'https://open-meteo.com/',
+  tcb: 'https://tcb.gov.bd/pages/daily-rmps',
   wfp: 'https://data.humdata.org/dataset/wfp-food-prices-for-bangladesh',
   worldBank: 'https://data.worldbank.org/country/bangladesh',
   nasa: 'https://power.larc.nasa.gov/',

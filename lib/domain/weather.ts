@@ -1,9 +1,23 @@
 /**
- * weather.ts — Open-Meteo forecast request/parse for all districts, plus WMO weather-code labels.
- * Pure (no fetching), unit-tested in weather.test.ts; the cached fetch lives in lib/sources/open-meteo.ts.
+ * weather.ts — Open-Meteo request/parse for all districts, plus WMO weather-code labels.
+ * Current conditions and the daily forecast are separate requests because they change at different
+ * rates (every 15 minutes vs a few times a day) and are cached for different lifetimes.
+ * Pure (no fetching), unit-tested in weather.test.ts; the cached fetches live in lib/sources/open-meteo.ts.
  */
 import { z } from 'zod';
 import type { Bilingual } from './vocab';
+
+export type CurrentConditions = {
+  time: string; // local ISO (YYYY-MM-DDTHH:mm, Asia/Dhaka) of the 15-minute measurement
+  isDay: boolean;
+  temperature: number;
+  apparentTemperature: number;
+  humidity: number;
+  precipitation: number;
+  weatherCode: number;
+  windSpeed: number; // km/h
+  soilMoisture: number | null; // m³/m³ at 3–9 cm
+};
 
 export type DailyForecast = {
   date: string; // YYYY-MM-DD, Asia/Dhaka
@@ -15,37 +29,26 @@ export type DailyForecast = {
   et0: number; // mm reference evapotranspiration (FAO-56)
 };
 
-export type DistrictWeather = {
-  current: {
-    time: string; // local ISO, Asia/Dhaka
-    temperature: number;
-    apparentTemperature: number;
-    humidity: number;
-    precipitation: number;
-    weatherCode: number;
-    windSpeed: number; // km/h
-    soilMoisture: number | null; // m³/m³ at 3–9 cm
-  };
-  daily: DailyForecast[];
-};
-
-const CURRENT = 'temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,soil_moisture_3_to_9cm';
+// Each request stays at 10 variables or fewer, so Open-Meteo counts it as one call per location.
+const CURRENT = 'temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,soil_moisture_3_to_9cm,is_day';
 const DAILY = 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,et0_fao_evapotranspiration';
 export const FORECAST_DAYS = 7;
 
 /** One request for every location (Open-Meteo returns an array in the same order). */
-export function forecastUrl(points: { lat: number; lon: number }[]): string {
+export function forecastUrl(points: { lat: number; lon: number }[], part: 'current' | 'daily'): string {
   return (
     'https://api.open-meteo.com/v1/forecast' +
     `?latitude=${points.map((p) => p.lat).join(',')}&longitude=${points.map((p) => p.lon).join(',')}` +
-    `&current=${CURRENT}&daily=${DAILY}&forecast_days=${FORECAST_DAYS}&timezone=Asia%2FDhaka`
+    (part === 'current' ? `&current=${CURRENT}` : `&daily=${DAILY}&forecast_days=${FORECAST_DAYS}`) +
+    '&timezone=Asia%2FDhaka'
   );
 }
 
 const num = z.number();
-const locationSchema = z.object({
+const currentSchema = z.object({
   current: z.object({
     time: z.string(),
+    is_day: num,
     temperature_2m: num,
     relative_humidity_2m: num,
     apparent_temperature: num,
@@ -54,6 +57,8 @@ const locationSchema = z.object({
     wind_speed_10m: num,
     soil_moisture_3_to_9cm: num.nullable(),
   }),
+});
+const dailySchema = z.object({
   daily: z.object({
     time: z.array(z.string()),
     weather_code: z.array(num),
@@ -65,40 +70,44 @@ const locationSchema = z.object({
   }),
 });
 
-/** Parses a multi-location response into weather per key (keys in request order); null if malformed. */
-export function parseForecast(json: unknown, keys: string[]): Record<string, DistrictWeather> | null {
-  const parsed = z.array(locationSchema).length(keys.length).safeParse(Array.isArray(json) ? json : [json]);
+/** Validates a multi-location response (one entry per key, in request order); null if malformed. */
+function parseLocations<S extends z.ZodType, T>(json: unknown, keys: string[], schema: S, map: (loc: z.infer<S>) => T) {
+  const parsed = z.array(schema).length(keys.length).safeParse(Array.isArray(json) ? json : [json]);
   if (!parsed.success) return null;
+  return Object.fromEntries(parsed.data.map((loc, i) => [keys[i], map(loc)])) as Record<string, T>;
+}
 
-  return Object.fromEntries(
-    parsed.data.map((loc, i) => {
-      const { current: c, daily: d } = loc;
-      return [
-        keys[i],
-        {
-          current: {
-            time: c.time,
-            temperature: c.temperature_2m,
-            apparentTemperature: c.apparent_temperature,
-            humidity: c.relative_humidity_2m,
-            precipitation: c.precipitation,
-            weatherCode: c.weather_code,
-            windSpeed: c.wind_speed_10m,
-            soilMoisture: c.soil_moisture_3_to_9cm,
-          },
-          daily: d.time.map((date, j) => ({
-            date,
-            weatherCode: d.weather_code[j],
-            tempMax: d.temperature_2m_max[j],
-            tempMin: d.temperature_2m_min[j],
-            rain: d.precipitation_sum[j],
-            rainChance: d.precipitation_probability_max[j],
-            et0: d.et0_fao_evapotranspiration[j],
-          })),
-        },
-      ];
-    })
+export function parseCurrent(json: unknown, keys: string[]): Record<string, CurrentConditions> | null {
+  return parseLocations(json, keys, currentSchema, ({ current: c }) => ({
+    time: c.time,
+    isDay: c.is_day === 1,
+    temperature: c.temperature_2m,
+    apparentTemperature: c.apparent_temperature,
+    humidity: c.relative_humidity_2m,
+    precipitation: c.precipitation,
+    weatherCode: c.weather_code,
+    windSpeed: c.wind_speed_10m,
+    soilMoisture: c.soil_moisture_3_to_9cm,
+  }));
+}
+
+export function parseDaily(json: unknown, keys: string[]): Record<string, DailyForecast[]> | null {
+  return parseLocations(json, keys, dailySchema, ({ daily: d }) =>
+    d.time.map((date, j) => ({
+      date,
+      weatherCode: d.weather_code[j],
+      tempMax: d.temperature_2m_max[j],
+      tempMin: d.temperature_2m_min[j],
+      rain: d.precipitation_sum[j],
+      rainChance: d.precipitation_probability_max[j],
+      et0: d.et0_fao_evapotranspiration[j],
+    }))
   );
+}
+
+/** Open-Meteo local times have no offset; Dhaka is UTC+6 all year (no daylight saving). */
+export function dhakaLocalToIso(localTime: string): string {
+  return `${localTime}:00+06:00`;
 }
 
 type CodeInfo = Bilingual & { icon: string };
@@ -121,7 +130,11 @@ const CODES: [number[], CodeInfo][] = [
   [[96, 99], { en: 'Thunderstorm with hail', bn: 'শিলাবৃষ্টিসহ বজ্রঝড়', icon: '⛈️' }],
 ];
 
-/** Plain-language label and icon for a WMO weather code. */
-export function weatherCodeInfo(code: number): CodeInfo {
-  return CODES.find(([codes]) => codes.includes(code))?.[1] ?? { en: 'Unknown', bn: 'অজানা', icon: '🌡️' };
+// Icons that show the sun, swapped for night-time ones.
+const NIGHT_ICONS: Record<string, string> = { '☀️': '🌙', '🌤️': '🌙', '⛅': '☁️', '🌦️': '🌧️' };
+
+/** Plain-language label and icon for a WMO weather code; pass isDay=false for the night-time icon. */
+export function weatherCodeInfo(code: number, isDay = true): CodeInfo {
+  const info = CODES.find(([codes]) => codes.includes(code))?.[1] ?? { en: 'Unknown', bn: 'অজানা', icon: '🌡️' };
+  return isDay ? info : { ...info, icon: NIGHT_ICONS[info.icon] ?? info.icon };
 }
