@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
-
-export const revalidate = 0; // Disable cache
-export const dynamic = 'force-dynamic';
+import { connection, NextResponse } from 'next/server';
 
 export async function GET(request, context) {
+  // Run per request (and outside the try/catch, which would swallow Next's prerender bail-out).
+  await connection();
+
   let cropId = 'potato';
   try {
     const { params } = context;

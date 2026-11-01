@@ -1,6 +1,5 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useLanguage } from '@/components/LanguageProvider';
 import { StatsProvider } from '@/components/StatsProvider';
 import Navbar from '@/components/Navbar';
@@ -14,9 +13,7 @@ import Climate from '@/components/Climate';
 import GenericCropGuide from '@/components/GenericCropGuide';
 import Link from 'next/link';
 
-export default function CropPage() {
-  const params = useParams();
-  const id = params.id;
+export default function CropPageClient({ id }) {
   const { lang } = useLanguage();
 
   return (

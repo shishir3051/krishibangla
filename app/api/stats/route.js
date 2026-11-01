@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { connection, NextResponse } from 'next/server';
 import { fetchWorldBankStats, COUNTRY } from '@/lib/external-apis';
 
-export const revalidate = 0; // Disable cache
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
+  // Always run per request: World Bank values are fetched live, never frozen into the build.
+  await connection();
+
   try {
     // 1. Fetch live real-world data (if available) - Timeout set in external-apis
     const wbStats = await fetchWorldBankStats();

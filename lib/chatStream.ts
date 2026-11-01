@@ -1,29 +1,32 @@
 /**
- * chatStream.js — Client helper for the streaming /api/chat endpoint.
+ * chatStream.ts — Client helper for the streaming /api/chat endpoint.
  * Buffers partial SSE lines across network chunks so no text is dropped.
  *
  * Imported by: AIChat.js, GenericCropGuide.js
  */
 
 export class ChatError extends Error {
-  constructor(message, status) {
+  constructor(message: string, readonly status: number) {
     super(message);
-    this.status = status;
   }
 }
 
-/**
- * @param {{ messages: {role: 'user'|'assistant', content: string}[], context?: { cropId?: string }, signal?: AbortSignal, onText: (fullText: string) => void }} options
- * @returns {Promise<string>} the full reply text
- */
-export async function streamChat({ messages, context, signal, onText }) {
+type StreamChatOptions = {
+  messages: { role: 'user' | 'assistant'; content: string }[];
+  context?: { cropId?: string };
+  signal?: AbortSignal;
+  onText: (fullText: string) => void;
+};
+
+/** Streams a reply, calling onText with the accumulated text; resolves with the full reply. */
+export async function streamChat({ messages, context, signal, onText }: StreamChatOptions): Promise<string> {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages, context }),
     signal,
   });
-  if (!res.ok) throw new ChatError(`Chat request failed (${res.status})`, res.status);
+  if (!res.ok || !res.body) throw new ChatError(`Chat request failed (${res.status})`, res.status);
 
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -35,7 +38,7 @@ export async function streamChat({ messages, context, signal, onText }) {
     if (done) break;
     buf += decoder.decode(value, { stream: true });
     const lines = buf.split('\n');
-    buf = lines.pop();
+    buf = lines.pop() ?? '';
     for (const line of lines) {
       if (!line.startsWith('data: ')) continue;
       const raw = line.slice(6).trim();
@@ -46,7 +49,9 @@ export async function streamChat({ messages, context, signal, onText }) {
           fullText += obj.delta.text;
           onText(fullText);
         }
-      } catch { }
+      } catch {
+        // ignore malformed keep-alive lines
+      }
     }
   }
   return fullText;

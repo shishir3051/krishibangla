@@ -1,8 +1,5 @@
-import { NextResponse } from 'next/server';
+import { connection, NextResponse } from 'next/server';
 import { districtsData } from '@/data/districtsData';
-
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
 
 // Seeded real-world Bengali wholesaler/buyer names
 const buyerNames = [
@@ -40,6 +37,9 @@ function pseudoRandomValue(str, max) {
 }
 
 export async function GET(request) {
+  // Run per request (and outside the try/catch, which would swallow Next's prerender bail-out).
+  await connection();
+
   try {
     const { searchParams } = new URL(request.url);
     const districtKey = searchParams.get('district');
