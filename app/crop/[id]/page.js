@@ -54,7 +54,7 @@ export default function CropPage() {
           )}
 
           {id !== 'rice' && id !== 'fisheries' && (
-            <GenericCropGuide cropId={id} />
+            <GenericCropGuide key={id} cropId={id} />
           )}
         </main>
 

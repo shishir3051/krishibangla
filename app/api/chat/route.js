@@ -1,6 +1,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { cropsData } from '@/data/cropsData';
+import { rateLimit } from '@/lib/rateLimit';
 
-const SYSTEM_PROMPT = `You are KrishiBangla AI, a passionate and knowledgeable expert on Bangladesh's complete agricultural sector. Reply in the SAME LANGUAGE the user writes in — Bangla question = full Bangla answer, English question = full English answer.
+const MAX_MESSAGES = 20;   // most recent messages sent to the model
+const MAX_HISTORY = 100;   // longer conversations are rejected outright
+const MAX_CHARS = 4000;    // per message
+
+const SYSTEM_PROMPT = `You are KrishiBangla AI, a passionate and knowledgeable expert on Bangladesh's complete agricultural sector. Always answer in the REPLY LANGUAGE given at the end of these instructions.
 
 Give WIDE, DETAILED, INFORMATIVE answers. Use bullet points, numbered steps, and clear sections. Include specific statistics, variety names, dates, and practical farmer-level advice. Never give short vague answers — always explain thoroughly.
 
@@ -30,25 +36,70 @@ INSTITUTIONS: BRRI (Gazipur), BARI, DAE, DoF, BARC, BAU (Mymensingh), BJRI
 POLICY: Fertilizer subsidy ভর্তুকি, OMS, food procurement MSP, crop insurance ফসল বীমা, e-krishi
 STATISTICS: Rice 38.1M MT, fish 4.7M MT, jute $1.1B, shrimp $450M, GDP 13%, workforce 40%, 38M farm households`;
 
+function validateMessages(messages) {
+  if (!Array.isArray(messages) || messages.length === 0) return 'messages must be a non-empty array.';
+  if (messages.length > MAX_HISTORY) return 'This conversation is too long. Please start a new chat.';
+  for (const m of messages) {
+    if (m?.role !== 'user' && m?.role !== 'assistant') return 'Only "user" and "assistant" roles are allowed.';
+    if (typeof m.content !== 'string') return 'Message content must be text.';
+    if (m.content.length > MAX_CHARS) return `Each message must be under ${MAX_CHARS} characters.`;
+  }
+  const last = messages[messages.length - 1];
+  if (last.role !== 'user' || !last.content.trim()) return 'The last message must be a non-empty user question.';
+  return null;
+}
+
+// Bangla script outweighs Latin letters → reply in Bangla; otherwise English.
+function detectLanguage(text) {
+  const bangla = (text.match(/[ঀ-৿]/g) || []).length;
+  const latin = (text.match(/[A-Za-z]/g) || []).length;
+  return bangla > latin ? 'bn' : 'en';
+}
+
+function buildSystemPrompt(replyLanguage, crop) {
+  let prompt = `${SYSTEM_PROMPT}\n\nREPLY LANGUAGE: ${
+    replyLanguage === 'bn'
+      ? 'Write the entire answer in Bangla (বাংলা).'
+      : 'Write the entire answer in English. Bangla terms may appear only in brackets.'
+  }`;
+  if (crop) {
+    prompt += `\n\nFOCUS: The user is reading the ${crop.en} (${crop.bn}) guide. Act as an agronomist specialised in ${crop.en} in Bangladesh and give precise, actionable advice.`;
+  }
+  return prompt;
+}
+
 export async function POST(req) {
+  const limited = await rateLimit('chat', req);
+  if (limited) return limited;
+
   try {
-    const { messages } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return Response.json({ error: 'Invalid JSON body.' }, { status: 400 });
+    }
+
+    const problem = validateMessages(body?.messages);
+    if (problem) return Response.json({ error: problem }, { status: 400 });
+
+    const messages = body.messages.slice(-MAX_MESSAGES);
+    const cropId = typeof body.context?.cropId === 'string' ? body.context.cropId.toLowerCase() : null;
+    const crop = cropId ? cropsData[cropId] ?? null : null;
+    const replyLanguage = detectLanguage(messages[messages.length - 1].content);
     
     // Load API key strictly from environment variables — no hardcoded fallback
     const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
-    // Debug logging to verify key loading
-    console.log("KrishiBangla Chat API: Checking for GEMINI_API_KEY...");
     if (!GEMINI_KEY) {
       console.error("KrishiBangla Chat Error: GEMINI_API_KEY is not defined.");
       return new Response(JSON.stringify({ error: "Gemini API Key is missing. Please check your .env.local file." }), { status: 500 });
     }
-    console.log("KrishiBangla Chat API: Key loaded (starts with: " + GEMINI_KEY.substring(0, 8) + "...)");
 
     const genAI = new GoogleGenerativeAI(GEMINI_KEY);
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
-      systemInstruction: SYSTEM_PROMPT,
+      systemInstruction: buildSystemPrompt(replyLanguage, crop),
     });
 
     // Formatting messages for Gemini - Ensuring no empty content or invalid roles

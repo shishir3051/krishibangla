@@ -7,7 +7,12 @@ export async function GET(request) {
   const lat = searchParams.get('lat');
   const lon = searchParams.get('lon');
   
-  const apiKey = process.env.WEATHER_API_KEY || 'f5aeec1f3dd348b291b141654262903';
+  // Load API key strictly from environment variables — no hardcoded fallback
+  const apiKey = process.env.WEATHER_API_KEY;
+  if (!apiKey) {
+    console.error('Weather API Error: WEATHER_API_KEY is not defined.');
+    return NextResponse.json({ error: 'Weather API Key is missing. Please check your .env.local file.' }, { status: 500 });
+  }
 
   let query;
   let isCoord = false;

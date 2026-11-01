@@ -2,6 +2,30 @@
 import { useState, useRef } from 'react';
 import { useLanguage } from './LanguageProvider';
 
+const MAX_SIDE = 1280; // px — keeps uploads well under the 4 MB server limit
+
+// Re-encodes the photo as a JPEG no larger than MAX_SIDE on its longest edge.
+function downscaleImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Could not decode image'));
+    };
+    img.src = url;
+  });
+}
+
 export default function DiseaseDetection() {
   const { lang } = useLanguage();
   const [image, setImage] = useState(null);
@@ -28,7 +52,9 @@ export default function DiseaseDetection() {
       back: 'Scan New Leaf',
       source: 'Source: KrishiBangla AI (BRRI/BARI standard)',
       error: 'Analysis failed. Please try a clearer image.',
-      limit: 'Daily Scan Limit Reached. Please try again tomorrow.',
+      limit: 'Too many scans in a short time. Please wait a few minutes and try again.',
+      badImage: 'This file could not be read as a photo. Please use a JPG, PNG or WebP image.',
+      fileHint: 'JPG, PNG or WebP photo',
     },
     bn: {
       title: 'এআই ফসল রোগ স্ক্যানার',
@@ -46,21 +72,23 @@ export default function DiseaseDetection() {
       back: 'নতুন পাতা স্ক্যান করুন',
       source: 'উৎস: কৃষিবাংলাদেশ এআই (BRRI/BARI মানসম্পন্ন)',
       error: 'বিশ্লেষণ ব্যর্থ হয়েছে। অনুগ্রহ করে পরিষ্কার ছবি দিয়ে চেষ্টা করুন।',
-      limit: 'স্ক্যানারের দৈনিক সীমা অতিক্রম হয়েছে। অনুগ্রহ করে আগামীকাল চেষ্টা করুন।',
+      limit: 'অল্প সময়ে অনেকবার স্ক্যান করা হয়েছে। কয়েক মিনিট পর আবার চেষ্টা করুন।',
+      badImage: 'ফাইলটি ছবি হিসেবে পড়া যায়নি। অনুগ্রহ করে JPG, PNG বা WebP ছবি দিন।',
+      fileHint: 'JPG, PNG বা WebP ছবি',
     }
   }[lang];
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-        setImage(reader.result);
-        setResult(null);
-        setError(null);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    setResult(null);
+    setError(null);
+    try {
+      const dataUrl = await downscaleImage(file);
+      setPreview(dataUrl);
+      setImage(dataUrl);
+    } catch {
+      setError(t.badImage);
     }
   };
 
@@ -76,10 +104,18 @@ export default function DiseaseDetection() {
         body: JSON.stringify({ image }),
       });
       const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      if (res.status === 429) {
+        setError(t.limit);
+        return;
+      }
+      if (res.status === 400 || res.status === 413 || res.status === 415) {
+        setError(t.badImage);
+        return;
+      }
+      if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
       setResult(data);
     } catch (err) {
-      if (err.message.includes('429') || err.message.toLowerCase().includes('quota') || err.message.toLowerCase().includes('limit')) {
+      if (err.message.includes('429') || err.message.toLowerCase().includes('quota')) {
         setError(t.limit);
       } else {
         setError(t.error);
@@ -157,7 +193,7 @@ export default function DiseaseDetection() {
                     📸
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2">{t.dragDrop}</h3>
-                  <p className="text-white/30 text-sm">PNG, JPG up to 10MB</p>
+                  <p className="text-white/30 text-sm">{t.fileHint}</p>
                 </div>
               )}
 
@@ -166,7 +202,7 @@ export default function DiseaseDetection() {
                 ref={fileInputRef} 
                 onChange={handleFileChange} 
                 className="hidden" 
-                accept="image/*" 
+                accept="image/jpeg,image/png,image/webp"
               />
             </div>
 

@@ -21,7 +21,7 @@ Krishi Bangla is an interactive, bilingual (English/Bengali) web platform dedica
 
 ## 🚀 Getting Started
 
-First, ensure you have your environment variables set up. You will need API keys for Google Generative AI and/or OpenAI if you are using the AI Chat features.
+First, copy `.env.example` to `.env.local` and fill in your own keys. `GEMINI_API_KEY` powers the AI Chat and Disease Detection features, and `WEATHER_API_KEY` (WeatherAPI.com) powers the weather widget. Never commit real keys.
 
 To run the development server:
 

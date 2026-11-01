@@ -2,12 +2,17 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "./LanguageProvider";
+import ChatMarkdown from "./ChatMarkdown";
+import { streamChat } from "@/lib/chatStream";
 
 export default function AIChat() {
   const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => [{
+    role: "assistant",
+    content: `আস্সালামু আলাইকুম! আমি KrishiBangla AI।\n\nবাংলায় বা English-এ যেকোনো প্রশ্ন করুন:\n🌾 ধান চাষ A-Z · 🐟 মৎস্য সম্পদ\n🌊 জলবায়ু · 🪢 পাট · 📊 পরিসংখ্যান\n\nWhat would you like to know? কি জানতে চান?`
+  }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showScrollDown, setShowScrollDown] = useState(false);
@@ -40,13 +45,6 @@ export default function AIChat() {
   };
 
   useEffect(() => {
-    setMessages([{
-      role: "assistant",
-      content: `আস্সালামু আলাইকুম! আমি KrishiBangla AI।\n\nবাংলায় বা English-এ যেকোনো প্রশ্ন করুন:\n🌾 ধান চাষ A-Z · 🐟 মৎস্য সম্পদ\n🌊 জলবায়ু · 🪢 পাট · 📊 পরিসংখ্যান\n\nWhat would you like to know? কি জানতে চান?`
-    }]);
-  }, []);
-
-  useEffect(() => {
     if (messages.length > 1 || loading) {
       const lastMsg = messages[messages.length - 1];
       // Force scroll if:
@@ -67,75 +65,28 @@ export default function AIChat() {
     }
   }, [open]);
 
-  const mdToHtml = (text) => {
-    return text
-      .replace(/^##### (.+)$/gm, '<strong class="block mt-[0.6rem] text-green-light text-[0.82rem] tracking-[0.04em] uppercase opacity-80">$1</strong>')
-      .replace(/^#### (.+)$/gm, '<strong class="block mt-[0.7rem] text-green-light text-[0.88rem]">$1</strong>')
-      .replace(/^### (.+)$/gm, '<strong class="block mt-[0.8rem] text-green-light text-[0.95rem]">$1</strong>')
-      .replace(/^## (.+)$/gm, '<strong class="block mt-4 text-gold text-[1rem]">$1</strong>')
-      .replace(/^# (.+)$/gm, '<strong class="block mt-4 text-gold text-[1.1rem]">$1</strong>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^- (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">• $1</span>')
-      .replace(/^(\d+)\. (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">$1. $2</span>')
-      .replace(/\n\n/g, '<br><br>')
-      .replace(/\n/g, '<br>');
-  };
-
   const getAIResponse = async (history) => {
     setLoading(true);
-    let fullText = "";
-    
-    // Create new abort controller
     abortControllerRef.current = new AbortController();
-    const signal = abortControllerRef.current.signal;
+    // messages = [greeting, ...history], so the reply lands right after the history
+    const botMessageIndex = history.length + 1;
+    const setReply = (content) =>
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[botMessageIndex] = { role: "assistant", content };
+        return updated;
+      });
 
     try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
-        signal: signal
-      });
-      if (!res.ok) throw new Error("API error");
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = "";
-      let botMessageIndex = history.length + 1;
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += decoder.decode(value, { stream: true });
-        const lines = buf.split('\n');
-        buf = lines.pop();
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const raw = line.slice(6).trim();
-          if (raw === '[DONE]') break;
-          try {
-            const obj = JSON.parse(raw);
-            if (obj.type === 'content_block_delta' && obj.delta?.type === 'text_delta' && obj.delta?.text) {
-              fullText += obj.delta.text;
-              setMessages((prev) => {
-                const updated = [...prev];
-                updated[botMessageIndex].content = fullText;
-                return updated;
-              });
-            }
-          } catch (e) { }
-        }
-      }
+      await streamChat({ messages: history, signal: abortControllerRef.current.signal, onText: setReply });
     } catch (err) {
       if (err.name === 'AbortError') {
-        // User interrupted the response, do nothing or show stopped indicator
+        // User interrupted the response; drop the bubble if nothing arrived yet
+        setMessages((prev) => prev.filter((m, i) => i !== botMessageIndex || m.content));
+      } else if (err.status === 429) {
+        setReply(lang === 'bn' ? 'অল্প সময়ে অনেক প্রশ্ন করা হয়েছে — কয়েক মিনিট পর আবার চেষ্টা করুন।' : 'Too many questions in a short time — please wait a few minutes and try again.');
       } else {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: lang === 'bn' ? 'সংযোগ সমস্যা — পুনরায় চেষ্টা করুন।' : 'Connection issue — please try again.' }
-        ]);
+        setReply(lang === 'bn' ? 'সংযোগ সমস্যা — পুনরায় চেষ্টা করুন।' : 'Connection issue — please try again.');
       }
     }
     setLoading(false);
@@ -208,7 +159,9 @@ export default function AIChat() {
                   ${m.role === 'user' ? 'text-right text-white/60' : 'text-left text-gray-400'}`}>
                   {m.role === 'user' ? (lang === 'bn' ? 'আপনি' : 'You') : 'Assistant'}
                 </div>
-                <div className="chat-content" dangerouslySetInnerHTML={{ __html: mdToHtml(m.content) }} />
+                {m.role === 'user'
+                  ? <div className="whitespace-pre-wrap">{m.content}</div>
+                  : <ChatMarkdown text={m.content} headingClass="text-green-mid" />}
               </div>
             </div>
           ))}

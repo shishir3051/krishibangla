@@ -5,6 +5,8 @@ import Text from "./Text";
 import { useLanguage } from "./LanguageProvider";
 import { cropsData, getFallbackCrop } from "@/data/cropsData";
 import { generateSmoothPath, scaleToViewport } from "@/lib/chartUtils";
+import { streamChat } from "@/lib/chatStream";
+import ChatMarkdown from "./ChatMarkdown";
 
 export default function GenericCropGuide({ cropId }) {
   const { lang } = useLanguage();
@@ -14,15 +16,13 @@ export default function GenericCropGuide({ cropId }) {
   const scrollContainerRef = useRef(null);
   const [liveMarketData, setLiveMarketData] = useState(null);
 
-  useEffect(() => {
-    // Initial AI greeting for this specific crop
-    setMessages([{
-      role: "assistant", 
-      content: lang === 'bn' 
-        ? `আস্সালামু আলাইকুম! আমি ${cropId} বিশেষজ্ঞ এআই। ${cropId} চাষ, রোগবালাই, বা বাজারদর নিয়ে যেকোনো প্রশ্ন করুন।` 
-        : `Hello! I am your real-time AI consultant for ${cropId}. Ask me anything about cultivation, diseases, or market trends.`
-    }]);
-  }, [cropId, lang]);
+  // Greeting is derived from the current language and crop, not stored in the conversation
+  const greeting = {
+    role: "assistant",
+    content: lang === 'bn'
+      ? `আস্সালামু আলাইকুম! আমি ${cropId} বিশেষজ্ঞ এআই। ${cropId} চাষ, রোগবালাই, বা বাজারদর নিয়ে যেকোনো প্রশ্ন করুন।`
+      : `Hello! I am your AI consultant for ${cropId}. Ask me anything about cultivation, diseases, or market trends.`
+  };
 
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
@@ -59,52 +59,22 @@ export default function GenericCropGuide({ cropId }) {
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setLoading(true);
 
-    try {
-      const payload = [
-        { role: "system", content: `You are an expert agronomist specialized in ${cropId} cultivation in Bangladesh. Provide precise, actionable advice.` },
-        ...messages,
-        { role: "user", content: userMsg }
-      ];
-
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: payload }),
+    // The server builds the crop-specific system prompt from context.cropId
+    const history = [...messages, { role: "user", content: userMsg }];
+    const replyIndex = messages.length + 1;
+    const setReply = (content) =>
+      setMessages(prev => {
+        const updated = [...prev];
+        updated[replyIndex] = { role: "assistant", content };
+        return updated;
       });
-      
-      if (!res.ok) throw new Error("API error");
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let fullText = "";
-      
-      setMessages(prev => [...prev, { role: "assistant", content: "" }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-        
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const raw = line.slice(6).trim();
-          if (raw === '[DONE]') break;
-          try {
-            const obj = JSON.parse(raw);
-            if (obj.type === 'content_block_delta' && obj.delta?.type === 'text_delta') {
-              fullText += obj.delta.text;
-              setMessages(prev => {
-                const updated = [...prev];
-                updated[updated.length - 1].content = fullText;
-                return updated;
-              });
-            }
-          } catch (e) {}
-        }
-      }
+    try {
+      await streamChat({ messages: history, context: { cropId }, onText: setReply });
     } catch (err) {
-      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, I am having trouble connecting to the intelligence server." }]);
+      setReply(err.status === 429
+        ? (lang === 'bn' ? 'অল্প সময়ে অনেক প্রশ্ন করা হয়েছে — কয়েক মিনিট পর আবার চেষ্টা করুন।' : 'Too many questions in a short time — please wait a few minutes and try again.')
+        : (lang === 'bn' ? 'সংযোগ সমস্যা — পুনরায় চেষ্টা করুন।' : 'Connection issue — please try again.'));
     }
     setLoading(false);
   };
@@ -315,25 +285,7 @@ export default function GenericCropGuide({ cropId }) {
               ref={scrollContainerRef}
               className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth chat-scrollbar bg-[#05111e]/50"
             >
-              {messages.filter(m => m.role !== 'system').map((msg, idx) => {
-                
-                // Advanced Markdown to HTML parser
-                const renderMarkdown = (text) => {
-                  let html = text
-                   .replace(/^##### (.+)$/gm, '<strong class="block mt-[0.6rem] text-green-light text-[0.82rem] tracking-[0.04em] uppercase opacity-80">$1</strong>')
-      .replace(/^#### (.+)$/gm, '<strong class="block mt-[0.7rem] text-green-light text-[0.88rem]">$1</strong>')
-      .replace(/^### (.+)$/gm, '<strong class="block mt-[0.8rem] text-green-light text-[0.95rem]">$1</strong>')
-      .replace(/^## (.+)$/gm, '<strong class="block mt-4 text-gold text-[1rem]">$1</strong>')
-      .replace(/^# (.+)$/gm, '<strong class="block mt-4 text-gold text-[1.1rem]">$1</strong>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^- (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">• $1</span>')
-      .replace(/^(\d+)\. (.+)$/gm, '<span class="block pl-4 my-[0.15rem]">$1. $2</span>')
-      .replace(/\n\n/g, '<br><br>')
-      .replace(/\n/g, '<br>');
-                  return html;
-                };
-
+              {[greeting, ...messages].map((msg, idx) => {
                 return (
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
@@ -352,10 +304,9 @@ export default function GenericCropGuide({ cropId }) {
                       {msg.role === 'user' ? (
                         <div className="font-sans whitespace-pre-wrap">{msg.content}</div>
                       ) : (
-                        <div 
-                          className="font-sans styled-ai-content" 
-                          dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }} 
-                        />
+                        <div className="font-sans">
+                          <ChatMarkdown text={msg.content} headingClass="text-emerald-300" />
+                        </div>
                       )}
                     </div>
                   </motion.div>
