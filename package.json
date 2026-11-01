@@ -13,7 +13,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "build:map": "node scripts/build-map.mjs",
-    "check:map": "node scripts/build-map.mjs --check"
+    "check:map": "node scripts/build-map.mjs --check",
+    "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
