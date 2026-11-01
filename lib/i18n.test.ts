@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hasLocale, localePath, switchLocalePath } from './i18n';
+import { hasLocale, isActivePath, localePath, switchLocalePath } from './i18n';
 
 describe('hasLocale', () => {
   it('accepts only supported locales', () => {
@@ -31,5 +31,24 @@ describe('switchLocalePath', () => {
     ['/crops/rice', 'bn', '/bn/crops/rice'],
   ] as const)('%s → %s gives %s', (pathname, to, expected) => {
     expect(switchLocalePath(pathname, to)).toBe(expected);
+  });
+});
+
+describe('isActivePath', () => {
+  it('matches home only on the home page itself', () => {
+    expect(isActivePath('/bn', '/bn')).toBe(true);
+    expect(isActivePath('/bn/markets', '/bn')).toBe(false);
+  });
+
+  it('matches a section and its sub-pages', () => {
+    expect(isActivePath('/bn/districts', '/bn/districts')).toBe(true);
+    expect(isActivePath('/bn/districts/rajshahi', '/bn/districts')).toBe(true);
+    expect(isActivePath('/en/markets', '/en/markets')).toBe(true);
+  });
+
+  it('does not match look-alike paths, other sections or the other language', () => {
+    expect(isActivePath('/bn/districtsx', '/bn/districts')).toBe(false);
+    expect(isActivePath('/bn/climate', '/bn/markets')).toBe(false);
+    expect(isActivePath('/en/markets', '/bn/markets')).toBe(false);
   });
 });

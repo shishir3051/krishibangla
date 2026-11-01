@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AskButton } from '@/components/chat/AskButton';
 import type { Dictionary } from '@/lib/dictionary';
-import { localePath, type Locale } from '@/lib/i18n';
+import { isActivePath, localePath, type Locale } from '@/lib/i18n';
 
 /** Bottom navigation on phones (hidden from md up, where the header shows the same links). */
 export function MobileTabBar({ locale, nav }: { locale: Locale; nav: Dictionary['nav'] }) {
@@ -19,10 +19,15 @@ export function MobileTabBar({ locale, nav }: { locale: Locale; nav: Dictionary[
   return (
     <nav className="no-print fixed inset-x-0 bottom-0 z-40 flex border-t border-line bg-surface/95 backdrop-blur md:hidden">
       {tabs.map((tab) => {
-        const active = tab.href === localePath(locale) ? pathname === tab.href : pathname.startsWith(tab.href);
+        const active = isActivePath(pathname, tab.href);
         return (
-          <Link key={tab.href} href={tab.href} className={`${item} ${active ? 'text-brand' : 'text-fg-muted'}`} aria-current={active ? 'page' : undefined}>
-            <span aria-hidden className="text-lg">
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={`${item} ${active ? 'font-semibold text-brand' : 'text-fg-muted'}`}
+            aria-current={active ? 'page' : undefined}
+          >
+            <span aria-hidden className={`rounded-full px-3 py-0.5 text-lg ${active ? 'bg-brand-soft' : ''}`}>
               {tab.icon}
             </span>
             {tab.label}

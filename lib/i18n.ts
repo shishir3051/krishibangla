@@ -29,3 +29,12 @@ export function switchLocalePath(pathname: string, to: Locale): string {
   if (hasLocale(segments[1])) segments.splice(1, 1);
   return localePath(to, segments.join('/') || '/');
 }
+
+/**
+ * Whether a nav link points at the current page. Home (/bn) matches only itself; a section
+ * also matches its sub-pages, so /bn/districts/rajshahi highlights "Districts".
+ */
+export function isActivePath(pathname: string, href: string): boolean {
+  const isHome = href.split('/').filter(Boolean).length <= 1;
+  return isHome ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+}

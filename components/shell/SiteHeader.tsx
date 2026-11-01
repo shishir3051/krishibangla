@@ -4,6 +4,7 @@ import { LocaleToggle } from '@/components/ui/LocaleToggle';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import type { Dictionary } from '@/lib/dictionary';
 import { localePath, type Locale } from '@/lib/i18n';
+import { HeaderNav } from './HeaderNav';
 
 export function SiteHeader({ locale, nav }: { locale: Locale; nav: Dictionary['nav'] }) {
   const links = [
@@ -22,13 +23,7 @@ export function SiteHeader({ locale, nav }: { locale: Locale; nav: Dictionary['n
           </span>
           {nav.brand}
         </Link>
-        <nav className="hidden items-center gap-1 text-sm md:flex">
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} className="rounded-lg px-3 py-2 text-fg-muted hover:bg-surface-2 hover:text-fg">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <HeaderNav links={links} />
         <div className="ml-auto flex items-center gap-2">
           <AskButton className="hidden h-10 rounded-full bg-brand px-4 text-sm font-medium text-on-brand hover:opacity-90 md:block">
             💬 {nav.ask}
