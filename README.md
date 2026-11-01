@@ -32,7 +32,7 @@ Details, licences and caveats: [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) (als
 ## Tech stack
 
 - [Next.js 16](https://nextjs.org) App Router with **Cache Components** (`'use cache'`, `cacheLife`), React 19, TypeScript (strict)
-- Tailwind CSS v4 with light/dark design tokens; Inter and Hind Siliguri via `next/font`
+- Tailwind CSS v4 with light/dark design tokens; Inter and Noto Sans Bengali via `next/font`
 - zod for validating every upstream response; Vitest for unit tests
 - `@google/genai` (Gemini) for AI; optional Upstash Redis for rate limiting
 - Map paths pre-built with mapshaper and d3-geo (`scripts/build-map.mjs`); no chart library — charts are hand-written SVG

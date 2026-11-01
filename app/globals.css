@@ -5,8 +5,8 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme inline {
-  --font-ui: var(--font-inter), var(--font-hind), system-ui, sans-serif;
-  --font-bangla: var(--font-hind), var(--font-inter), system-ui, sans-serif;
+  --font-ui: var(--font-inter), var(--font-bangla-src), system-ui, sans-serif;
+  --font-bangla: var(--font-bangla-src), var(--font-inter), system-ui, sans-serif;
 
   --color-canvas: var(--kb-canvas);
   --color-surface: var(--kb-surface);
