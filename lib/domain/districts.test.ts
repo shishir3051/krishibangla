@@ -42,6 +42,16 @@ describe('district registry', () => {
     }
   });
 
+  it('keeps unsourced figures (doses, ratios, percentages) out of curated profile text', () => {
+    // Latin or Bangla digits in editorial text are almost always an unsourced number.
+    const digits = /[0-9০-৯]/;
+    for (const d of DISTRICTS) {
+      for (const text of [d.profile?.soil, d.profile?.advisory].flatMap((t) => (t ? [t.en, t.bn] : []))) {
+        expect(text, `${d.slug}: "${text}"`).not.toMatch(digits);
+      }
+    }
+  });
+
   it('has a map path for every district', () => {
     expect(paths.districts.map((p) => p.slug).sort()).toEqual(DISTRICTS.map((d) => d.slug).sort());
     for (const p of paths.districts) expect(p.d).toMatch(/^M[\d.]+,[\d.]+/);
